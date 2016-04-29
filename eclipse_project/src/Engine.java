@@ -16,17 +16,72 @@ public class Engine {
         Engine eng = new Engine();
         eng.startEngine();
     }
-    
-    /*
-     * Not trying any complicated class integration yet.
-     */
-    
+
+    private static final int TARGET_FRAME_RATE = 75;
+
     private Input mInput;
     private Grid currentGrid = null;
     private Renderer mRenderer;
-    
-    public void startEngine(){
-        // start running thread, show windows etc.
+    private boolean isRunning = false;
+
+    public Engine() {
+        mInput = new Input();
+        mRenderer = new Renderer();
+    }
+
+    public void startEngine() {
+        // TODO: set windows to visible
+        isRunning = true;
+        loopThread.start();
+    }
+
+    private final Thread loopThread = new Thread() {
+        /*
+         * There are lots of viable ways to do a regular timed loop. This one
+         * checks every half-millisecond whether the time since last run
+         * exceeded our target interval.
+         */
+        private long lastTime = System.nanoTime();
+        private final long INTERVAL = (long) (Math.pow(10, 9)
+                / TARGET_FRAME_RATE);
+        private final int SLEEP_NANOS = (int) (Math.pow(10, 6) / 2);
+
+        public void run() {
+            while (isRunning) {
+                long time = System.nanoTime();
+                if (time - lastTime < INTERVAL) {
+                    try {
+                        Thread.sleep(0, SLEEP_NANOS);
+                    } catch (InterruptedException e) {
+                    }
+                } else {
+                    lastTime = time;
+                    update();
+                    render();
+                }
+            }
+        };
+    };
+
+    /**
+     * Update the game. Mainly just delegate to Grid to update. The main logic
+     * is deciding what to update (e.g. if there's no running game or it's
+     * paused, obviously don't update the Grid).
+     */
+    private void update() {
+        // TODO
+    }
+
+    /**
+     * As above, render the state of the game. It is up to Engine to decide what
+     * has to be drawn (i.e. which menus, whether to draw maze etc).
+     */
+    private void render() {
+        do {
+            mRenderer.startFrame();
+            // TODO
+        } while (!mRenderer.finishFrame());
+        // if finishFrame() fails the render has to restart
     }
 
 }

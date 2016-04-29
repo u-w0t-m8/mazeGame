@@ -13,7 +13,7 @@ import java.awt.image.BufferStrategy;
  * methods for Engine to choose from as appropriate (e.g. drawing the main menu,
  * or the game grid, or the grid with a pause menu overlay).
  * <p>
- * All draw calls should take place between startRender() and finishRender() to
+ * All draw calls should take place between startFrame() and finishFrame() to
  * allow frame buffering (the game will look really glitchy and odd otherwise).
  * 
  */
@@ -24,13 +24,32 @@ public class Renderer {
     BufferStrategy bufferStrategy = null;
     Graphics frameGraphics;
 
-    public void startRender() {
+    /**
+     * Start a new frame for display. After drawing, finishFrame() must be
+     * called to display the completed frame.
+     */
+    public void startFrame() {
         frameGraphics = bufferStrategy.getDrawGraphics();
     }
 
-    public void finishRender() {
+    /**
+     * Tries to display the completed frame and free drawing resources. The draw
+     * buffers used are volatile and can be lost during rendering, destroying
+     * render progress. If this happens, the method returns false and the caller
+     * should restart the render.
+     * 
+     * @return True if the frame render was successful.
+     */
+    public boolean finishFrame() {
         frameGraphics.dispose();
+        if (bufferStrategy.contentsRestored()) {
+            return false;
+        }
         bufferStrategy.show();
+        if (bufferStrategy.contentsLost()) {
+            return false;
+        }
+        return true;
     }
 
     public void drawGrid(Grid grid) {

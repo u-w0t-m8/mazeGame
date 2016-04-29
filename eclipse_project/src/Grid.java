@@ -26,6 +26,13 @@ public class Grid {
         Image tileImg;
         Collection<Entity> localList = null; // probably an ArrayList
     }
+    
+    /**
+     * Update the Grid and its entities.
+     */
+    public void update(){
+        
+    }
 
     public Collection<Entity> getEntities() {
         return entList;
