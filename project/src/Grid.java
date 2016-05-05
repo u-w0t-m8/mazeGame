@@ -27,11 +27,17 @@ public class Grid {
         Collection<Entity> localList = null; // probably an ArrayList
     }
     
+    public Grid(Tile[][] terrain){
+    	this.tileSpace = terrain;
+    }
+    
     /**
      * Update the Grid and its entities.
      */
     public void update(){
-        
+        for (Entity ent: entList){
+        	ent.update(this);
+        }
     }
 
     public Collection<Entity> getEntities() {

@@ -1,4 +1,3 @@
-
 /**
  * The entry point of the program. Its main responsibilities of this class are
  * to manage the current game state (i.e. mostly Grid management) and call
@@ -22,7 +21,9 @@ public class Engine {
     private Input mInput;
     private Grid currentGrid = null;
     private Renderer mRenderer;
+    
     private boolean isRunning = false;
+    private GameState state = GameState.MAIN_MENU;
 
     public Engine() {
         mInput = new Input();
@@ -33,6 +34,7 @@ public class Engine {
         // TODO: set windows to visible
         isRunning = true;
         loopThread.start();
+        mRenderer.show();
     }
 
     private final Thread loopThread = new Thread() {
@@ -69,7 +71,17 @@ public class Engine {
      * paused, obviously don't update the Grid).
      */
     private void update() {
-        // TODO
+        switch (state){
+        case MAIN_MENU:{
+        	break;	
+        }
+        case IN_GAME:{
+        	break;
+        }
+        case IN_GAME_PAUSED:{
+        	break;
+        }
+        }
     }
 
     /**
@@ -82,6 +94,26 @@ public class Engine {
             // TODO
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
+    }
+    
+    void toggleGamePaused(){
+    	if (state == GameState.IN_GAME){
+    		state = GameState.IN_GAME_PAUSED;
+    	}
+    	else if (state == GameState.IN_GAME_PAUSED){
+    		state = GameState.IN_GAME;
+    	}
+    }
+    
+    void startNewLevel(){
+    	GridGenerator gen = null;
+    	currentGrid = gen.generate(50,50,Difficulty.EASY);
+    	state = GameState.IN_GAME;
+    }
+    
+    void endLevel(){
+    	currentGrid= null;
+    	state = GameState.MAIN_MENU;
     }
 
 }

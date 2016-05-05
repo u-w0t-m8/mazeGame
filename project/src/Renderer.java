@@ -1,6 +1,10 @@
+import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferStrategy;
+
+import javax.swing.JFrame;
 
 /**
  * Responsible for drawing maze terrain and its entities (and menus,
@@ -19,10 +23,28 @@ import java.awt.image.BufferStrategy;
  */
 public class Renderer {
 
+	private static final int DEFAULT_XRES = 800;
+	private static final int DEFAULT_YRES = 600;
+	
     Image mazeBackground;
-    // Obtaining this depends on Window/JFrame, which we don't have yet.
+    JFrame mFrame;
+    Canvas canvas;
     BufferStrategy bufferStrategy = null;
     Graphics frameGraphics;
+    
+    public Renderer() {
+    	mFrame = new JFrame();
+    	canvas = new Canvas();
+    	canvas.setPreferredSize(new Dimension(DEFAULT_XRES,DEFAULT_YRES));
+    	mFrame.pack();
+    }
+    
+    /**
+     * Show the game window.
+     */
+    public void show(){
+    	mFrame.setVisible(true);
+    }
 
     /**
      * Start a new frame for display. After drawing, finishFrame() must be
