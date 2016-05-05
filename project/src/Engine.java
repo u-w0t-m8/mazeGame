@@ -18,7 +18,9 @@ public class Engine {
 
     private static final int TARGET_FRAME_RATE = 75;
 
-    private Input mInput;
+    private Menu menuMain;
+    private Menu menuDifficulty;
+    private Menu menuPause;
     private Grid currentGrid = null;
     private Renderer mRenderer;
     
@@ -26,8 +28,13 @@ public class Engine {
     private GameState state = GameState.MAIN_MENU;
 
     public Engine() {
-        mInput = new Input();
         mRenderer = new Renderer();
+        menuMain = new Menu();
+        menuMain.addItems("New game","Settings","Quit");
+        menuDifficulty = new Menu();
+        menuDifficulty.addItems("Easy","Normal","Hard");
+        menuPause = new Menu();
+        menuPause.addItems("Resume","Exit to menu","Quit");
     }
 
     public void startEngine() {
