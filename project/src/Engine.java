@@ -134,13 +134,11 @@ public class Engine {
 
     void startNewLevel(Difficulty diff) {
         currentGrid = new Grid();
-        mRenderer.createPreRender(currentGrid);
         state = GameState.IN_GAME;
     }
 
     void endLevel() {
         currentGrid = null;
-        mRenderer.destroyPreRender();
         state = GameState.MAIN_MENU;
     }
     
@@ -177,7 +175,7 @@ public class Engine {
 		    						currentGrid.print();
 	    			        		 //startNewLevel();
 		    					}
-		    					else if(keycode == KeyEvent.VK_ESCAPE){
+		    					else if(keyCode == KeyEvent.VK_ESCAPE){
 		    						System.exit(0);
 		    					}
 	    			        	break;
