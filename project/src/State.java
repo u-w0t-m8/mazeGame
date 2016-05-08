@@ -8,8 +8,9 @@ public class State {
 	private int playerY;
 	private int distanceTraveled;
 	private int heuristic;
+	private int move;
 	
-	public State(int distanceTraveled, int currX, int currY, int playerX, int playerY, State previousState){
+	public State(int move, int distanceTraveled, int currX, int currY, int playerX, int playerY, State previousState){
 		this.distanceTraveled = distanceTraveled;
 		this.currX = currX;
 		this.currY = currY;
@@ -19,6 +20,10 @@ public class State {
 		
 		setHeuristic();
 		
+	}
+	
+	public int getMove(){
+		return move;
 	}
 	
 	public int getCost(){
