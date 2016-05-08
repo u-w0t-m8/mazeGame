@@ -5,9 +5,16 @@
  */
 public class HunterEntity extends LivingEntity {
 
+	/**
+	 * Performs A* search with straight line distance squared
+	 */
     @Override
     public void think(Grid grid) {
-        // raaar chase (set velocity to go after the player)
+        int playerX = grid.getPlayerX();
+        int playerY = grid.getPlayerY();
+        
+        
+        
     }
     
 }
