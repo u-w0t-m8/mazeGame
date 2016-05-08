@@ -22,8 +22,25 @@ public class Grid {
     private int sizex;
     private int sizey;
     
-    public Grid(Tile[][] terrain){
-    	this.tileSpace = terrain;
+    public Grid(){
+        generate(50,50);
+        player = new PlayerEntity();
+        player.setPos(1, 1);
+    }
+    
+    private void generate(int sx, int sy){
+        tileSpace = new Tile[sx][sy];
+        Image imgBlank = ImageCache.getImage("tile_blank");
+        Image imgWall = ImageCache.getImage("tile_wall");
+        for (int y = 0; y < sy; y++){
+            for (int x = 0; x < sx; x++){
+                if (x == 0 || x == sx || y == 0 || y == sy){
+                    tileSpace[x][y] = new Tile(true, imgWall);
+                } else {
+                    tileSpace[x][y] = new Tile(false, imgBlank);
+                }
+            }
+        }
     }
     
     /**
@@ -61,6 +78,12 @@ public class Grid {
     
     public int getPlayerY(){
     	return player.getY();	
+    }
+    
+    public void setPlayerInput(int x, int y){
+    	// DO STUFF
+    	// X will be 1 if its moving to the right, -1 if left, 0 no movement
+    	// Y will be 1 if its moving downwards, -1 if upwards, 0 no movement
     }
 
 }

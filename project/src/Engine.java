@@ -26,33 +26,26 @@ public class Engine {
     private static final int TARGET_FRAME_RATE = 75;
     private static final int DEFAULT_XRES = 800;
     private static final int DEFAULT_YRES = 600;
-    
-    private Menu menuMain;
-    private Menu menuDifficulty;
-    private Menu menuPause;
+
+    private Menu mMenu;
     private Grid currentGrid = null;
     private Renderer mRenderer;
     private JFrame mFrame;
-    //private Input mInput;
-    
+    // private Input mInput;
+
     private boolean isRunning = false;
     private GameState state = GameState.MAIN_MENU;
 
     public Engine() {
-        menuMain = new Menu();
-        menuMain.addItems("New game","Settings","Quit");
-        menuDifficulty = new Menu();
-        menuDifficulty.addItems("Easy","Normal","Hard");
-        menuPause = new Menu();
-        menuPause.addItems("Resume","Exit to menu","Quit");
+        mMenu = new Menu();
         mFrame = new JFrame();
         Canvas c = new Canvas();
-        c.setPreferredSize(new Dimension(DEFAULT_XRES,DEFAULT_YRES));
+        c.setPreferredSize(new Dimension(DEFAULT_XRES, DEFAULT_YRES));
         mRenderer = new Renderer(c);
         mFrame.pack();
-        //mInput = new Input(this);
-        //mFrame.addKeyListener(mInput);
-    	addKeyPressListener();
+        // mInput = new Input(this);
+        // mFrame.addKeyListener(mInput);
+        addKeyPressListener();
     }
 
     public void startEngine() {
@@ -96,15 +89,15 @@ public class Engine {
      * paused, obviously don't update the Grid).
      */
     private void update() {
-        switch (state){
-        case MAIN_MENU:{
-        	break;	
+        switch (state) {
+        case MAIN_MENU: {
+            break;
         }
-        case IN_GAME:{
-        	break;
+        case IN_GAME: {
+            break;
         }
-        case IN_GAME_PAUSED:{
-        	break;
+        case IN_GAME_PAUSED: {
+            break;
         }
         }
     }
@@ -116,31 +109,35 @@ public class Engine {
     private void render() {
         do {
             mRenderer.startFrame();
-            // TODO
+            switch (state) {
+            case MAIN_MENU:
+                mRenderer.drawMenu(mMenu);
+                break;
+            case IN_GAME:
+                mRenderer.drawGrid(currentGrid);
+                break;
+            }
+            mRenderer.drawMenu(mMenu);
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
     }
-    
-    void toggleGamePaused(){
-    	if (state == GameState.IN_GAME){
-    		state = GameState.IN_GAME_PAUSED;
-    	}
-    	else if (state == GameState.IN_GAME_PAUSED){
-    		state = GameState.IN_GAME;
-    	}
+
+    void toggleGamePaused() {
+        if (state == GameState.IN_GAME) {
+            state = GameState.IN_GAME_PAUSED;
+        } else if (state == GameState.IN_GAME_PAUSED) {
+            state = GameState.IN_GAME;
+        }
     }
-    
-    void startNewLevel(Difficulty diff){
-    	GridGenerator gen = new DefaultGenerator();
-    	currentGrid = gen.generate(50,50,diff);
-    	PlayerEntity player = new PlayerEntity();
-    	player.setPos(1, 1);
+
+    void startNewLevel(Difficulty diff) {
+        currentGrid = new Grid();
         state = GameState.IN_GAME;
     }
-    
-    void endLevel(){
-    	currentGrid= null;
-    	state = GameState.MAIN_MENU;
+
+    void endLevel() {
+        currentGrid = null;
+        state = GameState.MAIN_MENU;
     }
     
     public void addKeyPressListener(){
@@ -152,14 +149,14 @@ public class Engine {
 	    			        case IN_GAME:{
 	    			        	if(keyCode == KeyEvent.VK_P)
 		    						toggleGamePaused();
-	    			        	else if(keyCode == KeyEvent.VK_UP){
-	    			        	}
-		    					else if(keyCode == KeyEvent.VK_DOWN){
-		    					}
-		    					else if(keyCode == KeyEvent.VK_LEFT){
-		    					}
-		    					else if(keyCode == KeyEvent.VK_RIGHT){
-		    					}
+	    			        	else if(keyCode == KeyEvent.VK_UP)
+	    			        		currentGrid.setPlayerInput(0, -1);
+		    					else if(keyCode == KeyEvent.VK_DOWN)
+		    						currentGrid.setPlayerInput(0, 1);
+		    					else if(keyCode == KeyEvent.VK_LEFT)
+		    						currentGrid.setPlayerInput(-1, 0);
+		    					else if(keyCode == KeyEvent.VK_RIGHT)
+		    						currentGrid.setPlayerInput(1, 0);
 	    			        	break;
 	    			        }
 	    			        case MAIN_MENU:{
