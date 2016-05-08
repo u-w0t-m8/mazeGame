@@ -34,7 +34,7 @@ public class Grid {
         Image imgWall = ImageCache.getImage("tile_wall");
         for (int y = 0; y < sy; y++){
             for (int x = 0; x < sx; x++){
-                if (x == 0 || x == sx || y == 0 || y == sy){
+                if (x == 0 || x == sx-1 || y == 0 || y == sy-1){
                     tileSpace[x][y] = new Tile(true, imgWall);
                 } else {
                     tileSpace[x][y] = new Tile(false, imgBlank);
@@ -109,7 +109,7 @@ public class Grid {
     	        if(tileSpace[i][j].getIsWall())
     	    		System.out.print("X");
     	        else
-    	        	System.out.print("o");
+    	        	System.out.print("O");
     	    }
     	    System.out.println();
     	}

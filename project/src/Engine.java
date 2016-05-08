@@ -170,6 +170,9 @@ public class Engine {
 		    					}
 		    					else if(keyCode == KeyEvent.VK_ENTER){
 	    			        		System.out.println("ENTAH");
+	    			        		// FOR TESTING
+	    			        		startNewLevel(Difficulty.EASY);
+		    						currentGrid.print();
 	    			        		 //startNewLevel();
 		    					}
 	    			        	break;
