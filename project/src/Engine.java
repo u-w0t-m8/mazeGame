@@ -39,6 +39,8 @@ public class Engine {
     public Engine() {
         mMenu = new Menu();
         mFrame = new JFrame();
+        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         Canvas c = new Canvas();
         c.setPreferredSize(new Dimension(DEFAULT_XRES, DEFAULT_YRES));
         mFrame.add(c);
@@ -96,6 +98,7 @@ public class Engine {
             break;
         }
         case IN_GAME: {
+        	currentGrid.update();
             break;
         }
         case IN_GAME_PAUSED: {

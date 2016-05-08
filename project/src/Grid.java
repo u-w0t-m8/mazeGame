@@ -66,6 +66,8 @@ public class Grid {
     		//end game
     	}
     	
+    	player.update(this);
+    	
         for (Entity ent: entList){
         	ent.update(this);
         }

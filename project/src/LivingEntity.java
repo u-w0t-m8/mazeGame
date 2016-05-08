@@ -33,6 +33,7 @@ public abstract class LivingEntity extends Entity {
     	
     	think(grid);
     	
+    	/*
     	if(intermediateCount == 0){
     		intermediateX = posx;
     		intermediateY = posy;
@@ -45,9 +46,20 @@ public abstract class LivingEntity extends Entity {
     		intermediateCount = 0;
     		posx += velx;
     		posy += vely;
+    		System.out.println("Intermediate count is 75");
     	}
+    	
+    	intermediateCount++;
+    	
     	intermediateX += velx/75;
     	intermediateY += vely/75;
+    	*/
+    	
+    	posx += velx;
+		posy += vely;
+		
+		velx = 0;
+		vely = 0;
     	
     }
     
@@ -60,10 +72,12 @@ public abstract class LivingEntity extends Entity {
     }
     
     protected void setVelX(float vx){
+    	System.out.println("Velocity x:" + vx);
         velx = vx;
     }
     
     protected void setVelY(float vy){
+    	System.out.println("Velocity y:" + vy);
         vely = vy;
     }
 
