@@ -124,7 +124,6 @@ public class Engine {
                 mRenderer.drawGrid(currentGrid);
                 break;
             }
-            mRenderer.drawMenu();
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
     }
