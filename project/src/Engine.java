@@ -171,9 +171,21 @@ public class Engine {
 		    					else if(keyCode == KeyEvent.VK_ENTER){
 	    			        		System.out.println("ENTAH");
 	    			        		// FOR TESTING
-	    			        		startNewLevel(Difficulty.EASY);
+	    			        		switch(mMenu.getSelected()){
+	    			        			case 0:{
+	    	    			        		startNewLevel(Difficulty.EASY);
+	    			        				break;
+	    			        			}
+	    			        			case 1:{
+	    	    			        		startNewLevel(Difficulty.NORMAL);
+	    			        				break;
+	    			        			}
+	    			        			case 2:{
+	    	    			        		startNewLevel(Difficulty.HARD);
+	    			        				break;
+	    			        			}
+	    			        		}
 		    						currentGrid.print();
-	    			        		 //startNewLevel();
 		    					}
 		    					else if(keyCode == KeyEvent.VK_ESCAPE){
 		    						System.exit(0);

@@ -109,7 +109,9 @@ public class Grid {
     	{
     	    for(int j = 0; j < tileSpace[i].length; j++)
     	    {
-    	        if(tileSpace[i][j].getIsWall())
+    	    	if (i == this.getPlayerY() && j == this.getPlayerX())
+    	    		System.out.print("#");
+    	    	else if(tileSpace[i][j].getIsWall())
     	    		System.out.print("X");
     	        else
     	        	System.out.print("O");
