@@ -45,9 +45,11 @@ public class Engine {
         mFrame.pack();
         c.createBufferStrategy(2);
         mRenderer = new Renderer(c);
-        // mInput = new Input(this);
-        // mFrame.addKeyListener(mInput);
-        addKeyPressListener();
+
+        // STUFF RELATED TO INPUT
+        addKeyPressListener(c);
+        c.setFocusable(true);
+        //c.getFocusListeners();
     }
 
     public void startEngine() {
@@ -142,8 +144,8 @@ public class Engine {
         state = GameState.MAIN_MENU;
     }
     
-    public void addKeyPressListener(){
-    	mFrame.addKeyListener(
+    public void addKeyPressListener(Canvas c){
+    	c.addKeyListener(
     			new KeyAdapter(){
     				public void keyPressed(KeyEvent e){
     					int keyCode = e.getKeyCode();
@@ -185,6 +187,7 @@ public class Engine {
 	    			        				break;
 	    			        			}
 	    			        		}
+	    			        		// FOR TESTING ONLY
 		    						currentGrid.print();
 		    					}
 		    					else if(keyCode == KeyEvent.VK_ESCAPE){

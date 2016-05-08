@@ -101,6 +101,8 @@ public class Grid {
     	
     	player.setVelX(x);
     	player.setVelY(y);
+    	
+    	// FOR TESTING ONLY
     	print();
 
     }
