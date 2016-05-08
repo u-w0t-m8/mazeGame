@@ -139,32 +139,38 @@ public class Engine {
         currentGrid = null;
         state = GameState.MAIN_MENU;
     }
-
-    public void addKeyPressListener() {
-        mFrame.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                int keyCode = e.getKeyCode();
-                switch (state) {
-                case IN_GAME: {
-                    if (keyCode == KeyEvent.VK_P)
-                        toggleGamePaused();
-                    else if (keyCode == KeyEvent.VK_UP) {
-                    } else if (keyCode == KeyEvent.VK_DOWN) {
-                    } else if (keyCode == KeyEvent.VK_LEFT) {
-                    } else if (keyCode == KeyEvent.VK_RIGHT) {
-                    }
-                    break;
-                }
-                case MAIN_MENU: {
-                    if (keyCode == KeyEvent.VK_UP) {
-                    } else if (keyCode == KeyEvent.VK_DOWN) {
-                    } else if (keyCode == KeyEvent.VK_ENTER) {
-                    }
-                    break;
-                }
-                }
-            }
-        });
+    
+    public void addKeyPressListener(){
+    	mFrame.addKeyListener(
+    			new KeyAdapter(){
+    				public void keyPressed(KeyEvent e){
+    					int keyCode = e.getKeyCode();
+    					switch (state){
+	    			        case IN_GAME:{
+	    			        	if(keyCode == KeyEvent.VK_P)
+		    						toggleGamePaused();
+	    			        	else if(keyCode == KeyEvent.VK_UP)
+	    			        		currentGrid.setPlayerInput(0, -1);
+		    					else if(keyCode == KeyEvent.VK_DOWN)
+		    						currentGrid.setPlayerInput(0, 1);
+		    					else if(keyCode == KeyEvent.VK_LEFT)
+		    						currentGrid.setPlayerInput(-1, 0);
+		    					else if(keyCode == KeyEvent.VK_RIGHT)
+		    						currentGrid.setPlayerInput(1, 0);
+	    			        	break;
+	    			        }
+	    			        case MAIN_MENU:{
+	    			        	if(keyCode == KeyEvent.VK_UP){
+		    					}
+		    					else if(keyCode == KeyEvent.VK_DOWN){
+		    					}
+		    					else if(keyCode == KeyEvent.VK_ENTER){
+		    					}
+	    			        	break;
+	    			        }
+    			        }
+            		}
+           		});
     }
 
 }
