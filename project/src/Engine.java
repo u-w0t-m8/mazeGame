@@ -124,10 +124,6 @@ public class Engine {
                 mRenderer.drawGrid(currentGrid);
                 break;
             }
-<<<<<<< HEAD
-            mRenderer.drawMenu(mMenu);
-=======
->>>>>>> branch 'master' of git@gitlab.com:HamishT/2911-project.git
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
     }

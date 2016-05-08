@@ -39,27 +39,7 @@ public class Menu{
 			selected--;
 		}
 	}
-<<<<<<< HEAD
-/*
-	public int getWidth() {
-		return width;
-	}
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-*/
-=======
-
->>>>>>> branch 'master' of git@gitlab.com:HamishT/2911-project.git
 	public void setSelected(int selected) {
 		this.selected = selected;
 	}
