@@ -8,7 +8,7 @@
 public class PlayerEntity extends LivingEntity {
 	
 	public PlayerEntity(){
-	    setSprite("player.png");
+	    setSprite("player");
 	}
     
     @Override

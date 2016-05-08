@@ -101,6 +101,7 @@ public class Grid {
     	
     	player.setVelX(x);
     	player.setVelY(y);
+    	System.out.println();
     	print();
 
     }
