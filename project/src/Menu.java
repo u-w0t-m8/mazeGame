@@ -18,7 +18,7 @@ public class Menu{
 	 * 2 = hard
 	 * @return int
 	 */
-	private int getSelected() {
+	public int getSelected() {
 		return selected;
 	}
 
