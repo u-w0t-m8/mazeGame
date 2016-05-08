@@ -140,41 +140,29 @@ public class Engine {
     
     public void pressUp() {
         switch (state){
-        case MAIN_MENU:{
-        	break;	
-        }
         case IN_GAME:{
         	break;
         }
-        case IN_GAME_PAUSED:{
-        	break;
+        case MAIN_MENU:{
+        	break;	
         }
         }
     }
     
     public void pressDown() {
         switch (state){
-        case MAIN_MENU:{
-        	break;	
-        }
         case IN_GAME:{
         	break;
         }
-        case IN_GAME_PAUSED:{
-        	break;
+        case MAIN_MENU:{
+        	break;	
         }
         }
     }
     
     public void pressLeft() {
         switch (state){
-        case MAIN_MENU:{
-        	break;	
-        }
         case IN_GAME:{
-        	break;
-        }
-        case IN_GAME_PAUSED:{
         	break;
         }
         }
@@ -182,13 +170,7 @@ public class Engine {
     
     public void pressRight() {
         switch (state){
-        case MAIN_MENU:{
-        	break;	
-        }
         case IN_GAME:{
-        	break;
-        }
-        case IN_GAME_PAUSED:{
         	break;
         }
         }
@@ -196,14 +178,11 @@ public class Engine {
     
     public void pressEnter() {
         switch (state){
-        case MAIN_MENU:{
-        	break;	
-        }
         case IN_GAME:{
         	break;
         }
-        case IN_GAME_PAUSED:{
-        	break;
+        case MAIN_MENU:{
+        	break;	
         }
         }
     }
