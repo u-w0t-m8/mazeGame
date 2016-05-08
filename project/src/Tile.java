@@ -6,6 +6,11 @@ public class Tile {
     private boolean isWall;
     private Image tileImg;
     private Collection<Entity> localList = null; // probably an ArrayList
+
+    public Tile(boolean wall, Image img){
+        isWall = wall;
+        tileImg = img; 
+    }
     
     public void setIsWall(boolean wall){
         isWall = wall;

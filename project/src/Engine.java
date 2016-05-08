@@ -128,9 +128,11 @@ public class Engine {
     }
     
     void startNewLevel(Difficulty diff){
-    	GridGenerator gen = null;
+    	GridGenerator gen = new DefaultGenerator();
     	currentGrid = gen.generate(50,50,diff);
-    	state = GameState.IN_GAME;
+    	PlayerEntity player = new PlayerEntity();
+    	player.setPos(1, 1);
+        state = GameState.IN_GAME;
     }
     
     void endLevel(){

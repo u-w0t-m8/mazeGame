@@ -72,7 +72,7 @@ public class Renderer {
         Graphics g = mazeBackground.getGraphics();
         for (int y = 0; y < grid.getSizeY(); y++) {
             for (int x = 0; x < grid.getSizeX(); x++) {
-                Grid.Tile tile = grid.getTile(x, y);
+                Tile tile = grid.getTile(x, y);
                 // draw tile onto background using g
             }
         }

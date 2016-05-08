@@ -3,7 +3,7 @@ import java.awt.Image;
 public class DefaultGenerator implements GridGenerator {
 
     public DefaultGenerator() {
-        // TODO Auto-generated constructor stub
+        // empty
     }
     
     @Override
@@ -14,23 +14,14 @@ public class DefaultGenerator implements GridGenerator {
         for (int y = 0; y < sy; y++){
             for (int x = 0; x < sx; x++){
                 if (x == 0 || x == sx || y == 0 || y == sy){
-                    terrain[x][y].setIsWall(true);
-                    terrain[x][y].setImage(imgBlank);
+                    terrain[x][y] = new Tile(true, imgWall);
                 } else {
-                    terrain[x][y].setIsWall(false);
-                    terrain[x][y].setImage(imgWall);
+                    terrain[x][y] = new Tile(false, imgBlank);
                 }
             }
         }
-        for (int x = 0; x < sx; x++){
-            terrain[x][0].isWall = true;
-            terrain[x][sy].isWall = true;
-        }
-        for (int y = 0; y < sy; y++){
-            terrain[0][y].isWall = true;
-            terrain[sx][y].isWall = true;
-        }
-        return new Grid(terrain);
+        Grid g = new Grid(terrain);
+        return g;
     }
     
 }

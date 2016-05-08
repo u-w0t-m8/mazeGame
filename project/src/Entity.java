@@ -22,6 +22,11 @@ public abstract class Entity {
 		return mSprite;
 	}
 	
+	public void setPos(int x, int y){
+	    posx = x;
+	    posy = y;
+	}
+	
 	public int getX(){
 		return posx;
 	}
