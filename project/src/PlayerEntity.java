@@ -6,21 +6,9 @@
  * 
  */
 public class PlayerEntity extends LivingEntity {
-
-    //simple -1,0,1 record of user input
-    private int inputx;
-	private int inputy;
 	
 	public PlayerEntity(){
 	    setSprite("player.png");
-	}
-	
-	public void setInputx(int inputx) {
-		this.inputx = inputx;
-	}
-
-	public void setInputy(int inputy) {
-		this.inputy = inputy;
 	}
     
     @Override
