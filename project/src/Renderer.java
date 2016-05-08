@@ -22,30 +22,16 @@ import javax.swing.JFrame;
  * 
  */
 public class Renderer {
-
-	private static final int DEFAULT_XRES = 800;
-	private static final int DEFAULT_YRES = 600;
 	
     Image mazeBackground;
     JFrame mFrame;
-    Canvas canvas;
     BufferStrategy bufferStrategy = null;
     Graphics frameGraphics;
     
-    public Renderer() {
-    	mFrame = new JFrame();
-    	canvas = new Canvas();
-    	canvas.setPreferredSize(new Dimension(DEFAULT_XRES,DEFAULT_YRES));
-    	mFrame.pack();
+    public Renderer(Canvas c) {
+    	bufferStrategy = c.getBufferStrategy();
     }
     
-    /**
-     * Show the game window.
-     */
-    public void show(){
-    	mFrame.setVisible(true);
-    }
-
     /**
      * Start a new frame for display. After drawing, finishFrame() must be
      * called to display the completed frame.
