@@ -39,6 +39,7 @@ public abstract class LivingEntity extends Entity {
     	}
     	else if(prevX != velx || prevY != vely){
     		intermediateCount = 75-intermediateCount;
+    		
     	}
     	else if(intermediateCount == 75){
     		intermediateCount = 0;
