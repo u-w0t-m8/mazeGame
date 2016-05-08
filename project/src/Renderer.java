@@ -75,18 +75,18 @@ public class Renderer {
     }
 
     public void drawMenu(Menu m){
-    	frameGraphics.drawString("Maze Game", m.getWidth()/2, m.getHeight()/4);
-    	frameGraphics.drawRect(0, 0, m.getWidth(), m.getHeight()/2);
- 
+    	frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
+    	frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
+
+    	frameGraphics.drawRect(0, m.PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+    	frameGraphics.drawString("EASY", PRERENDER_X/2, m.getHeight()/2);
+
+    	frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+    	frameGraphics.drawString("MEDIUM", PRERENDER_X/2, m.getHeight()*4/6);
     	
-    	frameGraphics.drawString("EASY", m.getWidth()/2, m.getHeight()*5/8);
-    	frameGraphics.drawRect(0, m.getHeight()/2, m.getWidth(), m.getHeight()/8);
-    	
-    	frameGraphics.drawString("MEDIUM", m.getWidth()/2, m.getHeight()*6/8);
-    	frameGraphics.drawRect(0, m.getHeight()*5/8, m.getWidth(), m.getHeight()/8);
-    	
-    	frameGraphics.drawString("HARD", m.getWidth()/2, m.getHeight()*7/8);
-    	frameGraphics.drawRect(0, m.getHeight()*6/8, m.getWidth(), m.getHeight()/8);
+    	frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
+    	frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*5/6);
+
     }
 
     public void createPreRender(Grid grid) {
