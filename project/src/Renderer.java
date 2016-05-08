@@ -23,6 +23,11 @@ import javax.swing.JFrame;
  */
 public class Renderer {
 	
+    private static final int PRERENDER_X = 500;
+    private static final int PRERENDER_Y = 500;
+    private static final int SIZE_X = 25;
+    private static final int SIZE_Y = 25;
+    
     Image mazeBackground;
     JFrame mFrame;
     BufferStrategy bufferStrategy = null;
@@ -77,7 +82,6 @@ public class Renderer {
         for (int y = 0; y < grid.getSizeY(); y++) {
             for (int x = 0; x < grid.getSizeX(); x++) {
                 Tile tile = grid.getTile(x, y);
-                // draw tile onto background using g
             }
         }
     }

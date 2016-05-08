@@ -21,7 +21,7 @@ public class ImageCache {
         Image img = cache.get(path);
         if (img == null) {
             img = loadImage(path);
-            cache.put(path, img);
+            cache.put("asset/"+path+".png", img);
         }
         return img;
     }
