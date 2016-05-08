@@ -74,7 +74,7 @@ public class Renderer {
         }
     }
 
-    public void drawMenu(Menu m){
+    public void drawMenu(){
     	frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
     	frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
 
