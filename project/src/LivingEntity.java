@@ -18,13 +18,36 @@ public abstract class LivingEntity extends Entity {
     // really need to solve smooth movement
     protected float velx;
     protected float vely;
+    public float prevX = 0;
+    public float prevY = 0;
+    
+    private double intermediateX;
+    private double intermediateY;
+    
+    int intermediateCount = 0;
 
     public abstract void think(Grid grid);
     
     @Override
     public void update(Grid grid) {
-        think(grid);
-        // do movement
+    	
+    	think(grid);
+    	
+    	if(intermediateCount == 0){
+    		intermediateX = posx;
+    		intermediateY = posy;
+    	}
+    	else if(prevX != velx || prevY != vely){
+    		intermediateCount = 0;
+    	}
+    	else if(intermediateCount == 75){
+    		intermediateCount = 0;
+    		posx += velx;
+    		posy += vely;
+    	}
+    	intermediateX += velx/75;
+    	intermediateY += vely/75;
+    	
     }
     
     protected void setVelX(float vx){
