@@ -66,6 +66,8 @@ public class Grid {
     		//end game
     	}
     	
+    	player.update(this);
+    	
         for (Entity ent: entList){
         	ent.update(this);
         }
@@ -107,8 +109,6 @@ public class Grid {
     	
     	player.setVelX(x);
     	player.setVelY(y);
-    	System.out.println();
-    	print();
 
     }
     

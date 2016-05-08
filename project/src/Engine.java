@@ -39,15 +39,19 @@ public class Engine {
     public Engine() {
         mMenu = new Menu();
         mFrame = new JFrame();
+        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         Canvas c = new Canvas();
         c.setPreferredSize(new Dimension(DEFAULT_XRES, DEFAULT_YRES));
         mFrame.add(c);
         mFrame.pack();
         c.createBufferStrategy(2);
         mRenderer = new Renderer(c);
-        // mInput = new Input(this);
-        // mFrame.addKeyListener(mInput);
-        addKeyPressListener();
+
+        // STUFF RELATED TO INPUT
+        addKeyPressListener(c);
+        c.setFocusable(true);
+        //c.getFocusListeners();
     }
 
     public void startEngine() {
@@ -96,6 +100,7 @@ public class Engine {
             break;
         }
         case IN_GAME: {
+        	currentGrid.update();
             break;
         }
         case IN_GAME_PAUSED: {
@@ -119,7 +124,10 @@ public class Engine {
                 mRenderer.drawGrid(currentGrid);
                 break;
             }
+<<<<<<< HEAD
             mRenderer.drawMenu(mMenu);
+=======
+>>>>>>> branch 'master' of git@gitlab.com:HamishT/2911-project.git
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
     }
@@ -144,8 +152,8 @@ public class Engine {
         state = GameState.MAIN_MENU;
     }
     
-    public void addKeyPressListener(){
-    	mFrame.addKeyListener(
+    public void addKeyPressListener(Canvas c){
+    	c.addKeyListener(
     			new KeyAdapter(){
     				public void keyPressed(KeyEvent e){
     					int keyCode = e.getKeyCode();
@@ -189,7 +197,8 @@ public class Engine {
 	    			        				break;
 	    			        			}
 	    			        		}
-		    						currentGrid.print();
+	    			        		// FOR TESTING ONLY
+		    						//currentGrid.print();
 		    					}
 		    					else if(keyCode == KeyEvent.VK_ESCAPE){
 		    						System.exit(0);
