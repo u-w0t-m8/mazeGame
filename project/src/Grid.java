@@ -30,6 +30,9 @@ public class Grid {
         generate(50,50);
         player = new PlayerEntity();
         player.setPos(1, 1);
+        
+        //TEST
+        entList.add(new HunterEntity());
     }
     
     private void generate(int sx, int sy){
