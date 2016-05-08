@@ -18,6 +18,7 @@ public class Grid {
 
     private Collection<Entity> entList;
     private Tile[][] tileSpace;
+    private Entity player;
     private int sizex;
     private int sizey;
 
@@ -54,6 +55,14 @@ public class Grid {
 
     public int getSizeY() {
         return sizey;
+    }
+    
+    public int getPlayerX(){
+    	return player.getX();
+    }
+    
+    public int getPlayerY(){
+    	return player.getY();
     }
 
 }
