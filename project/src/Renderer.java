@@ -67,6 +67,10 @@ public class Renderer {
         }
     }
 
+    public void drawMenu(Menu m){
+        //TODO
+    }
+    
     public void createPreRender(Grid grid) {
         // make mazeBackground a new image
         Graphics g = mazeBackground.getGraphics();
