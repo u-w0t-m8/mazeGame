@@ -24,6 +24,8 @@ public class Grid {
     private int sizey;
     
     public Grid(){
+        sizex = 50;
+        sizey = 50;
         entList = new ArrayList<Entity>();
         generate(50,50);
         player = new PlayerEntity();
@@ -89,6 +91,10 @@ public class Grid {
         return sizey;
     }
     
+    public PlayerEntity getPlayer(){
+        return player;
+    }
+    
     public int getPlayerX(){
     	return player.getX();
     }
@@ -101,6 +107,7 @@ public class Grid {
     	
     	player.setVelX(x);
     	player.setVelY(y);
+    	System.out.println();
     	print();
 
     }
