@@ -22,21 +22,23 @@ import javax.swing.JFrame;
  * 
  */
 public class Renderer {
-	
+
     private static final int PRERENDER_X = 500;
     private static final int PRERENDER_Y = 500;
-    private static final int SIZE_X = 25;
-    private static final int SIZE_Y = 25;
-    
+    private static final int SIZE_X = 50;
+    private static final int SIZE_Y = 50;
+    private static final int TILE_X = PRERENDER_X / SIZE_X;
+    private static final int TILE_Y = PRERENDER_Y / SIZE_Y;
+
     Image mazeBackground;
     JFrame mFrame;
     BufferStrategy bufferStrategy = null;
     Graphics frameGraphics;
-    
+
     public Renderer(Canvas c) {
-    	bufferStrategy = c.getBufferStrategy();
+        bufferStrategy = c.getBufferStrategy();
     }
-    
+
     /**
      * Start a new frame for display. After drawing, finishFrame() must be
      * called to display the completed frame.
@@ -66,22 +68,25 @@ public class Renderer {
     }
 
     public void drawGrid(Grid grid) {
-        // draw background image
+        frameGraphics.drawImage(mazeBackground, 0, 0, null);
         for (Entity ent : grid.getEntities()) {
-            // draw entity onto canvas
+            frameGraphics.drawImage(ent.getSprite().getCurrentImage(),
+                    ent.getX(), ent.getY(), TILE_X, TILE_Y, null);
         }
     }
 
-    public void drawMenu(Menu m){
-        //TODO
+    public void drawMenu(Menu m) {
+        // TODO
     }
-    
+
     public void createPreRender(Grid grid) {
         // make mazeBackground a new image
         Graphics g = mazeBackground.getGraphics();
         for (int y = 0; y < grid.getSizeY(); y++) {
             for (int x = 0; x < grid.getSizeX(); x++) {
                 Tile tile = grid.getTile(x, y);
+                Image img = tile.getImage();
+                g.drawImage(img, TILE_X*x, TILE_Y*y, TILE_X, TILE_Y, null);
             }
         }
     }

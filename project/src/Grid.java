@@ -1,4 +1,5 @@
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -23,6 +24,7 @@ public class Grid {
     private int sizey;
     
     public Grid(){
+        entList = new ArrayList<Entity>();
         generate(50,50);
         player = new PlayerEntity();
         player.setPos(1, 1);

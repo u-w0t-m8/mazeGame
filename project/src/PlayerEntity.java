@@ -11,6 +11,9 @@ public class PlayerEntity extends LivingEntity {
     private int inputx;
 	private int inputy;
 	
+	public PlayerEntity(){
+	    setSprite("player.png");
+	}
 	
 	public void setInputx(int inputx) {
 		this.inputx = inputx;

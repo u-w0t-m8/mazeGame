@@ -17,8 +17,12 @@ public abstract class Entity {
 	Sprite mSprite;
 
 	abstract public void update(Grid grid);
-
-	Sprite getSprite() {
+	
+	protected void setSprite(String imgPath){
+	    mSprite = new Sprite(imgPath);
+	}
+	
+	public Sprite getSprite() {
 		return mSprite;
 	}
 	
