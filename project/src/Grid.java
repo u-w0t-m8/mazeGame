@@ -21,12 +21,6 @@ public class Grid {
     private Entity player;
     private int sizex;
     private int sizey;
-
-    public class Tile {
-        boolean isWall;
-        Image tileImg;
-        Collection<Entity> localList = null; // probably an ArrayList
-    }
     
     public Grid(Tile[][] terrain){
     	this.tileSpace = terrain;
@@ -39,6 +33,10 @@ public class Grid {
         for (Entity ent: entList){
         	ent.update(this);
         }
+    }
+    
+    public void addEntity(Entity ent) {
+        entList.add(ent);
     }
 
     public Collection<Entity> getEntities() {
