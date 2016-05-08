@@ -175,6 +175,9 @@ public class Engine {
 		    						currentGrid.print();
 	    			        		 //startNewLevel();
 		    					}
+		    					else if(keycode == KeyEvent.VK_ESCAPE){
+		    						System.exit(0);
+		    					}
 	    			        	break;
 	    			        }
     			        }
