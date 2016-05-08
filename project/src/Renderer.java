@@ -79,10 +79,10 @@ public class Renderer {
     	frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
 
     	frameGraphics.drawRect(0, m.PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
-    	frameGraphics.drawString("EASY", PRERENDER_X/2, m.getHeight()/2);
+    	frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y/2);
 
     	frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
-    	frameGraphics.drawString("MEDIUM", PRERENDER_X/2, m.getHeight()*4/6);
+    	frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*4/6);
     	
     	frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
     	frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*5/6);

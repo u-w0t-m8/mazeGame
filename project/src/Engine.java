@@ -113,13 +113,13 @@ public class Engine {
             mRenderer.startFrame();
             switch (state) {
             case MAIN_MENU:
-                mRenderer.drawMenu(mMenu);
+                mRenderer.drawMenu();
                 break;
             case IN_GAME:
                 mRenderer.drawGrid(currentGrid);
                 break;
             }
-            mRenderer.drawMenu(mMenu);
+            mRenderer.drawMenu();
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
     }
