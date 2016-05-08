@@ -105,9 +105,10 @@ public class Grid {
     
     public void setPlayerInput(int x, int y){
     	
-    	// DO STUFF
-    	// X will be 1 if its moving to the right, -1 if left, 0 no movement
-    	// Y will be 1 if its moving downwards, -1 if upwards, 0 no movement
+    	player.setVelX(x);
+    	player.setVelY(y);
+    	print();
+
     }
     
     public void print(){
@@ -115,7 +116,9 @@ public class Grid {
     	{
     	    for(int j = 0; j < tileSpace[i].length; j++)
     	    {
-    	        if(tileSpace[i][j].getIsWall())
+    	    	if (i == this.getPlayerY() && j == this.getPlayerX())
+    	    		System.out.print("#");
+    	    	else if(tileSpace[i][j].getIsWall())
     	    		System.out.print("X");
     	        else
     	        	System.out.print("O");
