@@ -72,9 +72,24 @@ public class Renderer {
         }
     }
 
+    /**
+     * Setting up Graphics
+     */
     public void drawMenu(Menu m){
-        //TODO
+    	frameGraphics.drawString("Maze Game", m.getWidth()/2, m.getHeight()/4);
+    	frameGraphics.drawRect(0, 0, m.getWidth(), m.getHeight()/2);
+ 
+    	
+    	frameGraphics.drawString("EASY", m.getWidth()/2, m.getHeight()5/8);
+    	frameGraphics.drawRect(0, m.getHeight()/2, m.getWidth(), m.getHeight()/8);
+    	
+    	frameGraphics.drawString("MEDIUM", m.getWidth()/2, m.getHeight()6/8);
+    	frameGraphics.drawRect(0, m.getHeight()5/8, m.getWidth(), m.getHeight()/8);
+    	
+    	frameGraphics.drawString("HARD", m.getWidth()/2, m.getHeight()7/8);
+    	frameGraphics.drawRect(0, m.getHeight()6/8, m.getWidth(), m.getHeight()/8);
     }
+
     
     public void createPreRender(Grid grid) {
         // make mazeBackground a new image
