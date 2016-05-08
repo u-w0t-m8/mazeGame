@@ -14,6 +14,7 @@ public class HunterEntity extends LivingEntity {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 	/**
 	 * Performs A* search with straight line distance squared
 	 * @param grid - grid of the map
