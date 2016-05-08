@@ -9,11 +9,21 @@ public class PlayerEntity extends LivingEntity {
 
     //simple -1,0,1 record of user input
     private int inputx;
-    private int inputy;
+	private int inputy;
+	
+	
+	public void setInputx(int inputx) {
+		this.inputx = inputx;
+	}
+
+	public void setInputy(int inputy) {
+		this.inputy = inputy;
+	}
     
     @Override
     public void think(Grid grid) {
         // just act on user input: e.g. set velocity to match user request
     }
+
 
 }

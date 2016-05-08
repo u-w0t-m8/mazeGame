@@ -58,26 +58,6 @@ public class Engine {
         loopThread.start();
         mFrame.setVisible(true);
     }
-    
-    public void pressUp() {
-        
-    }
-    
-    public void pressDown() {
-        
-    }
-    
-    public void pressLeft() {
-        
-    }
-    
-    public void pressRight() {
-        
-    }
-    
-    public void pressEnter() {
-        
-    }
 
     private final Thread loopThread = new Thread() {
         /*
@@ -157,5 +137,55 @@ public class Engine {
     	currentGrid= null;
     	state = GameState.MAIN_MENU;
     }
+    
+    public void pressUp() {
+        switch (state){
+        case IN_GAME:{
+        	break;
+        }
+        case MAIN_MENU:{
+        	break;	
+        }
+        }
+    }
+    
+    public void pressDown() {
+        switch (state){
+        case IN_GAME:{
+        	break;
+        }
+        case MAIN_MENU:{
+        	break;	
+        }
+        }
+    }
+    
+    public void pressLeft() {
+        switch (state){
+        case IN_GAME:{
+        	break;
+        }
+        }
+    }
+    
+    public void pressRight() {
+        switch (state){
+        case IN_GAME:{
+        	break;
+        }
+        }
+    }
+    
+    public void pressEnter() {
+        switch (state){
+        case IN_GAME:{
+        	break;
+        }
+        case MAIN_MENU:{
+        	break;	
+        }
+        }
+    }
+
 
 }
