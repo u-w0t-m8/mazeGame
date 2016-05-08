@@ -18,7 +18,7 @@ public class Grid {
 
     private Collection<Entity> entList;
     private Tile[][] tileSpace;
-    private Entity player;
+    private LivingEntity player;
     private int sizex;
     private int sizey;
     
@@ -43,10 +43,25 @@ public class Grid {
         }
     }
     
+    public boolean checkCollision(){
+    	for(Entity e : entList){
+    		if((player.getIntermediateX() + 0.5 < e.getX() || player.getIntermediateX() - 0.5 > e.getX()) && 
+    				(player.getIntermediateY() + 0.5 < e.getY() || player.getIntermediateY() - 0.5 > e.getY())){
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
     /**
      * Update the Grid and its entities.
      */
     public void update(){
+    	
+    	if(checkCollision()){
+    		//end game
+    	}
+    	
         for (Entity ent: entList){
         	ent.update(this);
         }
