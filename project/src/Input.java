@@ -34,6 +34,9 @@ public class Input implements KeyListener {
 		else if(keyCode == KeyEvent.VK_ESCAPE){
 			System.exit(0);
 		}
+		else if(keyCode == KeyEvent.VK_P){
+			engine.toggleGamePaused();
+		}
 		
 	}
 
