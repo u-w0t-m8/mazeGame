@@ -113,13 +113,13 @@ public class Engine {
             mRenderer.startFrame();
             switch (state) {
             case MAIN_MENU:
-                mRenderer.drawMenu();
+                mRenderer.drawMenu(mMenu);
                 break;
             case IN_GAME:
                 mRenderer.drawGrid(currentGrid);
                 break;
             }
-            mRenderer.drawMenu();
+            mRenderer.drawMenu(mMenu);
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
     }
@@ -165,9 +165,11 @@ public class Engine {
 	    			        }
 	    			        case MAIN_MENU:{
 	    			        	if(keyCode == KeyEvent.VK_UP){
+	    			        		mMenu.up();
 	    			        		System.out.println("UP");
 		    					}
 		    					else if(keyCode == KeyEvent.VK_DOWN){
+		    						mMenu.down();
 	    			        		System.out.println("DOWN");
 		    					}
 		    					else if(keyCode == KeyEvent.VK_ENTER){

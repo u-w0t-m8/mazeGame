@@ -80,18 +80,56 @@ public class Renderer {
                 p.getX() * TILE_X, p.getY() * TILE_Y, TILE_X, TILE_Y, null);
     }
 
-    public void drawMenu(){
-    	frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
-    	frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
-
-    	frameGraphics.drawRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
-    	frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
-
-    	frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
-    	frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
+    public void drawMenu(Menu m){
     	
-    	frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
-    	frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
+    	switch(m.getSelected()){
+    		case(0):
+    			frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
+    			frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
+
+    			frameGraphics.drawRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
+    			frameGraphics.fillRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.setColor(Color.BLUE);
+
+    			frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
+    	
+    			frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
+    			break;
+    		case(1):
+    			frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
+    			frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
+
+    			frameGraphics.drawRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
+
+    			frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
+    			frameGraphics.fillRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.setColor(Color.BLUE);
+    	
+    			frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
+    			break;
+    		case(2):
+    			frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
+    			frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
+
+    			frameGraphics.drawRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
+
+    			frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
+    	
+    			frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
+    			frameGraphics.fillRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.setColor(Color.BLUE);
+    			break;
+    		
+    	}
     }
 
     public void createPreRender(Grid grid) {

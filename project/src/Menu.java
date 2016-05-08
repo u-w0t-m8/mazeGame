@@ -39,7 +39,7 @@ public class Menu{
 			selected--;
 		}
 	}
-
+/*
 	public int getWidth() {
 		return width;
 	}
@@ -55,7 +55,7 @@ public class Menu{
 	public void setHeight(int height) {
 		this.height = height;
 	}
-
+*/
 	public void setSelected(int selected) {
 		this.selected = selected;
 	}
