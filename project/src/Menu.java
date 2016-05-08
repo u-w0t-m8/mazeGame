@@ -2,8 +2,7 @@
 public class Menu{
 	
 	private int selected;
-	private int width;
-	private int height;
+
 	/**
 	 * Constructor for menu
 	 * set the selected difficulty to whatever input has passed in.
