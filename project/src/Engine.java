@@ -48,7 +48,7 @@ public class Engine {
         c.setPreferredSize(new Dimension(DEFAULT_XRES,DEFAULT_YRES));
         mRenderer = new Renderer(c);
         mFrame.pack();
-        mInput = new Input();
+        mInput = new Input(this);
         mFrame.addKeyListener(mInput);
     }
 
