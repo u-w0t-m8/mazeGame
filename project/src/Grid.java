@@ -100,7 +100,8 @@ public class Grid {
     public void setPlayerInput(int x, int y){
     	
     	player.setVelX(x);
-    	player.setVelY(y);;
+    	player.setVelY(y);
+    	print();
 
     }
     
