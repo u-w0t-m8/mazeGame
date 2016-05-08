@@ -62,8 +62,7 @@ public class Grid {
     }
     
     public int getPlayerY(){
-    	return player.getY();
-    	
+    	return player.getY();	
     }
 
 }

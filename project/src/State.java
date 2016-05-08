@@ -25,8 +25,24 @@ public class State {
 		return distanceTraveled + heuristic;
 	}
 	
+	public int getDistanceTraveled(){
+		return distanceTraveled;
+	}
+	
+	public int getX(){
+		return currX;
+	}
+	
+	public int getY(){
+		return currY;
+	}
+	
 	public boolean isGoal(){
-		return false;
+		if(currX == playerX && currY == playerY){
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public State getPreviousState(){
