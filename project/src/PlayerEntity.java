@@ -12,7 +12,7 @@ public class PlayerEntity extends LivingEntity {
 	private int inputy;
 	
 	public PlayerEntity(){
-	    setSprite("player.png");
+	    setSprite("player");
 	}
 	
 	public void setInputx(int inputx) {
