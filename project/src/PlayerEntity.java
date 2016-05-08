@@ -8,11 +8,9 @@
 public class PlayerEntity extends LivingEntity {
 	
 	public PlayerEntity(){
-<<<<<<< HEAD
+
 	    setSprite("player");
-=======
-	    setSprite("player");
->>>>>>> branch 'master' of git@gitlab.com:HamishT/2911-project.git
+
 	}
     
     @Override
