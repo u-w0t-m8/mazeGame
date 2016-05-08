@@ -39,6 +39,8 @@ public class Engine {
     public Engine() {
         mMenu = new Menu();
         mFrame = new JFrame();
+        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         Canvas c = new Canvas();
         c.setPreferredSize(new Dimension(DEFAULT_XRES, DEFAULT_YRES));
         mFrame.add(c);
@@ -98,6 +100,7 @@ public class Engine {
             break;
         }
         case IN_GAME: {
+        	currentGrid.update();
             break;
         }
         case IN_GAME_PAUSED: {
@@ -115,13 +118,13 @@ public class Engine {
             mRenderer.startFrame();
             switch (state) {
             case MAIN_MENU:
-                mRenderer.drawMenu(mMenu);
+                mRenderer.drawMenu();
                 break;
             case IN_GAME:
                 mRenderer.drawGrid(currentGrid);
                 break;
             }
-            mRenderer.drawMenu(mMenu);
+            mRenderer.drawMenu();
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
     }
@@ -136,11 +139,13 @@ public class Engine {
 
     void startNewLevel(Difficulty diff) {
         currentGrid = new Grid();
+        mRenderer.createPreRender(currentGrid);
         state = GameState.IN_GAME;
     }
 
     void endLevel() {
         currentGrid = null;
+        mRenderer.destroyPreRender();
         state = GameState.MAIN_MENU;
     }
     

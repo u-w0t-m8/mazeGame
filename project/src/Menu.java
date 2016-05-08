@@ -2,8 +2,7 @@
 public class Menu{
 	
 	private int selected;
-	private int width;
-	private int height;
+
 	/**
 	 * Constructor for menu
 	 * set the selected difficulty to whatever input has passed in.
@@ -39,22 +38,6 @@ public class Menu{
 		if ( (selected >= 0)  && (selected<= 2)){
 			selected--;
 		}
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
 	}
 
 	public void setSelected(int selected) {

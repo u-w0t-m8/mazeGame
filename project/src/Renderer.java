@@ -1,7 +1,9 @@
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
@@ -70,33 +72,37 @@ public class Renderer {
         frameGraphics.drawImage(mazeBackground, 0, 0, null);
         for (Entity ent : grid.getEntities()) {
             frameGraphics.drawImage(ent.getSprite().getCurrentImage(),
-                    ent.getX(), ent.getY(), TILE_X, TILE_Y, null);
+                    ent.getX() * TILE_X, ent.getY() * TILE_Y, TILE_X, TILE_Y,
+                    null);
         }
+        PlayerEntity p = grid.getPlayer();
+        frameGraphics.drawImage(p.getSprite().getCurrentImage(),
+                p.getX() * TILE_X, p.getY() * TILE_Y, TILE_X, TILE_Y, null);
     }
 
-    public void drawMenu(Menu m){
-    	frameGraphics.drawString("Maze Game", m.getWidth()/2, m.getHeight()/4);
-    	frameGraphics.drawRect(0, 0, m.getWidth(), m.getHeight()/2);
- 
+    public void drawMenu(){
+    	frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
+    	frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
+
+    	frameGraphics.drawRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+    	frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
+
+    	frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+    	frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
     	
-    	frameGraphics.drawString("EASY", m.getWidth()/2, m.getHeight()*5/8);
-    	frameGraphics.drawRect(0, m.getHeight()/2, m.getWidth(), m.getHeight()/8);
-    	
-    	frameGraphics.drawString("MEDIUM", m.getWidth()/2, m.getHeight()*6/8);
-    	frameGraphics.drawRect(0, m.getHeight()*5/8, m.getWidth(), m.getHeight()/8);
-    	
-    	frameGraphics.drawString("HARD", m.getWidth()/2, m.getHeight()*7/8);
-    	frameGraphics.drawRect(0, m.getHeight()*6/8, m.getWidth(), m.getHeight()/8);
+    	frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
+    	frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
     }
 
     public void createPreRender(Grid grid) {
-        // make mazeBackground a new image
+        mazeBackground = new BufferedImage(PRERENDER_X, PRERENDER_Y,
+                BufferedImage.TYPE_INT_ARGB);
         Graphics g = mazeBackground.getGraphics();
         for (int y = 0; y < grid.getSizeY(); y++) {
             for (int x = 0; x < grid.getSizeX(); x++) {
                 Tile tile = grid.getTile(x, y);
                 Image img = tile.getImage();
-                g.drawImage(img, TILE_X*x, TILE_Y*y, TILE_X, TILE_Y, null);
+                g.drawImage(img, TILE_X * x, TILE_Y * y, TILE_X, TILE_Y, null);
             }
         }
     }
