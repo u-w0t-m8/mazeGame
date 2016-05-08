@@ -51,6 +51,14 @@ public abstract class LivingEntity extends Entity {
     	
     }
     
+    public double getIntermediateX(){
+    	return intermediateX;
+    }
+    
+    public double getIntermediateY(){
+    	return intermediateY;
+    }
+    
     protected void setVelX(float vx){
         velx = vx;
     }

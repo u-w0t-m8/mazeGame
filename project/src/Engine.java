@@ -39,6 +39,7 @@ public class Engine {
     public Engine() {
         mMenu = new Menu();
         mFrame = new JFrame();
+        mFrame.createBufferStrategy(2);
         Canvas c = new Canvas();
         c.setPreferredSize(new Dimension(DEFAULT_XRES, DEFAULT_YRES));
         mRenderer = new Renderer(c);
