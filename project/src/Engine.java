@@ -1,3 +1,8 @@
+import java.awt.Canvas;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
 /**
  * The entry point of the program. Its main responsibilities of this class are
  * to manage the current game state (i.e. mostly Grid management) and call
@@ -17,31 +22,61 @@ public class Engine {
     }
 
     private static final int TARGET_FRAME_RATE = 75;
-
+    private static final int DEFAULT_XRES = 800;
+    private static final int DEFAULT_YRES = 600;
+    
     private Menu menuMain;
     private Menu menuDifficulty;
     private Menu menuPause;
     private Grid currentGrid = null;
     private Renderer mRenderer;
+    private JFrame mFrame;
+    private Input mInput;
     
     private boolean isRunning = false;
     private GameState state = GameState.MAIN_MENU;
 
     public Engine() {
-        mRenderer = new Renderer();
         menuMain = new Menu();
         menuMain.addItems("New game","Settings","Quit");
         menuDifficulty = new Menu();
         menuDifficulty.addItems("Easy","Normal","Hard");
         menuPause = new Menu();
         menuPause.addItems("Resume","Exit to menu","Quit");
+        mFrame = new JFrame();
+        Canvas c = new Canvas();
+        c.setPreferredSize(new Dimension(DEFAULT_XRES,DEFAULT_YRES));
+        mRenderer = new Renderer(c);
+        mFrame.pack();
+        mInput = new Input();
+        mFrame.addKeyListener(mInput);
     }
 
     public void startEngine() {
         // TODO: set windows to visible
         isRunning = true;
         loopThread.start();
-        mRenderer.show();
+        mFrame.setVisible(true);
+    }
+    
+    public void pressUp() {
+        
+    }
+    
+    public void pressDown() {
+        
+    }
+    
+    public void pressLeft() {
+        
+    }
+    
+    public void pressRight() {
+        
+    }
+    
+    public void pressEnter() {
+        
     }
 
     private final Thread loopThread = new Thread() {
@@ -112,9 +147,9 @@ public class Engine {
     	}
     }
     
-    void startNewLevel(){
+    void startNewLevel(Difficulty diff){
     	GridGenerator gen = null;
-    	currentGrid = gen.generate(50,50,Difficulty.EASY);
+    	currentGrid = gen.generate(50,50,diff);
     	state = GameState.IN_GAME;
     }
     
