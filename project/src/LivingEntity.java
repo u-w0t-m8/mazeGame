@@ -55,6 +55,7 @@ public abstract class LivingEntity extends Entity {
     	intermediateY += vely/75;
     	*/
     	
+    	
     	posx += velx;
 		posy += vely;
 		
