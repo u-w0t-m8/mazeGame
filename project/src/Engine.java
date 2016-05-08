@@ -163,10 +163,14 @@ public class Engine {
 	    			        }
 	    			        case MAIN_MENU:{
 	    			        	if(keyCode == KeyEvent.VK_UP){
+	    			        		System.out.println("UP");
 		    					}
 		    					else if(keyCode == KeyEvent.VK_DOWN){
+	    			        		System.out.println("DOWN");
 		    					}
 		    					else if(keyCode == KeyEvent.VK_ENTER){
+	    			        		System.out.println("ENTAH");
+	    			        		 //startNewLevel();
 		    					}
 	    			        	break;
 	    			        }

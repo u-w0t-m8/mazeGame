@@ -100,5 +100,19 @@ public class Grid {
     	// X will be 1 if its moving to the right, -1 if left, 0 no movement
     	// Y will be 1 if its moving downwards, -1 if upwards, 0 no movement
     }
+    
+    public void print(){
+    	for(int i = 0; i < tileSpace.length; i++)
+    	{
+    	    for(int j = 0; j < tileSpace[i].length; j++)
+    	    {
+    	        if(tileSpace[i][j].getIsWall())
+    	    		System.out.print("X");
+    	        else
+    	        	System.out.print("o");
+    	    }
+    	    System.out.println();
+    	}
+    }
 
 }
