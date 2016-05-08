@@ -103,7 +103,7 @@ public class Grid {
     	player.setVelY(y);
     	
     	// FOR TESTING ONLY
-    	print();
+    	//print();
 
     }
     

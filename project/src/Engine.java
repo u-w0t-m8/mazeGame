@@ -188,7 +188,7 @@ public class Engine {
 	    			        			}
 	    			        		}
 	    			        		// FOR TESTING ONLY
-		    						currentGrid.print();
+		    						//currentGrid.print();
 		    					}
 		    					else if(keyCode == KeyEvent.VK_ESCAPE){
 		    						System.exit(0);
