@@ -62,5 +62,11 @@ public class Grid {
     public int getPlayerY(){
     	return player.getY();	
     }
+    
+    public void setPlayerInput(int x, int y){
+    	// DO STUFF
+    	// X will be 1 if its moving to the right, -1 if left, 0 no movement
+    	// Y will be 1 if its moving downwards, -1 if upwards, 0 no movement
+    }
 
 }
