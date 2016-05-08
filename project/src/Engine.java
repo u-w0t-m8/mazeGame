@@ -1,5 +1,7 @@
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
@@ -31,7 +33,7 @@ public class Engine {
     private Grid currentGrid = null;
     private Renderer mRenderer;
     private JFrame mFrame;
-    private Input mInput;
+    //private Input mInput;
     
     private boolean isRunning = false;
     private GameState state = GameState.MAIN_MENU;
@@ -48,8 +50,9 @@ public class Engine {
         c.setPreferredSize(new Dimension(DEFAULT_XRES,DEFAULT_YRES));
         mRenderer = new Renderer(c);
         mFrame.pack();
-        mInput = new Input(this);
-        mFrame.addKeyListener(mInput);
+        //mInput = new Input(this);
+        //mFrame.addKeyListener(mInput);
+    	addKeyPressListener();
     }
 
     public void startEngine() {
@@ -140,54 +143,37 @@ public class Engine {
     	state = GameState.MAIN_MENU;
     }
     
-    public void pressUp() {
-        switch (state){
-        case IN_GAME:{
-        	break;
-        }
-        case MAIN_MENU:{
-        	break;	
-        }
-        }
+    public void addKeyPressListener(){
+    	mFrame.addKeyListener(
+    			new KeyAdapter(){
+    				public void keyPressed(KeyEvent e){
+    					int keyCode = e.getKeyCode();
+    					switch (state){
+	    			        case IN_GAME:{
+	    			        	if(keyCode == KeyEvent.VK_P)
+		    						toggleGamePaused();
+	    			        	else if(keyCode == KeyEvent.VK_UP){
+	    			        	}
+		    					else if(keyCode == KeyEvent.VK_DOWN){
+		    					}
+		    					else if(keyCode == KeyEvent.VK_LEFT){
+		    					}
+		    					else if(keyCode == KeyEvent.VK_RIGHT){
+		    					}
+	    			        	break;
+	    			        }
+	    			        case MAIN_MENU:{
+	    			        	if(keyCode == KeyEvent.VK_UP){
+		    					}
+		    					else if(keyCode == KeyEvent.VK_DOWN){
+		    					}
+		    					else if(keyCode == KeyEvent.VK_ENTER){
+		    					}
+	    			        	break;
+	    			        }
+    			        }
+            		}
+           		});
     }
-    
-    public void pressDown() {
-        switch (state){
-        case IN_GAME:{
-        	break;
-        }
-        case MAIN_MENU:{
-        	break;	
-        }
-        }
-    }
-    
-    public void pressLeft() {
-        switch (state){
-        case IN_GAME:{
-        	break;
-        }
-        }
-    }
-    
-    public void pressRight() {
-        switch (state){
-        case IN_GAME:{
-        	break;
-        }
-        }
-    }
-    
-    public void pressEnter() {
-        switch (state){
-        case IN_GAME:{
-        	break;
-        }
-        case MAIN_MENU:{
-        	break;	
-        }
-        }
-    }
-
 
 }
