@@ -9,6 +9,11 @@ public class HunterEntity extends LivingEntity {
 	int[] x = {0, 1, 0, -1};
 	int[] y = {1, 0, -1, 0};
 	
+	public HunterEntity() {
+		setSprite("enemy");
+		// TODO Auto-generated constructor stub
+	}
+	
 	/**
 	 * Performs A* search with straight line distance squared
 	 * @param grid - grid of the map
