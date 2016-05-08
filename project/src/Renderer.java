@@ -81,6 +81,11 @@ public class Renderer {
     }
 
     public void drawMenu(Menu m){
+    	frameGraphics.clearRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
+    	frameGraphics.clearRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+    	frameGraphics.clearRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+    	frameGraphics.clearRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
+
     	
     	switch(m.getSelected()){
     		case(0):

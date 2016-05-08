@@ -170,11 +170,11 @@ public class Engine {
 	    			        case MAIN_MENU:{
 	    			        	if(keyCode == KeyEvent.VK_UP){
 	    			        		mMenu.up();
-	    			        		System.out.println("UP");
+	    			        		//System.out.println("UP");
 		    					}
 		    					else if(keyCode == KeyEvent.VK_DOWN){
 		    						mMenu.down();
-	    			        		System.out.println("DOWN");
+	    			        		//System.out.println("DOWN");
 		    					}
 		    					else if(keyCode == KeyEvent.VK_ENTER){
 	    			        		System.out.println("ENTAH");

@@ -26,8 +26,8 @@ public class Menu{
 	 * Change the selected value if key pressed is up
 	 */
 	public void up(){
-		if ( (selected >= 0)  && (selected<= 2)){
-			selected++;
+		if ( (selected > 0)  && (selected <= 2)){
+			selected--;
 		}
 	}
 	
@@ -35,8 +35,8 @@ public class Menu{
 	 * Change the selected value if key pressed is down
 	 */
 	public void down(){
-		if ( (selected >= 0)  && (selected<= 2)){
-			selected--;
+		if ( (selected >= 0)  && (selected < 2)){
+			selected++;
 		}
 	}
 
