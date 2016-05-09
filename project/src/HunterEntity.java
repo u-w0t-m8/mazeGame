@@ -23,6 +23,7 @@ public class HunterEntity extends LivingEntity {
         int playerX = grid.getPlayerX();
         int playerY = grid.getPlayerY();
         
+        
         PriorityQueue<State> queue = new PriorityQueue<State>(1, new StateComparator());
         queue.add(new State(-1, 0, posx, posy, playerX, playerY, null));
         
@@ -32,7 +33,7 @@ public class HunterEntity extends LivingEntity {
         	if(nextState.isGoal()){
         		
         		if(nextState.getPreviousState() == null){
-        			System.out.println("Already standing on player");
+        			//System.out.println("Already standing on player");
         		}
         		else {
         			while(nextState.getPreviousState().getPreviousState() != null){
