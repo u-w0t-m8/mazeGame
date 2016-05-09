@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 public class HunterEntity extends LivingEntity {
 
 	int[] x = {0, 1, 0, -1};
-	int[] y = {1, 0, -1, 0};
+	int[] y = {-1, 0, 1, 0};
 	
 	public HunterEntity() {
 		setSprite("enemy");
@@ -34,13 +34,17 @@ public class HunterEntity extends LivingEntity {
         			nextState = nextState.getPreviousState();
         		}
         		velx = x[nextState.getMove()];
+        		vely = y[nextState.getMove()];
         		break;
         	}
         	else {
         		for(int i = 0; i < 4; ++i){
-        			if(grid.getTile(nextState.getX() + x[i],  nextState.getY() + y[i]).getIsWall()){ // Check if it is not a wall
-        				queue.add(new State(i, nextState.getDistanceTraveled(), 
+        			if(nextState.getX() + x[i] < 49 && nextState.getX() + x[i] > 0 &&
+        					nextState.getY() + y[i] < 49 && nextState.getY() + y[i] > 0 &&
+        					!grid.getTile(nextState.getX() + x[i],  nextState.getY() + y[i]).getIsWall()){ // Check if it is not a wall
+        				queue.add(new State(i, nextState.getDistanceTraveled()+1, 
         						nextState.getX() + x[i], nextState.getY() + y[i], playerX, playerY, nextState));
+
         			}
         		}
         	}

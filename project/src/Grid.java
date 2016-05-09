@@ -33,6 +33,7 @@ public class Grid {
         
         //TEST
         entList.add(new HunterEntity());
+        ((ArrayList<Entity>) entList).get(0).setPos(40,40);
     }
     
     private void generate(int sx, int sy){
