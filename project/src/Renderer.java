@@ -81,8 +81,20 @@ public class Renderer {
         PlayerEntity p = grid.getPlayer();
         frameGraphics.drawImage(p.getSprite().getCurrentImage(),
                 p.getX() * TILE_X, p.getY() * TILE_Y, TILE_X, TILE_Y, null);
+        
+        //g.drawImage(ImageCache.getImage("wobcke"), PRERENDER_X, PRERENDER_Y, 300,500,null);
+        frameGraphics.drawRect(PRERENDER_X, 0, 300, PRERENDER_Y);
+        frameGraphics.setColor(Color.BLUE);
+        frameGraphics.fillRect(PRERENDER_X, 0, 300, PRERENDER_Y);
     }
-
+    
+    /**
+     * Draw Menu initializes the graphics for the menu interface, using the method within menu to know which 'difficulty' 
+     * it is currently on
+     * 
+     * @param m menu
+     */
+    
     public void drawMenu(Menu m){
     	frameGraphics.clearRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
     	frameGraphics.clearRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
@@ -101,9 +113,8 @@ public class Renderer {
 		frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
 
 		frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
-		frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
-    	//frameGraphics.drawImage(ImageCache.getImage("asset/wobcke.jpg"), 0 , 0, null);
-    	
+		frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);   
+		
     	switch(m.getSelected()){
     		case(0):			
     			frameGraphics.setColor(Color.DARK_GRAY);
@@ -125,6 +136,7 @@ public class Renderer {
     			break;
     	}
     }
+    
 
     public void createPreRender(Grid grid) {
         mazeBackground = new BufferedImage(PRERENDER_X, PRERENDER_Y,

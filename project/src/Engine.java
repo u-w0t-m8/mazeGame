@@ -25,7 +25,7 @@ public class Engine {
 
     private static final int TARGET_FRAME_RATE = 75;
     private static final int DEFAULT_XRES = 800;
-    private static final int DEFAULT_YRES = 600;
+    private static final int DEFAULT_YRES = 500;
 
     private Menu mMenu;
     private Grid currentGrid = null;
