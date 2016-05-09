@@ -30,11 +30,17 @@ public class HunterEntity extends LivingEntity {
         	State nextState = queue.poll();
         	
         	if(nextState.isGoal()){
-        		while(nextState.getPreviousState().getPreviousState() != null){
-        			nextState = nextState.getPreviousState();
+        		
+        		if(nextState.getPreviousState() == null){
+        			System.out.println("Already standing on player");
         		}
-        		velx = x[nextState.getMove()];
-        		vely = y[nextState.getMove()];
+        		else {
+        			while(nextState.getPreviousState().getPreviousState() != null){
+            			nextState = nextState.getPreviousState();
+            		}
+            		velx = x[nextState.getMove()];
+            		vely = y[nextState.getMove()];
+        		}
         		break;
         	}
         	else {

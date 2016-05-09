@@ -17,6 +17,7 @@ public class State {
 		this.playerX = playerX;
 		this.playerY = playerY;
 		this.previousState = previousState;
+		this.move = move;
 		
 		setHeuristic();
 		
@@ -63,7 +64,7 @@ public class State {
 		
 		int manDist = Math.abs(diffx) + Math.abs(diffy);
 		
-		heuristic = manDist;
+		heuristic = manDist*manDist;
 		
 	}
 	

@@ -73,12 +73,12 @@ public abstract class LivingEntity extends Entity {
     }
     
     protected void setVelX(float vx){
-    	System.out.println("Velocity x:" + vx);
+    	//System.out.println("Velocity x:" + vx);
         velx = vx;
     }
     
     protected void setVelY(float vy){
-    	System.out.println("Velocity y:" + vy);
+    	//System.out.println("Velocity y:" + vy);
         vely = vy;
     }
 
