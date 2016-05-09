@@ -90,6 +90,7 @@ public class Renderer {
     	frameGraphics.clearRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
 
     	frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
+    	frameGraphics.drawImage(ImageCache.getImage("wobcke"), 0 , 0, null);
 		frameGraphics.setFont(stringFont);
 		frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
 
@@ -101,22 +102,23 @@ public class Renderer {
 
 		frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
 		frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
+    	//frameGraphics.drawImage(ImageCache.getImage("asset/wobcke.jpg"), 0 , 0, null);
     	
     	switch(m.getSelected()){
     		case(0):			
-    			frameGraphics.setColor(Color.BLUE);
+    			frameGraphics.setColor(Color.DARK_GRAY);
 				frameGraphics.fillRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
     			frameGraphics.setColor(Color.WHITE);
 				frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
     			break;
     		case(1):
-    			frameGraphics.setColor(Color.BLUE);
+    			frameGraphics.setColor(Color.DARK_GRAY);
 				frameGraphics.fillRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
     			frameGraphics.setColor(Color.WHITE);
     			frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
     			break;
     		case(2):	
-    			frameGraphics.setColor(Color.BLUE);
+    			frameGraphics.setColor(Color.DARK_GRAY);
 				frameGraphics.fillRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
     			frameGraphics.setColor(Color.WHITE);
     			frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
