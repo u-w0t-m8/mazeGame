@@ -89,78 +89,38 @@ public class Renderer {
     	frameGraphics.clearRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
     	frameGraphics.clearRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
 
+    	frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
+		frameGraphics.setFont(stringFont);
+		frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
+
+		frameGraphics.drawRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+		frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
+
+		frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+		frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
+
+		frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
+		frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
     	
     	switch(m.getSelected()){
-    		case(0):
-    			frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
-    			frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
-    			frameGraphics.setFont(stringFont);
-
-    			
-    			frameGraphics.drawRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
-    			frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
-    			frameGraphics.setFont(stringFont);
-    			frameGraphics.fillRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+    		case(0):			
     			frameGraphics.setColor(Color.BLUE);
-
-    			frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
-    			frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
-    			frameGraphics.setFont(stringFont);
-
-    			
-    			frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
-    			frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
-    			frameGraphics.setFont(stringFont);
-
+				frameGraphics.fillRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.setColor(Color.WHITE);
+				frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
     			break;
     		case(1):
-    			frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
-    			frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
-    			frameGraphics.setFont(stringFont);
-
-
-    			frameGraphics.drawRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
-    			frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
-    			frameGraphics.setFont(stringFont);
-
-
-    			frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
-    			frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
-    			frameGraphics.fillRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
     			frameGraphics.setColor(Color.BLUE);
-    			frameGraphics.setFont(stringFont);
-
-    	
-    			frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
-    			frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
-    			frameGraphics.setFont(stringFont);
-
-    			break;
-    		case(2):
-    			frameGraphics.drawRect(0, 0, PRERENDER_X, PRERENDER_Y/2);
-    			frameGraphics.drawString("Maze Game", PRERENDER_X/2, PRERENDER_Y/4);
-    			frameGraphics.setFont(stringFont);
-
-    			
-    			frameGraphics.drawRect(0, PRERENDER_Y/2, PRERENDER_X, PRERENDER_Y/6);
-    			frameGraphics.drawString("EASY", PRERENDER_X/2, PRERENDER_Y*7/12);
-    			frameGraphics.setFont(stringFont);
-
-    				
-    			frameGraphics.drawRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+				frameGraphics.fillRect(0, PRERENDER_Y*4/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.setColor(Color.WHITE);
     			frameGraphics.drawString("MEDIUM", PRERENDER_X/2, PRERENDER_Y*9/12);
-    			frameGraphics.setFont(stringFont);
-
-    				
-    			frameGraphics.drawRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
-    			frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
-    			frameGraphics.fillRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
-    			frameGraphics.setColor(Color.BLUE);
-    			frameGraphics.setFont(stringFont);
-
-    			
     			break;
-    		
+    		case(2):	
+    			frameGraphics.setColor(Color.BLUE);
+				frameGraphics.fillRect(0, PRERENDER_Y*5/6, PRERENDER_X, PRERENDER_Y/6);
+    			frameGraphics.setColor(Color.WHITE);
+    			frameGraphics.drawString("HARD", PRERENDER_X/2, PRERENDER_Y*11/12);
+    			break;
     	}
     }
 
