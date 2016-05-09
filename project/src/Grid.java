@@ -34,6 +34,8 @@ public class Grid {
         //TEST
         entList.add(new HunterEntity());
         ((ArrayList<Entity>) entList).get(0).setPos(40,40);
+        entList.add(new Token());
+        ((ArrayList<Entity>) entList).get(1).setPos(20,20);
     }
     
     private void generate(int sx, int sy){
@@ -53,8 +55,8 @@ public class Grid {
     
     public boolean checkCollision(){
     	for(Entity e : entList){
-    		if((player.getIntermediateX() + 0.5 < e.getX() || player.getIntermediateX() - 0.5 > e.getX()) && 
-    				(player.getIntermediateY() + 0.5 < e.getY() || player.getIntermediateY() - 0.5 > e.getY())){
+    		if((e.getX() <= player.getIntermediateX() + 0.5 && e.getX() >= player.getIntermediateX() - 0.5) && 
+    				(e.getY() <= player.getIntermediateY() + 0.5 && e.getY() >= player.getIntermediateY() - 0.5)){
     			return true;
     		}
     	}
@@ -67,7 +69,7 @@ public class Grid {
     public void update(){
     	
     	if(checkCollision()){
-    		//end game
+    		System.out.println("Game over");
     	}
     	
     	player.update(this);

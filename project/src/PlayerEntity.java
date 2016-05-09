@@ -7,6 +7,8 @@
  */
 public class PlayerEntity extends LivingEntity {
 	
+	int points = 0;
+	
 	public PlayerEntity(){
 
 	    setSprite("player");
@@ -15,7 +17,7 @@ public class PlayerEntity extends LivingEntity {
     
     @Override
     public void think(Grid grid) {
-        // just act on user input: e.g. set velocity to match user request
+
     }
 
 
