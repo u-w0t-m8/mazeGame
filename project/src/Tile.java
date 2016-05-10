@@ -1,5 +1,4 @@
 import java.awt.Image;
-import java.util.Collection;
 
 public class Tile {
     

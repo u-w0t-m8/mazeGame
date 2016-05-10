@@ -1,5 +1,7 @@
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -31,6 +33,7 @@ public class Engine {
     private Grid currentGrid = null;
     private Renderer mRenderer;
     private JFrame mFrame;
+    private Canvas mCanvas;
     // private Input mInput;
 
     private boolean isRunning = false;
@@ -40,18 +43,25 @@ public class Engine {
         mMenu = new Menu();
         mFrame = new JFrame();
         mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        Canvas c = new Canvas();
-        c.setPreferredSize(new Dimension(DEFAULT_XRES, DEFAULT_YRES));
-        mFrame.add(c);
+        mCanvas = new Canvas();
+        mCanvas.setPreferredSize(new Dimension(DEFAULT_XRES, DEFAULT_YRES));
+        mFrame.add(mCanvas);
         mFrame.pack();
-        c.createBufferStrategy(2);
-        mRenderer = new Renderer(c);
-
+        mCanvas.createBufferStrategy(2);
+        mRenderer = new Renderer(mCanvas);
+        mFrame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int w = mFrame.getContentPane().getWidth();
+                int h = mFrame.getContentPane().getHeight();
+                mCanvas.setSize(w, h);
+                mRenderer.setResolution(w, h);
+            }
+        });
         // STUFF RELATED TO INPUT
-        addKeyPressListener(c);
-        c.setFocusable(true);
-        //c.getFocusListeners();
+        mCanvas.addKeyListener(inputListener);
+        mCanvas.setFocusable(true);
+        // c.getFocusListeners();
     }
 
     public void startEngine() {
@@ -100,10 +110,7 @@ public class Engine {
             break;
         }
         case IN_GAME: {
-        	currentGrid.update();
-            break;
-        }
-        case IN_GAME_PAUSED: {
+            currentGrid.update();
             break;
         }
         }
@@ -128,14 +135,6 @@ public class Engine {
         // if finishFrame() fails the render has to restart
     }
 
-    void toggleGamePaused() {
-        if (state == GameState.IN_GAME) {
-            state = GameState.IN_GAME_PAUSED;
-        } else if (state == GameState.IN_GAME_PAUSED) {
-            state = GameState.IN_GAME;
-        }
-    }
-
     void startNewLevel(Difficulty diff) {
         currentGrid = new Grid();
         mRenderer.createPreRender(currentGrid);
@@ -147,63 +146,55 @@ public class Engine {
         mRenderer.destroyPreRender();
         state = GameState.MAIN_MENU;
     }
-    
-    public void addKeyPressListener(Canvas c){
-    	c.addKeyListener(
-    			new KeyAdapter(){
-    				public void keyPressed(KeyEvent e){
-    					int keyCode = e.getKeyCode();
-    					switch (state){
-	    			        case IN_GAME:{
-	    			        	if(keyCode == KeyEvent.VK_P)
-		    						toggleGamePaused();
-	    			        	else if(keyCode == KeyEvent.VK_UP)
-	    			        		currentGrid.setPlayerInput(0, -1);
-		    					else if(keyCode == KeyEvent.VK_DOWN)
-		    						currentGrid.setPlayerInput(0, 1);
-		    					else if(keyCode == KeyEvent.VK_LEFT)
-		    						currentGrid.setPlayerInput(-1, 0);
-		    					else if(keyCode == KeyEvent.VK_RIGHT)
-		    						currentGrid.setPlayerInput(1, 0);
-	    			        	break;
-	    			        }
-	    			        case MAIN_MENU:{
-	    			        	if(keyCode == KeyEvent.VK_UP){
-	    			        		mMenu.up();
-	    			        		//System.out.println("UP");
-		    					}
-		    					else if(keyCode == KeyEvent.VK_DOWN){
-		    						mMenu.down();
-	    			        		//System.out.println("DOWN");
-		    					}
-		    					else if(keyCode == KeyEvent.VK_ENTER){
-	    			        		System.out.println("ENTAH");
-	    			        		// FOR TESTING
-	    			        		switch(mMenu.getSelected()){
-	    			        			case 0:{
-	    	    			        		startNewLevel(Difficulty.EASY);
-	    			        				break;
-	    			        			}
-	    			        			case 1:{
-	    	    			        		startNewLevel(Difficulty.NORMAL);
-	    			        				break;
-	    			        			}
-	    			        			case 2:{
-	    	    			        		startNewLevel(Difficulty.HARD);
-	    			        				break;
-	    			        			}
-	    			        		}
-	    			        		// FOR TESTING ONLY
-		    						//currentGrid.print();
-		    					}
-		    					else if(keyCode == KeyEvent.VK_ESCAPE){
-		    						System.exit(0);
-		    					}
-	    			        	break;
-	    			        }
-    			        }
-            		}
-           		});
-    }
+
+    private KeyAdapter inputListener = new KeyAdapter() {
+        public void keyPressed(KeyEvent e) {
+            int keyCode = e.getKeyCode();
+            switch (state) {
+            case IN_GAME: {
+                if (keyCode == KeyEvent.VK_UP)
+                    currentGrid.setPlayerInput(0, -1);
+                else if (keyCode == KeyEvent.VK_DOWN)
+                    currentGrid.setPlayerInput(0, 1);
+                else if (keyCode == KeyEvent.VK_LEFT)
+                    currentGrid.setPlayerInput(-1, 0);
+                else if (keyCode == KeyEvent.VK_RIGHT)
+                    currentGrid.setPlayerInput(1, 0);
+                break;
+            }
+            case MAIN_MENU: {
+                if (keyCode == KeyEvent.VK_UP) {
+                    mMenu.up();
+                    // System.out.println("UP");
+                } else if (keyCode == KeyEvent.VK_DOWN) {
+                    mMenu.down();
+                    // System.out.println("DOWN");
+                } else if (keyCode == KeyEvent.VK_ENTER) {
+                    System.out.println("ENTAH");
+                    // FOR TESTING
+                    switch (mMenu.getSelected()) {
+                    case 0: {
+                        startNewLevel(Difficulty.EASY);
+                        break;
+                    }
+                    case 1: {
+                        startNewLevel(Difficulty.NORMAL);
+                        break;
+                    }
+                    case 2: {
+                        startNewLevel(Difficulty.HARD);
+                        break;
+                    }
+                    }
+                    // FOR TESTING ONLY
+                    // currentGrid.print();
+                } else if (keyCode == KeyEvent.VK_ESCAPE) {
+                    System.exit(0);
+                }
+                break;
+            }
+            }
+        }
+    };
 
 }

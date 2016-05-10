@@ -6,8 +6,8 @@
  *
  */
 public enum GameState {
-	// STARTUP, //very unlikely to be needed
 	MAIN_MENU,
-	// LOADING, //might not be needed
-	IN_GAME, IN_GAME_PAUSED
+	// LOADING, // may be needed later
+	IN_GAME,
+	// IN_GAME_PAUSED // will definitely be needed later
 }
