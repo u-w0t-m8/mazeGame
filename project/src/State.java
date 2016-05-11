@@ -58,7 +58,6 @@ public class State {
 	public void setHeuristic(){
 		heuristic = 0;
 		
-		
 		int diffx = playerX - currX;
 		int diffy = playerY - currY;
 		
