@@ -20,7 +20,7 @@ public class ImageCache {
     public static Image getImage(String path) {
         Image img = cache.get(path);
         if (img == null) {
-            String fullPath = "asset/"+path+".png";
+            String fullPath = "asset2/"+path+".png";
             img = loadImage(fullPath);
             cache.put(path, img);
         }
