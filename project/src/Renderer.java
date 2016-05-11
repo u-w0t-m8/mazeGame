@@ -32,19 +32,22 @@ public class Renderer {
     private static final int GRID_PRERENDER_Y = 1000;
 
     // canvas background color
+    static Color colourBlue = new Color(0xA9EBE6);
+    static Color selectedColour = new Color(0x89C4C0);
     private static final Color BG_COLOR = Color.BLACK;
 
     // menu config
     private static final double MENU_MARGIN = 0.05;
-    private static final Color MENU_DEFAULT_FILL = Color.BLACK;
+    private static final Color MENU_DEFAULT_FILL = colourBlue;
     private static final Color MENU_DEFAULT_CONTENT = Color.WHITE;
-    private static final Color MENU_SELECTED_FILL = Color.WHITE;
+    private static final Color MENU_SELECTED_FILL = selectedColour;
     private static final Color MENU_SELECTED_CONTENT = Color.BLACK;
 
     // whether to wipe the canvas clean on each frame (recommended)
     private static final boolean CLEAN_FRAME = true;
 
     private final Font stringFont = new Font("SansSerif", Font.PLAIN, 36);
+    private Font selectedFont = new Font("Helvetica", Font.BOLD, 52);
     private Image mazeBackground;
     private BufferStrategy bufferStrategy = null;
     private Graphics frameGraphics;
@@ -139,9 +142,11 @@ public class Renderer {
             if (i == m.getSelected()) {
                 colFill = MENU_SELECTED_FILL;
                 colContent = MENU_SELECTED_CONTENT;
+                g.setFont(selectedFont);
             } else {
                 colFill = MENU_DEFAULT_FILL;
                 colContent = MENU_DEFAULT_CONTENT;
+                g.setFont(stringFont);
             }
             // fill and draw rectangle then text
             g.setColor(colFill);
