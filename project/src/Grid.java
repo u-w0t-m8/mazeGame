@@ -89,7 +89,7 @@ public class Grid {
 
     private void openMaze() {
         Random rand = new Random();
-        Image imgBlank = ImageCache.getImage("cartoon/tile_blank");
+        Image imgBlank = ImageCache.getImage("tile_blank");
         for (int i = 1; i < sizey - 1; ++i) {
             for (int j = 1; j < sizex - 1; ++j) {
                 if (tileSpace[i][j].getIsWall()
@@ -114,7 +114,7 @@ public class Grid {
         }
 
         Random rand = new Random();
-        Image imgBlank = ImageCache.getImage("cartoon/tile_blank");
+        Image imgBlank = ImageCache.getImage("tile_blank");
         Queue<Integer> queueCol = new LinkedList<Integer>();
         Queue<Integer> queueRow = new LinkedList<Integer>();
 
@@ -148,7 +148,7 @@ public class Grid {
 
     private void generate(int sx, int sy) {
         tileSpace = new Tile[sx][sy];
-        Image imgWall = ImageCache.getImage("cartoon/tile_wall");
+        Image imgWall = ImageCache.getImage("tile_wall");
         for (int y = 0; y < sy; y++) {
             for (int x = 0; x < sx; x++) {
                 tileSpace[x][y] = new Tile(true, imgWall);

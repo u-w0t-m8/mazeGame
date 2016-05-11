@@ -13,7 +13,7 @@ public class PlayerEntity extends LivingEntity {
     private int keyRight = 0;
 
     public PlayerEntity() {
-        setSprite("simple/player");
+        setSprite("player");
     }
 
     /**

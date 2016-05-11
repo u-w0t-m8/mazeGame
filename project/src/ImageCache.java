@@ -15,12 +15,14 @@ import javax.imageio.ImageIO;
  */
 public class ImageCache {
 
+    private static final String ROOT = "asset/cartoon2/";
+    
     static HashMap<String, Image> cache = new HashMap<String, Image>();
 
     public static Image getImage(String path) {
         Image img = cache.get(path);
         if (img == null) {
-            String fullPath = "asset/"+path+".png";
+            String fullPath = ROOT+path+".png";
             img = loadImage(fullPath);
             cache.put(path, img);
         }

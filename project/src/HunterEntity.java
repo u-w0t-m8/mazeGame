@@ -10,7 +10,7 @@ public class HunterEntity extends LivingEntity {
 	int[] y = {-1, 0, 1, 0};
 	
 	public HunterEntity() {
-		setSprite("simple/enemy");
+		setSprite("enemy");
 		// TODO Auto-generated constructor stub
 	}
 	

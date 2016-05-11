@@ -25,9 +25,8 @@ import java.awt.image.ImageObserver;
  * 
  */
 public class Renderer {
-	
-	
-	Image title = ImageCache.getImage("title");
+
+    Image title = ImageCache.getImage("title");
     // maze render config
     private static final double GRID_MARGIN = 0.05;
     // these should be at least as big as the largest expected screen height
@@ -35,17 +34,14 @@ public class Renderer {
     private static final int GRID_PRERENDER_Y = 1000;
 
     // canvas background color
-    static Color colourBlue = new Color(0xA9EBE6);
-    static Color selectedColour = new Color(0x89C4C0);
-    static Color someOtherColour = new Color(0x4B989C);
-    //private static final Color BG_COLOR = Color.BLACK;
+    private static final Color BG_COLOR = Color.LIGHT_GRAY;
 
     // menu config
     private static final double MENU_MARGIN = 0.05;
-    private static final Color MENU_DEFAULT_FILL = colourBlue;
+    private static final Color MENU_DEFAULT_FILL = new Color(0xA9EBE6);
     private static final Color MENU_DEFAULT_CONTENT = Color.WHITE;
-    private static final Color MENU_SELECTED_FILL = selectedColour;
-    private static final Color MENU_SELECTED_CONTENT = someOtherColour;
+    private static final Color MENU_SELECTED_FILL = new Color(0x89C4C0);
+    private static final Color MENU_SELECTED_CONTENT = new Color(0x4B989C);
 
     // whether to wipe the canvas clean on each frame (recommended)
     private static final boolean CLEAN_FRAME = true;
@@ -60,7 +56,7 @@ public class Renderer {
 
     public Renderer(Canvas c) {
         bufferStrategy = c.getBufferStrategy();
-        //c.setBackground(BG_COLOR);
+        c.setBackground(BG_COLOR);
     }
 
     public void setResolution(int x, int y) {
@@ -127,14 +123,11 @@ public class Renderer {
         final int SX = 1600;
         final int SY = 900;
         Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
-        ImageObserver observer = null;
-		frameGraphics.drawImage(title, SX, SY/2, Color.white, observer);
+        g.drawImage(ImageCache.getImage("title"), 0, 0, SX, SY/2, null);
         g.setColor(MENU_DEFAULT_CONTENT);
         g.drawRect(0, 0, SX, SY / 2);
-        // frameGraphics.drawImage(ImageCache.getImage("wobcke"), 0, 0, 0, 500,
-        // null);
         g.setFont(stringFont);
-        drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
+        //drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 
         String[] strings = new String[] { "EASY", "MEDIUM", "HARD" };
 
