@@ -116,38 +116,39 @@ public class Renderer {
      */
 
     public void drawMenu(Menu m) {
-        // S can be anything: it gets transformed into the full screen
-        final int S = 1000;
-        Graphics2D g = getTransformedGraphics(MENU_MARGIN, S, S);
+        // SX and SY decide the aspect ratio of the menu
+        final int SX = 1600;
+        final int SY = 900;
+        Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
         g.setColor(MENU_DEFAULT_CONTENT);
-        g.drawRect(0, 0, S, S / 2);
+        g.drawRect(0, 0, SX, SY / 2);
         // frameGraphics.drawImage(ImageCache.getImage("wobcke"), 0, 0, 0, 500,
         // null);
         g.setFont(stringFont);
-        drawStringCentred(g, "Maze Game", S / 2, S / 4);
+        drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 
         String[] strings = new String[] { "EASY", "MEDIUM", "HARD" };
 
         // renders the 3 menu buttons in order
         for (int i = 0; i < 3; i++) {
             // shift each successive button's Y coords downwards
-            int buttonY = S * (3 + i) / 6;
-            int textY = S * (2 * i + 7) / 12;
+            final int buttonY = SY * (3 + i) / 6;
+            final int textY = SY * (2 * i + 7) / 12;
             // decide colors for item
-            Color fill, content;
+            Color colFill, colContent;
             if (i == m.getSelected()) {
-                fill = MENU_SELECTED_FILL;
-                content = MENU_SELECTED_CONTENT;
+                colFill = MENU_SELECTED_FILL;
+                colContent = MENU_SELECTED_CONTENT;
             } else {
-                fill = MENU_DEFAULT_FILL;
-                content = MENU_DEFAULT_CONTENT;
+                colFill = MENU_DEFAULT_FILL;
+                colContent = MENU_DEFAULT_CONTENT;
             }
             // fill and draw rectangle then text
-            g.setColor(fill);
-            g.fillRect(0, buttonY, S, S / 6);
-            g.setColor(content);
-            g.drawRect(0, buttonY, S, S / 6);
-            drawStringCentred(g, strings[i], S / 2, textY);
+            g.setColor(colFill);
+            g.fillRect(0, buttonY, SX, SY / 6);
+            g.setColor(colContent);
+            g.drawRect(0, buttonY, SX, SY / 6);
+            drawStringCentred(g, strings[i], SX / 2, textY);
         }
     }
 
@@ -179,19 +180,12 @@ public class Renderer {
 
     /**
      * Provides a resolution-independent graphics object that maps virtual
-     * coordinates to a square area in the centre of the canvas.
+     * coordinates to a rectangular area in the centre of the canvas.
      * <p>
      * Copies the existing frameGraphics object, and then translates and scales
      * it so that the coordinates (0..x, 0..y) map to the largest possible
-     * square area at the centre of the canvas, with the specified margin from
-     * the edge.
-     * <p>
-     * For example, drawing a rectangle from (0,0) to (50,50) with a graphics
-     * object transformed with arguments (0.05, 100, 100) will draw a square
-     * from the middle of the canvas extending up and left, with a 5% margin
-     * from the top.
-     * <p>
-     * We can adjust this to allow for non-square aspect ratios if need be.
+     * rectangle at the centre of the canvas with aspect ratio x/y, and given
+     * percentage margin from the edge.
      * 
      * @param margin the percentage of the space that should be margin
      * @param x the horizontal size of the virtual coordinate space
@@ -201,13 +195,21 @@ public class Renderer {
      */
     private Graphics2D getTransformedGraphics(double margin, int x, int y) {
         Graphics2D g2d = (Graphics2D) frameGraphics.create();
-        if (resX > resY) {
-            g2d.translate((resX - resY) / 2d, 0);
-            g2d.scale(resY / (double) x, resY / (double) y);
+        final double w = resX;
+        final double h = resY;
+        final double rx = x / w;
+        final double ry = y / h;
+        // decide whether to expand to the width or height of the screen
+        if (ry > rx) {
+            // shift right to keep designated rectangle in centre
+            g2d.translate((w - (h * x / y)) / 2, 0);
+            g2d.scale(1 / ry, 1 / ry);
         } else {
-            g2d.translate(0, (resY - resX) / 2d);
-            g2d.scale(resX / (double) x, resX / (double) y);
+            // shift down to keep designated rectangle in centre
+            g2d.translate(0, (h - (w * y / x)) / 2);
+            g2d.scale(1 / rx, 1 / rx);
         }
+        // apply the margin in a similar way if there is one
         if (margin > 0) {
             g2d.translate(margin * x, margin * y);
             g2d.scale(1d - 2 * margin, 1d - 2 * margin);
