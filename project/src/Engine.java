@@ -149,50 +149,59 @@ public class Engine {
 
     private KeyAdapter inputListener = new KeyAdapter() {
         public void keyPressed(KeyEvent e) {
-            int keyCode = e.getKeyCode();
             switch (state) {
             case IN_GAME: {
-                if (keyCode == KeyEvent.VK_UP)
-                    currentGrid.setPlayerInput(0, -1);
-                else if (keyCode == KeyEvent.VK_DOWN)
-                    currentGrid.setPlayerInput(0, 1);
-                else if (keyCode == KeyEvent.VK_LEFT)
-                    currentGrid.setPlayerInput(-1, 0);
-                else if (keyCode == KeyEvent.VK_RIGHT)
-                    currentGrid.setPlayerInput(1, 0);
+                switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                    currentGrid.updatePlayerInput(1, 0, 0, 0);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    currentGrid.updatePlayerInput(0, 1, 0 ,0);
+                    break;
+                case KeyEvent.VK_LEFT:
+                    currentGrid.updatePlayerInput(0, 0, 1, 0);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    currentGrid.updatePlayerInput(0, 0, 0, 1);
+                }
                 break;
             }
             case MAIN_MENU: {
-                if (keyCode == KeyEvent.VK_UP) {
+                switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
                     mMenu.up();
-                    // System.out.println("UP");
-                } else if (keyCode == KeyEvent.VK_DOWN) {
+                    break;
+                case KeyEvent.VK_DOWN:
                     mMenu.down();
-                    // System.out.println("DOWN");
-                } else if (keyCode == KeyEvent.VK_ENTER) {
-                    System.out.println("ENTAH");
-                    // FOR TESTING
-                    switch (mMenu.getSelected()) {
-                    case 0: {
-                        startNewLevel(Difficulty.EASY);
-                        break;
-                    }
-                    case 1: {
-                        startNewLevel(Difficulty.NORMAL);
-                        break;
-                    }
-                    case 2: {
-                        startNewLevel(Difficulty.HARD);
-                        break;
-                    }
-                    }
-                    // FOR TESTING ONLY
-                    // currentGrid.print();
-                } else if (keyCode == KeyEvent.VK_ESCAPE) {
+                    break;
+                case KeyEvent.VK_ENTER:
+                    Difficulty diff = Difficulty.values()[mMenu.getSelected()];
+                    startNewLevel(diff);
+                    break;
+                case KeyEvent.VK_ESCAPE:
                     System.exit(0);
                 }
                 break;
             }
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (state == GameState.IN_GAME) {
+                switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                    currentGrid.updatePlayerInput(-1, 0, 0, 0);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    currentGrid.updatePlayerInput(0, -1, 0, 0);
+                    break;
+                case KeyEvent.VK_LEFT:
+                    currentGrid.updatePlayerInput(0, 0, -1, 0);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    currentGrid.updatePlayerInput(0, 0, 0, -1);
+                }
             }
         }
     };
