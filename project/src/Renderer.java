@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 
 /**
  * Responsible for drawing maze terrain and its entities (and menus,
@@ -24,7 +25,9 @@ import java.awt.image.BufferedImage;
  * 
  */
 public class Renderer {
-
+	
+	
+	Image title = ImageCache.getImage("title");
     // maze render config
     private static final double GRID_MARGIN = 0.05;
     // these should be at least as big as the largest expected screen height
@@ -34,14 +37,15 @@ public class Renderer {
     // canvas background color
     static Color colourBlue = new Color(0xA9EBE6);
     static Color selectedColour = new Color(0x89C4C0);
-    private static final Color BG_COLOR = Color.BLACK;
+    static Color someOtherColour = new Color(0x4B989C);
+    //private static final Color BG_COLOR = Color.BLACK;
 
     // menu config
     private static final double MENU_MARGIN = 0.05;
     private static final Color MENU_DEFAULT_FILL = colourBlue;
     private static final Color MENU_DEFAULT_CONTENT = Color.WHITE;
     private static final Color MENU_SELECTED_FILL = selectedColour;
-    private static final Color MENU_SELECTED_CONTENT = Color.BLACK;
+    private static final Color MENU_SELECTED_CONTENT = someOtherColour;
 
     // whether to wipe the canvas clean on each frame (recommended)
     private static final boolean CLEAN_FRAME = true;
@@ -56,7 +60,7 @@ public class Renderer {
 
     public Renderer(Canvas c) {
         bufferStrategy = c.getBufferStrategy();
-        c.setBackground(BG_COLOR);
+        //c.setBackground(BG_COLOR);
     }
 
     public void setResolution(int x, int y) {
@@ -123,6 +127,8 @@ public class Renderer {
         final int SX = 1600;
         final int SY = 900;
         Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
+        ImageObserver observer = null;
+		frameGraphics.drawImage(title, SX, SY/2, Color.white, observer);
         g.setColor(MENU_DEFAULT_CONTENT);
         g.drawRect(0, 0, SX, SY / 2);
         // frameGraphics.drawImage(ImageCache.getImage("wobcke"), 0, 0, 0, 500,
