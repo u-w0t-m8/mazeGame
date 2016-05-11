@@ -42,7 +42,7 @@ public class Grid {
         int x = rand.nextInt(sizex-1)+1;
         int y = rand.nextInt(sizey-1)+1;
         while(this.getTile(x, y).getIsWall()){
-        	 x = rand.nextInt(sizex-1)+1;
+             x = rand.nextInt(sizex-1)+1;
              y = rand.nextInt(sizey-1)+1;
         }
         player.setPos(x, y);
@@ -50,16 +50,16 @@ public class Grid {
         //Place hunter in random position
         int j = 0;
         switch(diff){
-        	case EASY: j = 1; break;
-        	case NORMAL: j = 2; break;
-        	case HARD: j = 3; break;
+            case EASY: j = 1; break;
+            case NORMAL: j = 2; break;
+            case HARD: j = 3; break;
         }
         for(int i = 0; i < j; ++i){
-        	entList.add(new HunterEntity());
+            entList.add(new HunterEntity());
             x = rand.nextInt(sizex-1)+1;
             y = rand.nextInt(sizey-1)+1;
             while(this.getTile(x, y).getIsWall()){
-            	 x = rand.nextInt(sizex-1)+1;
+                 x = rand.nextInt(sizex-1)+1;
                  y = rand.nextInt(sizey-1)+1;
             }
             ((ArrayList<Entity>) entList).get(i).setPos(x,y);
@@ -68,11 +68,11 @@ public class Grid {
         
         //Place coin
         for(int i = 0; i < 8; ++i){
-        	entList.add(new Token());
-        	x = rand.nextInt(sizex-1)+1;
+            entList.add(new Token());
+            x = rand.nextInt(sizex-1)+1;
             y = rand.nextInt(sizey-1)+1;
             while(this.getTile(x, y).getIsWall()){
-            	 x = rand.nextInt(sizex-1)+1;
+                 x = rand.nextInt(sizex-1)+1;
                  y = rand.nextInt(sizey-1)+1;
             }
             ((ArrayList<Entity>) entList).get(i).setPos(x,y);
@@ -80,55 +80,55 @@ public class Grid {
     }
     
     private void openMaze(){
-    	Random rand = new Random();
-    	Image imgBlank = ImageCache.getImage("tile_blank");
-    	for(int i = 1; i < sizey-1; ++i){
-    		for(int j = 1; j < sizex-1; ++j){
-    			if(tileSpace[i][j].getIsWall() && 
-    					((!tileSpace[i-1][j].getIsWall() && !tileSpace[i+1][j].getIsWall()) || (!tileSpace[i][j].getIsWall() && !tileSpace[i][j].getIsWall()))){
-    				int d = rand.nextInt(7);
-    				if(d == 0){
-    					tileSpace[i][j] = new Tile(false, imgBlank);
-    				}
-    			}
-    		}
-    	}
+        Random rand = new Random();
+        Image imgBlank = ImageCache.getImage("tile_blank");
+        for(int i = 1; i < sizey-1; ++i){
+            for(int j = 1; j < sizex-1; ++j){
+                if(tileSpace[i][j].getIsWall() && 
+                        ((!tileSpace[i-1][j].getIsWall() && !tileSpace[i+1][j].getIsWall()) || (!tileSpace[i][j].getIsWall() && !tileSpace[i][j].getIsWall()))){
+                    int d = rand.nextInt(7);
+                    if(d == 0){
+                        tileSpace[i][j] = new Tile(false, imgBlank);
+                    }
+                }
+            }
+        }
     }
     
     private void DFS(){
-    	for(int i = 0; i < sizex-2; i++){
-    		for(int j = 0; j < sizey-2; ++j){
-    			visited[i][j] = false;
-    		}
-    	}
-    	
-    	Random rand = new Random();
-    	Image imgBlank = ImageCache.getImage("tile_blank");
-    	Queue<Integer> queueCol = new LinkedList<Integer>();
-    	Queue<Integer> queueRow = new LinkedList<Integer>();
-    	
-    	queueCol.add(20);
-    	queueRow.add(20);
-    	
-    	while(queueRow.size() > 0){
-    		int row = queueRow.poll();
-    		int col = queueCol.poll();
-    		while(col > 2 && col < sizex-3 && row > 2 && row < sizey-3 && (!visited[row+2][col] || !visited[row-2][col] || !visited[row][col+2] || !visited[row][col-2])){
-    			queueCol.add(col);
-    			queueRow.add(row);
-    			int d = rand.nextInt(4);
-    			while(visited[row+y[d]][col+x[d]]){
-    				d = rand.nextInt(4);
-    			}
-    			visited[row+(y[d])/2][col+(x[d])/2] = true;
-    			visited[row+y[d]][col+x[d]] = true;
-    			tileSpace[row+(y[d])/2][col+(x[d])/2] = new Tile(false, imgBlank);
-    			tileSpace[row+y[d]][col+x[d]] = new Tile(false, imgBlank);
-    			col += x[d];
-    			row += y[d];
-    		}
-    	}
-    	openMaze();
+        for(int i = 0; i < sizex-2; i++){
+            for(int j = 0; j < sizey-2; ++j){
+                visited[i][j] = false;
+            }
+        }
+        
+        Random rand = new Random();
+        Image imgBlank = ImageCache.getImage("tile_blank");
+        Queue<Integer> queueCol = new LinkedList<Integer>();
+        Queue<Integer> queueRow = new LinkedList<Integer>();
+        
+        queueCol.add(20);
+        queueRow.add(20);
+        
+        while(queueRow.size() > 0){
+            int row = queueRow.poll();
+            int col = queueCol.poll();
+            while(col > 2 && col < sizex-3 && row > 2 && row < sizey-3 && (!visited[row+2][col] || !visited[row-2][col] || !visited[row][col+2] || !visited[row][col-2])){
+                queueCol.add(col);
+                queueRow.add(row);
+                int d = rand.nextInt(4);
+                while(visited[row+y[d]][col+x[d]]){
+                    d = rand.nextInt(4);
+                }
+                visited[row+(y[d])/2][col+(x[d])/2] = true;
+                visited[row+y[d]][col+x[d]] = true;
+                tileSpace[row+(y[d])/2][col+(x[d])/2] = new Tile(false, imgBlank);
+                tileSpace[row+y[d]][col+x[d]] = new Tile(false, imgBlank);
+                col += x[d];
+                row += y[d];
+            }
+        }
+        openMaze();
     }
     
     private void generate(int sx, int sy){
@@ -136,39 +136,39 @@ public class Grid {
         Image imgWall = ImageCache.getImage("tile_wall");
         for (int y = 0; y < sy; y++){
             for (int x = 0; x < sx; x++){
-            	tileSpace[x][y] = new Tile(true, imgWall);
+                tileSpace[x][y] = new Tile(true, imgWall);
             }
         }
         DFS();
     }
     
     public boolean checkCollision(){
-    	for(Entity e : entList){
-    		if((e.getX() <= player.getX() + 0.5 && e.getX() >= player.getX() - 0.5) && 
-    				(e.getY() <= player.getY() + 0.5 && e.getY() >= player.getY() - 0.5)){
-    			if(e instanceof Token){
-    				System.out.println("Got coin");
-    			}
-    			else{
-    				System.out.println("Game over");
-    			}
-    			return true;
-    		}
-    	}
-    	return false;
+        for(Entity e : entList){
+            if((e.getX() <= player.getX() + 0.5 && e.getX() >= player.getX() - 0.5) && 
+                    (e.getY() <= player.getY() + 0.5 && e.getY() >= player.getY() - 0.5)){
+                if(e instanceof Token){
+                    System.out.println("Got coin");
+                }
+                else{
+                    System.out.println("Game over");
+                }
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
      * Update the Grid and its entities.
      */
     public void update(){
-    	
-    	checkCollision();
-    	
-    	player.update(this);
-    	
+        
+        checkCollision();
+        
+        player.update(this);
+        
         for (Entity ent: entList){
-        	ent.update(this);
+            ent.update(this);
         }
     }
     
@@ -197,17 +197,17 @@ public class Grid {
     }
     
     public int getPlayerX(){
-    	return player.getX();
+        return player.getX();
     }
     
     public int getPlayerY(){
-    	return player.getY();	
+        return player.getY();   
     }
     
     public void setPlayerInput(int x, int y){
-    	
-    	player.setVelX(x);
-    	player.setVelY(y);
+        
+        player.setVelX(x);
+        player.setVelY(y);
 
     }
 
