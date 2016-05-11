@@ -25,19 +25,22 @@ import java.awt.image.BufferedImage;
  */
 public class Renderer {
 
+    // maze render config
+    private static final double GRID_MARGIN = 0.05;
     // these should be at least as big as the largest expected screen height
-    private static final int PRERENDER_X = 1000;
-    private static final int PRERENDER_Y = 1000;
+    private static final int GRID_PRERENDER_X = 1000;
+    private static final int GRID_PRERENDER_Y = 1000;
 
     // canvas background color
     private static final Color BG_COLOR = Color.BLACK;
-    
-    // colors for menu items
+
+    // menu config
+    private static final double MENU_MARGIN = 0.05;
     private static final Color MENU_DEFAULT_FILL = Color.BLACK;
     private static final Color MENU_DEFAULT_CONTENT = Color.WHITE;
     private static final Color MENU_SELECTED_FILL = Color.WHITE;
     private static final Color MENU_SELECTED_CONTENT = Color.BLACK;
-    
+
     // whether to wipe the canvas clean on each frame (recommended)
     private static final boolean CLEAN_FRAME = true;
 
@@ -94,8 +97,7 @@ public class Renderer {
         final int S = 1000;
         final int TX = S / grid.getSizeX();
         final int TY = S / grid.getSizeY();
-        final double MARGIN = 0.05;
-        Graphics2D g = getTransformedGraphics(MARGIN, S, S);
+        Graphics2D g = getTransformedGraphics(GRID_MARGIN, S, S);
         g.drawImage(mazeBackground, 0, 0, S, S, null);
         for (Entity ent : grid.getEntities()) {
             g.drawImage(ent.getSprite().getCurrentImage(), ent.getX() * TX,
@@ -116,8 +118,7 @@ public class Renderer {
     public void drawMenu(Menu m) {
         // S can be anything: it gets transformed into the full screen
         final int S = 1000;
-        final double MARGIN = 0.05;
-        Graphics2D g = getTransformedGraphics(MARGIN, S, S);
+        Graphics2D g = getTransformedGraphics(MENU_MARGIN, S, S);
         g.setColor(MENU_DEFAULT_CONTENT);
         g.drawRect(0, 0, S, S / 2);
         // frameGraphics.drawImage(ImageCache.getImage("wobcke"), 0, 0, 0, 500,
@@ -158,11 +159,11 @@ public class Renderer {
     }
 
     public void createPreRender(Grid grid) {
-        mazeBackground = new BufferedImage(PRERENDER_X, PRERENDER_Y,
+        mazeBackground = new BufferedImage(GRID_PRERENDER_X, GRID_PRERENDER_Y,
                 BufferedImage.TYPE_INT_ARGB);
         Graphics g = mazeBackground.getGraphics();
-        final int TX = PRERENDER_X / grid.getSizeX();
-        final int TY = PRERENDER_Y / grid.getSizeY();
+        final int TX = GRID_PRERENDER_X / grid.getSizeX();
+        final int TY = GRID_PRERENDER_Y / grid.getSizeY();
         for (int y = 0; y < grid.getSizeY(); y++) {
             for (int x = 0; x < grid.getSizeX(); x++) {
                 Tile tile = grid.getTile(x, y);
