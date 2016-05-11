@@ -54,6 +54,8 @@ public class Grid {
             case NORMAL: j = 2; break;
             case HARD: j = 3; break;
         }
+        
+        int hunterCount = 0;
         for(int i = 0; i < j; ++i){
             entList.add(new HunterEntity());
             x = rand.nextInt(sizex-1)+1;
@@ -63,6 +65,7 @@ public class Grid {
                  y = rand.nextInt(sizey-1)+1;
             }
             ((ArrayList<Entity>) entList).get(i).setPos(x,y);
+            hunterCount++;
         }
         
         
@@ -75,7 +78,7 @@ public class Grid {
                  x = rand.nextInt(sizex-1)+1;
                  y = rand.nextInt(sizey-1)+1;
             }
-            ((ArrayList<Entity>) entList).get(i).setPos(x,y);
+            ((ArrayList<Entity>) entList).get(i+hunterCount).setPos(x,y);
         }
     }
     
