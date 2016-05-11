@@ -2,7 +2,7 @@
 public class Token extends Entity {
 
 	public Token() {
-		setSprite("coin");
+		setSprite("cartoon/coin");
 	}
 	
 	@Override
