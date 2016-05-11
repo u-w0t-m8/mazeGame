@@ -136,7 +136,7 @@ public class Engine {
     }
 
     void startNewLevel(Difficulty diff) {
-        currentGrid = new Grid();
+        currentGrid = new Grid(diff);
         mRenderer.createPreRender(currentGrid);
         state = GameState.IN_GAME;
     }

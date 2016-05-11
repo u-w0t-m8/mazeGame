@@ -55,9 +55,17 @@ public abstract class LivingEntity extends Entity {
     	intermediateY += vely/75;
     	*/
     	
+    	try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
-    	posx += velx;
-		posy += vely;
+    	if(!grid.getTile((int)(posx+velx), (int)(posy+vely)).getIsWall()){
+    		posx += velx;
+    		posy += vely;
+    	}
 		
 		velx = 0;
 		vely = 0;
