@@ -25,6 +25,8 @@ public class Grid {
     private PlayerEntity player;
     private int sizex;
     private int sizey;
+    
+    private int coinsCollected = 0;
 
     boolean[][] visited = new boolean[48][48];
     int[] x = { 0, 2, 0, -2 };
@@ -164,9 +166,11 @@ public class Grid {
                     && (e.getY() <= player.getY() + 0.5
                             && e.getY() >= player.getY() - 0.5)) {
                 if (e instanceof Token) {
-                    System.out.println("Got coin");
+                	coinsCollected++;
+                	entList.remove(e);
+                    //System.out.println("Got coin");
                 } else {
-                    System.out.println("Game over");
+                    //System.out.println("Game over");
                 }
                 return true;
             }
@@ -218,6 +222,10 @@ public class Grid {
 
     public float getPlayerY() {
         return player.getY();
+    }
+    
+    public int getCoinsCollected(){
+    	return this.coinsCollected;
     }
 
     /**
