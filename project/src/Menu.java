@@ -44,4 +44,8 @@ public class Menu{
 		this.selected = selected;
 	}
 	
+	public int getItemAtScreenPosition(int x, int y){
+	    return -1; // TODO
+	}
+	
 }
