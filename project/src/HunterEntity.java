@@ -55,8 +55,8 @@ public class HunterEntity extends LivingEntity {
             	}
             	else {
             		for(int i = 0; i < 4; ++i){
-            			if(nextState.getX() + x[i] < grid.getSizeX()-1 && nextState.getX() + x[i] > 2 &&
-            					nextState.getY() + y[i] < grid.getSizeY()-1 && nextState.getY() + y[i] > 2 &&
+            			if(nextState.getX() + x[i] < grid.getSizeX()-1 && nextState.getX() + x[i] > 1 &&
+            					nextState.getY() + y[i] < grid.getSizeY()-1 && nextState.getY() + y[i] > 1 &&
             					!grid.getTile(nextState.getX() + x[i],  nextState.getY() + y[i]).getIsWall()){ // Check if it is not a wall
             				queue.add(new State(i, nextState.getDistanceTraveled()+1, 
             						nextState.getX() + x[i], nextState.getY() + y[i], playerX, playerY, nextState));
