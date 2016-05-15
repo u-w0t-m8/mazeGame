@@ -19,20 +19,22 @@ import java.util.Random;
  * 
  */
 public class Grid {
-
+	
+	private final int SIZE = 25;
+	
     private Collection<Entity> entList;
     private Tile[][] tileSpace;
     private PlayerEntity player;
     private int sizex;
     private int sizey;
 
-    boolean[][] visited = new boolean[48][48];
+    boolean[][] visited = new boolean[SIZE][SIZE];
     int[] x = { 0, 2, 0, -2 };
     int[] y = { -2, 0, 2, 0 };
 
     public Grid(Difficulty diff) {
-        sizex = 31;
-        sizey = 31;
+        sizex = SIZE;
+        sizey = SIZE;
         entList = new ArrayList<Entity>();
         generate(sizex, sizey);
         player = new PlayerEntity();
@@ -118,8 +120,8 @@ public class Grid {
         Queue<Integer> queueCol = new LinkedList<Integer>();
         Queue<Integer> queueRow = new LinkedList<Integer>();
 
-        queueCol.add(20);
-        queueRow.add(20);
+        queueCol.add(SIZE/2);
+        queueRow.add(SIZE/2);
 
         while (queueRow.size() > 0) {
             int row = queueRow.poll();
