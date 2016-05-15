@@ -20,7 +20,7 @@ import java.util.Random;
  */
 public class Grid {
 	
-	private final int SIZE = 28;
+	private final int SIZE = 31;
 	
     private Collection<Entity> entList;
     private Tile[][] tileSpace;
@@ -75,15 +75,15 @@ public class Grid {
             break;
         }
         if(j >= 1){
-        	entList.add(new HunterEntity());
+        	entList.add(new HunterEntity(0));
         	((ArrayList<Entity>) entList).get(0+(int)(sizex/2)).setPos(sizex-3, sizey-3);
         }
         if(j >= 2){
-        	entList.add(new HunterEntity());
+        	entList.add(new HunterEntity(1));
         	((ArrayList<Entity>) entList).get(1+(int)(sizex/2)).setPos(sizex-3, 2);
         }
         if(j >= 3){
-        	entList.add(new HunterEntity());
+        	entList.add(new HunterEntity(2));
         	((ArrayList<Entity>) entList).get(2+(int)(sizex/2)).setPos(2, sizey-3);
         }
 
@@ -128,8 +128,8 @@ public class Grid {
         Queue<Integer> queueCol = new LinkedList<Integer>();
         Queue<Integer> queueRow = new LinkedList<Integer>();
 
-        queueCol.add(SIZE/2);
-        queueRow.add(SIZE/2);
+        queueCol.add(20);
+        queueRow.add(20);
 
         while (queueRow.size() > 0) {
             int row = queueRow.poll();
