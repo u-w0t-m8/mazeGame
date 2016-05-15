@@ -13,6 +13,7 @@ public class PinPattern implements Patterns {
 			}
 		}
 	}
+	
 
 	@Override
 	public int getX() {
