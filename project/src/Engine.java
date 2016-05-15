@@ -38,6 +38,7 @@ public class Engine {
 
     private boolean isRunning = false;
     private GameState state = GameState.MAIN_MENU;
+    
 
     public Engine() {
         mMenu = new Menu();
@@ -112,6 +113,9 @@ public class Engine {
         case IN_GAME: {
             currentGrid.update();
             break;
+        }
+        case GAME_OVER: {
+        	break;
         }
         }
     }
