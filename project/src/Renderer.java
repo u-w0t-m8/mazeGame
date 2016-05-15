@@ -98,6 +98,10 @@ public class Renderer {
         return true;
     }
 
+    /**
+     * Draws the game map
+     * @param grid
+     */
     public void drawGrid(Grid grid) {
         final int S = 1000;
         final int TX = S / grid.getSizeX();
@@ -195,9 +199,13 @@ public class Renderer {
         g.setFont(stringFont);
         //drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 
+        String[] strings = new String[] { "PLAY", "INSTRUCTIONS", "QUIT" };
         String[] difficulty = new String[] { "EASY", "MEDIUM", "HARD" };
-        String[] strings = new String[] { "Play", "Instructions", "Quit" };
-
+        if( m.getSelected() == 0){
+        	strings[0] = difficulty[m.getDifficulty()];
+        }
+        
+        
         // renders the 3 menu buttons in order
         for (int i = 0; i < 3; i++) {
             // shift each successive button's Y coords downwards
@@ -215,14 +223,26 @@ public class Renderer {
                 g.setFont(stringFont);
             }
             // fill and draw rectangle then text
+  
+            
             g.setColor(colFill);
             g.fillRect(0, buttonY, SX, SY / 6);
             g.setColor(colContent);
             g.drawRect(0, buttonY, SX, SY / 6);
+            
+           
             drawStringCentred(g, strings[i], SX / 2, textY);
+
         }
     }
 
+    /**
+     * Centre the objects
+     * @param g
+     * @param s
+     * @param x
+     * @param y
+     */
     private void drawStringCentred(Graphics g, String s, int x, int y) {
         Rectangle2D bounds = g.getFontMetrics().getStringBounds(s, g);
         int dx = (int) bounds.getCenterX();
@@ -230,6 +250,10 @@ public class Renderer {
         g.drawString(s, x - dx, y - dy);
     }
 
+    /**
+     * 
+     * @param grid
+     */
     public void createPreRender(Grid grid) {
         mazeBackground = new BufferedImage(GRID_PRERENDER_X, GRID_PRERENDER_Y,
                 BufferedImage.TYPE_INT_ARGB);
@@ -245,6 +269,9 @@ public class Renderer {
         }
     }
 
+    /**
+     * 
+     */
     public void destroyPreRender() {
         mazeBackground = null;
     }

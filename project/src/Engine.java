@@ -191,11 +191,12 @@ public class Engine {
                 case KeyEvent.VK_DOWN:
                     mMenu.down();
                     break;
-                case KeyEvent.VK_RIGHT:
-                	mMenu.right();
-                	break;
+
                 case KeyEvent.VK_LEFT:
                 	mMenu.left();
+                	break;
+                case KeyEvent.VK_RIGHT:
+                	mMenu.right();
                 	break;
                 case KeyEvent.VK_ENTER:
                 	switch(mMenu.getSelected()){
@@ -209,7 +210,6 @@ public class Engine {
                 		System.exit(0);
                 		break;
                 	}
-                  
                     break;
                 case KeyEvent.VK_ESCAPE:
                     System.exit(0);
