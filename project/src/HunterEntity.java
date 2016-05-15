@@ -8,10 +8,11 @@ public class HunterEntity extends LivingEntity {
 
 	int[] x = {0, 1, 0, -1};
 	int[] y = {-1, 0, 1, 0};
+	int pattern;
 	
-	public HunterEntity() {
+	public HunterEntity(int pattern) {
 		setSprite("enemy");
-		// TODO Auto-generated constructor stub
+		this.pattern = pattern;
 	}
 	
 	/**
@@ -28,11 +29,22 @@ public class HunterEntity extends LivingEntity {
     		}
     	}
     	
-        int playerX = (int)(grid.getPlayerX()+0.1);
-        int playerY = (int)(grid.getPlayerY()+0.1);
+    	Patterns patt;
+    	if(pattern == 0){
+    		patt = new DirectPattern(grid);
+    	}
+    	else if(pattern == 1){
+    		patt = new PinPattern(grid);
+    	}
+    	else {
+    		patt = new RandomPattern(grid);
+    	}
+    	
+        int goalX = patt.getX();
+        int goalY = patt.getY();
         
         PriorityQueue<State> queue = new PriorityQueue<State>(1, new StateComparator());
-        queue.add(new State(-1, 0, (int)(posx+0.1), (int)(posy+0.1), playerX, playerY+1, null));
+        queue.add(new State(-1, 0, (int)(posx+0.1), (int)(posy+0.1), goalX, goalY+1, null));
         
         while(queue.size() > 0){
         	State nextState = queue.poll();
@@ -59,7 +71,7 @@ public class HunterEntity extends LivingEntity {
             					nextState.getY() + y[i] < grid.getSizeY()-1 && nextState.getY() + y[i] > 1 &&
             					!grid.getTile(nextState.getX() + x[i],  nextState.getY() + y[i]).getIsWall()){ // Check if it is not a wall
             				queue.add(new State(i, nextState.getDistanceTraveled()+1, 
-            						nextState.getX() + x[i], nextState.getY() + y[i], playerX, playerY, nextState));
+            						nextState.getX() + x[i], nextState.getY() + y[i], goalX, goalY, nextState));
             				
 
             			}

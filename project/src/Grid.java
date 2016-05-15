@@ -61,7 +61,7 @@ public class Grid {
         int j = 0;
         switch (diff) {
         case EASY:
-            j = 1;
+            j = 3;
             break;
         case NORMAL:
             j = 2;
@@ -71,15 +71,15 @@ public class Grid {
             break;
         }
         if(j >= 1){
-        	entList.add(new HunterEntity());
+        	entList.add(new HunterEntity(0));
         	((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex-3, sizey-3);
         }
         if(j >= 2){
-        	entList.add(new HunterEntity());
+        	entList.add(new HunterEntity(1));
         	((ArrayList<Entity>) entList).get(1+(int)(sizex/3)).setPos(sizex-3, 2);
         }
         if(j >= 3){
-        	entList.add(new HunterEntity());
+        	entList.add(new HunterEntity(2));
         	((ArrayList<Entity>) entList).get(2+(int)(sizex/3)).setPos(2, sizey-3);
         }
 

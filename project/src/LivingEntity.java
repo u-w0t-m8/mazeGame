@@ -79,5 +79,13 @@ public abstract class LivingEntity extends Entity {
     	//System.out.println("Velocity y:" + vy);
         vely = vy;
     }
+    
+    public int getVelx(){
+    	return (int)velx;
+    }
+    
+    public int getVely(){
+    	return (int)vely;
+    }
 
 }
