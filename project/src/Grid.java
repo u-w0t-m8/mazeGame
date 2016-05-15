@@ -20,16 +20,18 @@ import java.util.Random;
  */
 public class Grid {
 	
-	private final int SIZE = 25;
+	private final int SIZE = 28;
 	
     private Collection<Entity> entList;
     private Tile[][] tileSpace;
     private PlayerEntity player;
     private int sizex;
     private int sizey;
+    private boolean gameEnd;
     
-    private int coinsCollected = 0;
-
+    private int coinsLeft;
+    private int coinsCollected;
+    
     private boolean[][] visited = new boolean[SIZE][SIZE];
     private int[] x = { 0, 2, 0, -2 };
     private int[] y = { -2, 0, 2, 0 };
@@ -40,16 +42,24 @@ public class Grid {
         entList = new ArrayList<Entity>();
         generate(sizex, sizey);
         player = new PlayerEntity();
-
+        gameEnd = false;
+        coinsCollected = 0;
+        coinsLeft = sizex/2;
         Random rand = new Random();
-        // Place player in random position
-        int x = rand.nextInt(sizex - 1) + 1;
-        int y = rand.nextInt(sizey - 1) + 1;
-        while (this.getTile(x, y).getIsWall()) {
-            x = rand.nextInt(sizex - 1) + 1;
-            y = rand.nextInt(sizey - 1) + 1;
+
+        player.setPos(2, 2);
+        
+     // Place coin
+        for (int i = 0; i < sizex/2; ++i) {
+            entList.add(new Token());
+            int x = rand.nextInt(sizex - 1) + 1;
+            int y = rand.nextInt(sizey - 1) + 1;
+            while (this.getTile(x, y).getIsWall()) {
+                x = rand.nextInt(sizex - 1) + 1;
+                y = rand.nextInt(sizey - 1) + 1;
+            }
+            ((ArrayList<Entity>) entList).get(i).setPos(x, y);
         }
-        player.setPos(x, y);
 
         // Place hunter in random position
         int j = 0;
@@ -64,31 +74,19 @@ public class Grid {
             j = 3;
             break;
         }
-
-        int hunterCount = 0;
-        for (int i = 0; i < j; ++i) {
-            entList.add(new HunterEntity());
-            x = rand.nextInt(sizex - 1) + 1;
-            y = rand.nextInt(sizey - 1) + 1;
-            while (this.getTile(x, y).getIsWall()) {
-                x = rand.nextInt(sizex - 1) + 1;
-                y = rand.nextInt(sizey - 1) + 1;
-            }
-            ((ArrayList<Entity>) entList).get(i).setPos(x, y);
-            hunterCount++;
+        if(j >= 1){
+        	entList.add(new HunterEntity());
+        	((ArrayList<Entity>) entList).get(0+(int)(sizex/2)).setPos(sizex-3, sizey-3);
+        }
+        if(j >= 2){
+        	entList.add(new HunterEntity());
+        	((ArrayList<Entity>) entList).get(1+(int)(sizex/2)).setPos(sizex-3, 2);
+        }
+        if(j >= 3){
+        	entList.add(new HunterEntity());
+        	((ArrayList<Entity>) entList).get(2+(int)(sizex/2)).setPos(2, sizey-3);
         }
 
-        // Place coin
-        for (int i = 0; i < 8; ++i) {
-            entList.add(new Token());
-            x = rand.nextInt(sizex - 1) + 1;
-            y = rand.nextInt(sizey - 1) + 1;
-            while (this.getTile(x, y).getIsWall()) {
-                x = rand.nextInt(sizex - 1) + 1;
-                y = rand.nextInt(sizey - 1) + 1;
-            }
-            ((ArrayList<Entity>) entList).get(i + hunterCount).setPos(x, y);
-        }
     }
 
     private void openMaze() {
@@ -177,29 +175,39 @@ public class Grid {
                             && e.getY() >= player.getY() - 0.5)) {
                 if (e instanceof Token) {
                 	coinsCollected++;
+                	coinsLeft--;
                 	entList.remove(e);
-                    //System.out.println("Got coin");
                 } else {
-                    //System.out.println("Game over");
+                	gameEnd = true;
                 }
                 return true;
             }
         }
         return false;
     }
+   /* 
+    public boolean coinsLeft(){
+    	for(Entity e : entList){
+    		if(e instanceof Token){
+    			return true;
+    		}
+    	}
+    	return false;
+    }*/
 
     /**
      * Update the Grid and its entities.
      */
     public void update() {
-
+    	
         checkCollision();
 
         player.update(this);
 
         for (Entity ent : entList) {
-            ent.update(this);
+        	ent.update(this);
         }
+        
     }
 
     public void addEntity(Entity ent) {
@@ -236,6 +244,14 @@ public class Grid {
     
     public int getCoinsCollected(){
     	return this.coinsCollected;
+    }
+    
+    public int getCoinsLeft(){
+    	return coinsLeft;
+    }
+    
+    public boolean getGameEnd(){
+    	return gameEnd;
     }
 
     /**
