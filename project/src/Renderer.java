@@ -127,7 +127,14 @@ public class Renderer {
      * 
      */
     public void drawInstructions(){
+    	int SX = 1600;
+    	int SY = 900;
     	
+    	Graphics2D g = getTransformedGraphics(MENU_MARGIN,SX,SY);
+    	g.setFont(stringFont);
+    	g.setColor(MENU_DEFAULT_FILL);
+    	g.drawRect(0, SY*6/8, SX, SY/8);
+    	drawStringCentred(g, "Menu",SX/2,SY*13/16);
     }
     
     /**
