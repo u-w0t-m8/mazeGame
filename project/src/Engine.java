@@ -4,8 +4,11 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
+import javax.swing.event.MouseInputAdapter;
 
 /**
  * The entry point of the program. Its main responsibilities of this class are
@@ -25,7 +28,7 @@ public class Engine {
         eng.startEngine();
     }
 
-    private static final int TARGET_FRAME_RATE = 75;
+    public static final int TARGET_FRAME_RATE = 75;
     private static final int DEFAULT_XRES = 800;
     private static final int DEFAULT_YRES = 500;
 
@@ -63,6 +66,8 @@ public class Engine {
         });
         // STUFF RELATED TO INPUT
         mCanvas.addKeyListener(inputListener);
+        mCanvas.addMouseListener(mouseListener);
+        mCanvas.addMouseMotionListener(mouseMotionListener);
         mCanvas.setFocusable(true);
         // c.getFocusListeners();
     }
@@ -70,11 +75,11 @@ public class Engine {
     public void startEngine() {
         // TODO: set windows to visible
         isRunning = true;
-        loopThread.start();
+        LOOPTHREAD.start();
         mFrame.setVisible(true);
     }
 
-    private final Thread loopThread = new Thread() {
+    private final Thread LOOPTHREAD = new Thread() {
         /*
          * There are lots of viable ways to do a regular timed loop. This one
          * checks every half-millisecond whether the time since last run
@@ -95,12 +100,8 @@ public class Engine {
                     }
                 } else {
                     lastTime = time;
-                   //if(currentGrid.getGameEnd()){
-                   //   isRunning = false;
-                   //}
                     	update();
                     	render();
-                    //}
                 }
             }
         };
@@ -113,19 +114,18 @@ public class Engine {
      */
     private void update() {
         switch (state) {
-        case MAIN_MENU: {
+        case MAIN_MENU:
             break;
-        }
-        case IN_GAME: {
+        case IN_GAME:
             currentGrid.update();
             if(currentGrid.getGameEnd()){
             	endLevel();
             }
             break;
-        }
-        case GAME_OVER: {
+        case GAME_OVER: 
         	break;
-        }
+        case INSTRUCTION:
+        	break;
         }
     }
 
@@ -144,8 +144,10 @@ public class Engine {
                 mRenderer.drawGrid(currentGrid);
                 break;
             case GAME_OVER: 
-            	mRenderer.drawEndState(mEndState);
+            	mRenderer.drawEndState(mEndState, currentGrid);
             	break;
+            case INSTRUCTION:
+            	mRenderer.drawInstructions();
             }
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
@@ -190,9 +192,25 @@ public class Engine {
                 case KeyEvent.VK_DOWN:
                     mMenu.down();
                     break;
+
+                case KeyEvent.VK_LEFT:
+                	mMenu.left();
+                	break;
+                case KeyEvent.VK_RIGHT:
+                	mMenu.right();
+                	break;
                 case KeyEvent.VK_ENTER:
-                    Difficulty diff = Difficulty.values()[mMenu.getSelected()];
-                    startNewLevel(diff);
+                	switch(mMenu.getSelected()){
+                	case(0):
+                		startNewLevel(Difficulty.values()[mMenu.getDifficulty()]);
+                		break;
+                	case(1):
+                		state = GameState.INSTRUCTION;
+                		break;
+                	case(2):
+                		System.exit(0);
+                		break;
+                	}
                     break;
                 case KeyEvent.VK_ESCAPE:
                     System.exit(0);
@@ -218,6 +236,11 @@ public class Engine {
                     System.exit(0);
                 }
             	}
+            case INSTRUCTION:
+            	switch(e.getKeyCode()){
+            	case KeyEvent.VK_ENTER:
+            		state = GameState.MAIN_MENU;
+            	}
             }
             }
 
@@ -240,5 +263,22 @@ public class Engine {
             }
         }
     };
+    
+    private MouseAdapter mouseListener = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent event) {
+			int mouseLocationX = event.getX();
+			int mouseLocationY = event.getY();
+			mMenu.getItemAtScreenPosition(mouseLocationX, mouseLocationY);
+        }    	
+	};
+	
+	private MouseInputAdapter mouseMotionListener = new MouseInputAdapter(){
+		@Override
+        public void mouseMoved(MouseEvent event) {
+			int mouseLocationX = event.getX();
+			int mouseLocationY = event.getY();
+        }   
+	};
 
 }

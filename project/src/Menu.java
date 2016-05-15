@@ -1,4 +1,4 @@
-
+ 
 public class Menu{
 	
 	private int selected;
@@ -10,13 +10,14 @@ public class Menu{
 	 */
 	public Menu() {	
 		selected = 0;
+		difficulty = 0;
 	}
 	
 	/**
 	 * Get the value of selected 
-	 * 0 = Difficulty
-	 * 1 = Instructions
-	 * 2 = Quit
+	 * 0 = easy
+	 * 1 = medium
+	 * 2 = hard
 	 * @return int
 	 */
 	public int getSelected() {
@@ -44,23 +45,29 @@ public class Menu{
 	public void setSelected(int selected) {
 		this.selected = selected;
 	}
-	
+
+	public int getItemAtScreenPosition(int x, int y){
+	    return -1; // TODO
+	}
+	    
 	public void left() {
 		if(selected == 0){
-			if((difficulty >= 0) && (difficulty < 2)){
-				difficulty++;
-				System.out.println(difficulty);
-			}
+				difficulty--;
+
+			if(difficulty == -1)
+				difficulty = 2;
 		}
 	}
-	
-	
+
 	public void right() {
 		if(selected == 0){
-			if((difficulty >= 0) && (difficulty < 2)){
-				difficulty--;
-				System.out.println(difficulty);
-			}
+				difficulty++;
+				if(difficulty == 3)
+					difficulty = 0;
 		}
 	} 
+	
+	public int getDifficulty(){
+		return difficulty;
+	}
 }
