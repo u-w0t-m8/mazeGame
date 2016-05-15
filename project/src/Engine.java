@@ -95,12 +95,8 @@ public class Engine {
                     }
                 } else {
                     lastTime = time;
-                   //if(currentGrid.getGameEnd()){
-                   //   isRunning = false;
-                   //}
                     	update();
                     	render();
-                    //}
                 }
             }
         };

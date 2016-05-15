@@ -137,8 +137,10 @@ public class Renderer {
     	Graphics2D g = getTransformedGraphics(MENU_MARGIN,SX,SY);
     	g.setFont(stringFont);
     	g.setColor(MENU_DEFAULT_FILL);
-    	g.drawRect(0, SY*6/8, SX, SY/8);
-    	drawStringCentred(g, "Menu",SX/2,SY*13/16);
+    	g.drawRect(0, SY*7/8, SX, SY/8);
+    	g.fillRect(0, SY*7/8, SX, SY/8);
+    	g.setColor(MENU_DEFAULT_CONTENT);
+    	drawStringCentred(g, "< Back",SX/2,SY*15/16);
     }
     
     /**
