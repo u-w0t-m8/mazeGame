@@ -118,11 +118,16 @@ public class Renderer {
         g.setFont(inGameFont);
         drawStringCentred(g,"Player",-150,S/4);
         g.drawImage(p.getSprite().getCurrentImage(), -182, S*9/32, 64, 64, null);
-        drawStringCentred(g,"Coins Collected",-150,S/2);
-        drawStringCentred(g,Integer.toString(grid.getCoinsCollected()),-150,S*7/12);
+        drawStringCentred(g,"Coins Left",-150,S/2);
+        drawStringCentred(g,Integer.toString(grid.getCoinsLeft()),-150,S*7/12);
 
-        //Graphics2D sidePanel = getTransformedGraphics(GRID_MARGIN,-300,S);
-        //sidePanel.drawRect(-300, 0, 300, S);
+    }
+    
+    /**
+     * 
+     */
+    public void drawInstructions(){
+    	
     }
     
     /**
@@ -137,27 +142,31 @@ public class Renderer {
     	g.setColor(MENU_DEFAULT_FILL);
     	drawStringCentred(g, "GAME OVER", SX/2, SY/4);
     	g.drawRect(0, SY*5/8, SX, SY/8);
-    	g.setColor(MENU_DEFAULT_FILL);
-    	g.fillRect(0, SY*5/8, SX, SY/8);
-    	g.setColor(MENU_DEFAULT_CONTENT);
-    	drawStringCentred(g, "Menu",SX/2,SY*11/16);
+    
     	g.drawRect(0, SY*6/8, SX, SY/8);
-    	g.setColor(MENU_DEFAULT_FILL);
-    	g.fillRect(0, SY*6/8, SX, SY/8);
-    	g.setColor(MENU_DEFAULT_CONTENT);
-    	drawStringCentred(g, "Exit",SX/2,SY*13/16);
+    
     	if(end.getSelected() == 0){
             g.setFont(selectedFont);
             g.setColor(MENU_SELECTED_FILL);
             g.fillRect(0, SY*5/8, SX, SY/8);
         	g.setColor(MENU_SELECTED_CONTENT);
         	drawStringCentred(g, "Menu",SX/2,SY*11/16);
+        	g.setColor(MENU_DEFAULT_FILL);
+        	g.fillRect(0, SY*6/8, SX, SY/8);
+        	g.setColor(MENU_DEFAULT_CONTENT);
+        	drawStringCentred(g, "Exit",SX/2,SY*13/16);
     	}else{
+            g.setFont(selectedFont);
+    		g.setColor(MENU_DEFAULT_FILL);
+        	g.fillRect(0, SY*5/8, SX, SY/8);
+        	g.setColor(MENU_DEFAULT_CONTENT);
+        	drawStringCentred(g, "Menu",SX/2,SY*11/16);
             g.setFont(selectedFont);
             g.setColor(MENU_SELECTED_FILL);
     	   	g.fillRect(0, SY*6/8, SX, SY/8);
            	g.setColor(MENU_SELECTED_CONTENT);
            	drawStringCentred(g, "Exit",SX/2,SY*13/16);
+           	
     	}
     }
 

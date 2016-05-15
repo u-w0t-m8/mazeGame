@@ -1,4 +1,4 @@
-
+ 
 public class Menu{
 	
 	private int selected;
@@ -21,6 +21,11 @@ public class Menu{
 	 */
 	public int getSelected() {
 		return selected;
+	}
+	
+	
+	public int getDifficulty(){
+		return difficulty;
 	}
 
 	/**
@@ -49,7 +54,7 @@ public class Menu{
 		if(selected == 0){
 			if((difficulty >= 0) && (difficulty < 2)){
 				difficulty++;
-				System.out.println(difficulty);
+				//System.out.println(difficulty);
 			}
 		}
 	}
@@ -57,9 +62,9 @@ public class Menu{
 	
 	public void right() {
 		if(selected == 0){
-			if((difficulty >= 0) && (difficulty < 2)){
+			if((difficulty > 0) && (difficulty <= 2)){
 				difficulty--;
-				System.out.println(difficulty);
+				//System.out.println(difficulty);
 			}
 		}
 	} 

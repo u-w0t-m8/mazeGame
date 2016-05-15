@@ -27,8 +27,9 @@ public class Grid {
     private int sizey;
     private boolean gameEnd;
     
-    private int coinsCollected = 0;
-
+    private int coinsLeft;
+    private int coinsCollected;
+    
     boolean[][] visited = new boolean[48][48];
     int[] x = { 0, 2, 0, -2 };
     int[] y = { -2, 0, 2, 0 };
@@ -40,13 +41,14 @@ public class Grid {
         generate(sizex, sizey);
         player = new PlayerEntity();
         gameEnd = false;
-
+        coinsCollected = 0;
+        coinsLeft = sizex/2;
         Random rand = new Random();
 
         player.setPos(2, 2);
         
      // Place coin
-        for (int i = 0; i < sizex/3; ++i) {
+        for (int i = 0; i < sizex/2; ++i) {
             entList.add(new Token());
             int x = rand.nextInt(sizex - 1) + 1;
             int y = rand.nextInt(sizey - 1) + 1;
@@ -72,15 +74,15 @@ public class Grid {
         }
         if(j >= 1){
         	entList.add(new HunterEntity());
-        	((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex-3, sizey-3);
+        	((ArrayList<Entity>) entList).get(0+(int)(sizex/2)).setPos(sizex-3, sizey-3);
         }
         if(j >= 2){
         	entList.add(new HunterEntity());
-        	((ArrayList<Entity>) entList).get(1+(int)(sizex/3)).setPos(sizex-3, 2);
+        	((ArrayList<Entity>) entList).get(1+(int)(sizex/2)).setPos(sizex-3, 2);
         }
         if(j >= 3){
         	entList.add(new HunterEntity());
-        	((ArrayList<Entity>) entList).get(2+(int)(sizex/3)).setPos(2, sizey-3);
+        	((ArrayList<Entity>) entList).get(2+(int)(sizex/2)).setPos(2, sizey-3);
         }
 
     }
@@ -171,18 +173,25 @@ public class Grid {
                             && e.getY() >= player.getY() - 0.5)) {
                 if (e instanceof Token) {
                 	coinsCollected++;
+                	coinsLeft--;
                 	entList.remove(e);
-                    //System.out.println("Got coin");
                 } else {
                 	gameEnd = true;
-                	//System.exit(1);
-                    //System.out.println("Game over");
                 }
                 return true;
             }
         }
         return false;
     }
+   /* 
+    public boolean coinsLeft(){
+    	for(Entity e : entList){
+    		if(e instanceof Token){
+    			return true;
+    		}
+    	}
+    	return false;
+    }*/
 
     /**
      * Update the Grid and its entities.
@@ -233,6 +242,10 @@ public class Grid {
     
     public int getCoinsCollected(){
     	return this.coinsCollected;
+    }
+    
+    public int getCoinsLeft(){
+    	return coinsLeft;
     }
     
     public boolean getGameEnd(){

@@ -123,6 +123,8 @@ public class Engine {
             break;
         case GAME_OVER: 
         	break;
+        case INSTRUCTION:
+        	break;
         }
     }
 
@@ -143,6 +145,8 @@ public class Engine {
             case GAME_OVER: 
             	mRenderer.drawEndState(mEndState, currentGrid);
             	break;
+            case INSTRUCTION:
+            	mRenderer.drawInstructions();
             }
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
@@ -187,9 +191,25 @@ public class Engine {
                 case KeyEvent.VK_DOWN:
                     mMenu.down();
                     break;
+                case KeyEvent.VK_RIGHT:
+                	mMenu.right();
+                	break;
+                case KeyEvent.VK_LEFT:
+                	mMenu.left();
+                	break;
                 case KeyEvent.VK_ENTER:
-                    Difficulty diff = Difficulty.values()[mMenu.getSelected()];
-                    startNewLevel(diff);
+                	switch(mMenu.getSelected()){
+                	case(0):
+                		startNewLevel(Difficulty.values()[mMenu.getDifficulty()]);
+                		break;
+                	case(1):
+                		state = GameState.INSTRUCTION;
+                		break;
+                	case(2):
+                		System.exit(0);
+                		break;
+                	}
+                  
                     break;
                 case KeyEvent.VK_ESCAPE:
                     System.exit(0);
@@ -214,6 +234,11 @@ public class Engine {
                 case KeyEvent.VK_ESCAPE:
                     System.exit(0);
                 }
+            	}
+            case INSTRUCTION:
+            	switch(e.getKeyCode()){
+            	case KeyEvent.VK_ENTER:
+            		state = GameState.MAIN_MENU;
             	}
             }
             }
