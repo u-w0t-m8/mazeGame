@@ -190,9 +190,20 @@ public class Engine {
                 case KeyEvent.VK_DOWN:
                     mMenu.down();
                     break;
+                case KeyEvent.VK_LEFT:
+                	mMenu.left();
+                	break;
+                case KeyEvent.VK_RIGHT:
+                	mMenu.right();
+                	break;
                 case KeyEvent.VK_ENTER:
-                    Difficulty diff = Difficulty.values()[mMenu.getSelected()];
+                    Difficulty diff = Difficulty.values()[mMenu.getDifficulty()];
                     startNewLevel(diff);
+                    // if mMenu.getSelected == 1 
+                    // display instructions page
+                    if(mMenu.getSelected() == 2){
+                    	System.exit(0);
+                    }
                     break;
                 case KeyEvent.VK_ESCAPE:
                     System.exit(0);

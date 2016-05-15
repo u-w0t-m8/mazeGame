@@ -10,6 +10,7 @@ public class Menu{
 	 */
 	public Menu() {	
 		selected = 0;
+		difficulty = 0;
 	}
 	
 	/**
@@ -47,9 +48,11 @@ public class Menu{
 	
 	public void left() {
 		if(selected == 0){
-			if((difficulty >= 0) && (difficulty < 2)){
-				difficulty++;
-				System.out.println(difficulty);
+			//if((difficulty > 0) && (difficulty <= 2)){
+				difficulty--;
+			//}
+			if(difficulty == -1){
+				difficulty = 2;
 			}
 		}
 	}
@@ -57,10 +60,16 @@ public class Menu{
 	
 	public void right() {
 		if(selected == 0){
-			if((difficulty >= 0) && (difficulty < 2)){
-				difficulty--;
-				System.out.println(difficulty);
+			//if((difficulty >= 0) && (difficulty < 2)){
+				difficulty++;
+			//}
+			if(difficulty == 3){
+				difficulty = 0;
 			}
 		}
 	} 
+	
+	public int getDifficulty(){
+		return difficulty;
+	}
 }
