@@ -22,6 +22,7 @@ public class Grid {
 	
 	private final int SIZE = 31;
 	
+	
     private Collection<Entity> entList;
     private Tile[][] tileSpace;
     private PlayerEntity player;
