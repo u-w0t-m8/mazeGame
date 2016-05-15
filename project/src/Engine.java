@@ -4,8 +4,11 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
+import javax.swing.event.MouseInputAdapter;
 
 /**
  * The entry point of the program. Its main responsibilities of this class are
@@ -25,7 +28,7 @@ public class Engine {
         eng.startEngine();
     }
 
-    private static final int TARGET_FRAME_RATE = 75;
+    public static final int TARGET_FRAME_RATE = 75;
     private static final int DEFAULT_XRES = 800;
     private static final int DEFAULT_YRES = 500;
 
@@ -63,6 +66,8 @@ public class Engine {
         });
         // STUFF RELATED TO INPUT
         mCanvas.addKeyListener(inputListener);
+        mCanvas.addMouseListener(mouseListener);
+        mCanvas.addMouseMotionListener(mouseMotionListener);
         mCanvas.setFocusable(true);
         // c.getFocusListeners();
     }
@@ -70,11 +75,11 @@ public class Engine {
     public void startEngine() {
         // TODO: set windows to visible
         isRunning = true;
-        loopThread.start();
+        LOOPTHREAD.start();
         mFrame.setVisible(true);
     }
 
-    private final Thread loopThread = new Thread() {
+    private final Thread LOOPTHREAD = new Thread() {
         /*
          * There are lots of viable ways to do a regular timed loop. This one
          * checks every half-millisecond whether the time since last run
@@ -258,5 +263,22 @@ public class Engine {
             }
         }
     };
+    
+    private MouseAdapter mouseListener = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent event) {
+			int mouseLocationX = event.getX();
+			int mouseLocationY = event.getY();
+			mMenu.getItemAtScreenPosition(mouseLocationX, mouseLocationY);
+        }    	
+	};
+	
+	private MouseInputAdapter mouseMotionListener = new MouseInputAdapter(){
+		@Override
+        public void mouseMoved(MouseEvent event) {
+			int mouseLocationX = event.getX();
+			int mouseLocationY = event.getY();
+        }   
+	};
 
 }

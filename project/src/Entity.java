@@ -14,7 +14,7 @@ public abstract class Entity {
 	protected float posx;
 	protected float posy;
 
-	Sprite mSprite;
+	private Sprite mSprite;
 
 	abstract public void update(Grid grid);
 	

@@ -46,7 +46,7 @@ public class Renderer {
     // whether to wipe the canvas clean on each frame (recommended)
     private static final boolean CLEAN_FRAME = true;
 
-    private final Font stringFont = new Font("SansSerif", Font.PLAIN, 36);
+    private final Font STRINGFONT = new Font("SansSerif", Font.PLAIN, 36);
     private Font selectedFont = new Font("Helvetica", Font.BOLD, 52);
     private Font inGameFont = new Font("SansSerif", Font.BOLD, 24);
     private Image mazeBackground;
@@ -135,7 +135,7 @@ public class Renderer {
     	int SY = 900;
     	
     	Graphics2D g = getTransformedGraphics(MENU_MARGIN,SX,SY);
-    	g.setFont(stringFont);
+    	g.setFont(STRINGFONT);
     	g.setColor(MENU_DEFAULT_FILL);
     	g.drawRect(0, SY*7/8, SX, SY/8);
     	g.fillRect(0, SY*7/8, SX, SY/8);
@@ -151,7 +151,7 @@ public class Renderer {
     	final int SY = 900;
     	
     	Graphics2D g = getTransformedGraphics(MENU_MARGIN,SX,SY);
-    	g.setFont(stringFont);
+    	g.setFont(STRINGFONT);
     	g.setColor(MENU_DEFAULT_FILL);
     	drawStringCentred(g, "GAME OVER", SX/2, SY/4);
     	g.drawRect(0, SY*5/8, SX, SY/8);
@@ -198,7 +198,7 @@ public class Renderer {
         g.drawImage(ImageCache.getImage("title"), 0, 0, SX, SY/2, null);
         g.setColor(MENU_DEFAULT_CONTENT);
         g.drawRect(0, 0, SX, SY / 2);
-        g.setFont(stringFont);
+        g.setFont(STRINGFONT);
         //drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 
         String[] strings = new String[] { "PLAY", "INSTRUCTIONS", "QUIT" };
@@ -222,7 +222,7 @@ public class Renderer {
             } else {
                 colFill = MENU_DEFAULT_FILL;
                 colContent = MENU_DEFAULT_CONTENT;
-                g.setFont(stringFont);
+                g.setFont(STRINGFONT);
             }
             // fill and draw rectangle then text
   
