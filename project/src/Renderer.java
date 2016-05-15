@@ -128,7 +128,7 @@ public class Renderer {
     /**
      * Frame of end state
      */
-    public void drawEndState(EndState End){
+    public void drawEndState(EndState end, Grid currentGrid){
     	final int SX = 1600;
     	final int SY = 900;
     	
@@ -146,7 +146,7 @@ public class Renderer {
     	g.fillRect(0, SY*6/8, SX, SY/8);
     	g.setColor(MENU_DEFAULT_CONTENT);
     	drawStringCentred(g, "Exit",SX/2,SY*13/16);
-    	if(End.getSelected() == 0){
+    	if(end.getSelected() == 0){
             g.setFont(selectedFont);
             g.setColor(MENU_SELECTED_FILL);
             g.fillRect(0, SY*5/8, SX, SY/8);

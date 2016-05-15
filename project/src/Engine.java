@@ -113,19 +113,16 @@ public class Engine {
      */
     private void update() {
         switch (state) {
-        case MAIN_MENU: {
+        case MAIN_MENU:
             break;
-        }
-        case IN_GAME: {
+        case IN_GAME:
             currentGrid.update();
             if(currentGrid.getGameEnd()){
             	endLevel();
             }
             break;
-        }
-        case GAME_OVER: {
+        case GAME_OVER: 
         	break;
-        }
         }
     }
 
@@ -144,7 +141,7 @@ public class Engine {
                 mRenderer.drawGrid(currentGrid);
                 break;
             case GAME_OVER: 
-            	mRenderer.drawEndState(mEndState);
+            	mRenderer.drawEndState(mEndState, currentGrid);
             	break;
             }
         } while (!mRenderer.finishFrame());

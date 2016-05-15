@@ -12,5 +12,4 @@ public enum GameState {
 	// IN_GAME_PAUSED // will definitely be needed later
 	GAME_OVER,
 	
-	WIN_GAME;
 }
