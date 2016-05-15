@@ -4,8 +4,11 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
+import javax.swing.event.MouseInputAdapter;
 
 /**
  * The entry point of the program. Its main responsibilities of this class are
@@ -60,6 +63,8 @@ public class Engine {
         });
         // STUFF RELATED TO INPUT
         mCanvas.addKeyListener(inputListener);
+        mCanvas.addMouseListener(mouseListener);
+        mCanvas.addMouseMotionListener(mouseMotionListener);
         mCanvas.setFocusable(true);
         // c.getFocusListeners();
     }
@@ -205,5 +210,21 @@ public class Engine {
             }
         }
     };
+    
+    private MouseAdapter mouseListener = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent event) {
+			int mouseLocationX = event.getX();
+			int mouseLocationY = event.getY();
+        }    	
+	};
+	
+	private MouseInputAdapter mouseMotionListener = new MouseInputAdapter(){
+		@Override
+        public void mouseMoved(MouseEvent event) {
+			int mouseLocationX = event.getX();
+			int mouseLocationY = event.getY();
+        }   
+	};
 
 }
