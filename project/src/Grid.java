@@ -94,14 +94,22 @@ public class Grid {
     private void openMaze() {
         Random rand = new Random();
         Image imgBlank = ImageCache.getImage("tile_blank");
+        
+        for(int i = 2; i < sizey - 2; ++i){
+        	for(int j = 2; j < sizex - 2; j += sizex - 5){
+        		tileSpace[j][i] = new Tile(false, imgBlank);
+        	}
+        	for(int j = 2; j < sizex - 2; j += sizex - 5){
+        		tileSpace[i][j] = new Tile(false, imgBlank);
+        	}
+        }
+        
         for (int i = 1; i < sizey - 1; ++i) {
             for (int j = 1; j < sizex - 1; ++j) {
-                if (tileSpace[i][j].getIsWall()
-                        && ((!tileSpace[i - 1][j].getIsWall()
-                                && !tileSpace[i + 1][j].getIsWall())
-                                || (!tileSpace[i][j].getIsWall()
-                                        && !tileSpace[i][j].getIsWall()))) {
-                    int d = rand.nextInt(7);
+                if (tileSpace[i][j].getIsWall() && 
+                		((!tileSpace[i - 1][j].getIsWall() && !tileSpace[i + 1][j].getIsWall() && tileSpace[i][j-1].getIsWall() && tileSpace[i][j+1].getIsWall()) || 
+                				(!tileSpace[i][j-1].getIsWall() && !tileSpace[i][j+1].getIsWall() && tileSpace[i-1][j].getIsWall() && tileSpace[i+1][j].getIsWall()))) {
+                    int d = rand.nextInt(4);
                     if (d == 0) {
                         tileSpace[i][j] = new Tile(false, imgBlank);
                     }
@@ -221,11 +229,11 @@ public class Grid {
         return player;
     }
 
-    public int getPlayerX() {
+    public float getPlayerX() {
         return player.getX();
     }
 
-    public int getPlayerY() {
+    public float getPlayerY() {
         return player.getY();
     }
     
