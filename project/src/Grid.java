@@ -30,9 +30,9 @@ public class Grid {
     
     private int coinsCollected = 0;
 
-    boolean[][] visited = new boolean[SIZE][SIZE];
-    int[] x = { 0, 2, 0, -2 };
-    int[] y = { -2, 0, 2, 0 };
+    private boolean[][] visited = new boolean[SIZE][SIZE];
+    private int[] x = { 0, 2, 0, -2 };
+    private int[] y = { -2, 0, 2, 0 };
 
     public Grid(Difficulty diff) {
         sizex = SIZE;

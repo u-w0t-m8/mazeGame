@@ -28,7 +28,7 @@ public class Engine {
         eng.startEngine();
     }
 
-    private static final int TARGET_FRAME_RATE = 75;
+    public static final int TARGET_FRAME_RATE = 75;
     private static final int DEFAULT_XRES = 800;
     private static final int DEFAULT_YRES = 500;
 
@@ -73,11 +73,11 @@ public class Engine {
     public void startEngine() {
         // TODO: set windows to visible
         isRunning = true;
-        loopThread.start();
+        LOOPTHREAD.start();
         mFrame.setVisible(true);
     }
 
-    private final Thread loopThread = new Thread() {
+    private final Thread LOOPTHREAD = new Thread() {
         /*
          * There are lots of viable ways to do a regular timed loop. This one
          * checks every half-millisecond whether the time since last run

@@ -46,7 +46,7 @@ public class Renderer {
     // whether to wipe the canvas clean on each frame (recommended)
     private static final boolean CLEAN_FRAME = true;
 
-    private final Font stringFont = new Font("SansSerif", Font.PLAIN, 36);
+    private final Font STRINGFONT = new Font("SansSerif", Font.PLAIN, 36);
     private Font selectedFont = new Font("Helvetica", Font.BOLD, 52);
     private Font inGameFont = new Font("SansSerif", Font.BOLD, 24);
     private Image mazeBackground;
@@ -142,7 +142,7 @@ public class Renderer {
         g.drawImage(ImageCache.getImage("title"), 0, 0, SX, SY/2, null);
         g.setColor(MENU_DEFAULT_CONTENT);
         g.drawRect(0, 0, SX, SY / 2);
-        g.setFont(stringFont);
+        g.setFont(STRINGFONT);
         //drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 
         String[] strings = new String[] { "EASY", "MEDIUM", "HARD" };
@@ -161,7 +161,7 @@ public class Renderer {
             } else {
                 colFill = MENU_DEFAULT_FILL;
                 colContent = MENU_DEFAULT_CONTENT;
-                g.setFont(stringFont);
+                g.setFont(STRINGFONT);
             }
             // fill and draw rectangle then text
             g.setColor(colFill);

@@ -6,8 +6,8 @@ import java.util.PriorityQueue;
  */
 public class HunterEntity extends LivingEntity {
 
-	int[] x = {0, 1, 0, -1};
-	int[] y = {-1, 0, 1, 0};
+	private int[] x = {0, 1, 0, -1};
+	private int[] y = {-1, 0, 1, 0};
 	
 	public HunterEntity() {
 		setSprite("enemy");

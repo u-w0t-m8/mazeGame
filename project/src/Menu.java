@@ -2,7 +2,6 @@
 public class Menu{
 	
 	private int selected;
-	private int difficulty;
 
 	/**
 	 * Constructor for menu
@@ -14,9 +13,9 @@ public class Menu{
 	
 	/**
 	 * Get the value of selected 
-	 * 0 = Difficulty
-	 * 1 = Instructions
-	 * 2 = Quit
+	 * 0 = easy
+	 * 1 = medium
+	 * 2 = hard
 	 * @return int
 	 */
 	public int getSelected() {
@@ -45,22 +44,8 @@ public class Menu{
 		this.selected = selected;
 	}
 	
-	public void left() {
-		if(selected == 0){
-			if((difficulty >= 0) && (difficulty < 2)){
-				difficulty++;
-				System.out.println(difficulty);
-			}
-		}
+	public int getItemAtScreenPosition(int x, int y){
+	    return -1; // TODO
 	}
 	
-	
-	public void right() {
-		if(selected == 0){
-			if((difficulty >= 0) && (difficulty < 2)){
-				difficulty--;
-				System.out.println(difficulty);
-			}
-		}
-	} 
 }

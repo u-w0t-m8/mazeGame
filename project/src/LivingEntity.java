@@ -18,7 +18,7 @@ public abstract class LivingEntity extends Entity {
     // really need to solve smooth movement
     protected float velx;
     protected float vely;
-    int counter = 0;
+    private int counter = 0;
 
     public abstract void think(Grid grid);
     
