@@ -212,11 +212,11 @@ public class Grid {
         return player;
     }
 
-    public int getPlayerX() {
+    public float getPlayerX() {
         return player.getX();
     }
 
-    public int getPlayerY() {
+    public float getPlayerY() {
         return player.getY();
     }
 

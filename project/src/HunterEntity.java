@@ -28,11 +28,11 @@ public class HunterEntity extends LivingEntity {
     		}
     	}
     	
-        int playerX = grid.getPlayerX();
-        int playerY = grid.getPlayerY();
+        int playerX = (int)(grid.getPlayerX()+0.1);
+        int playerY = (int)(grid.getPlayerY()+0.1);
         
         PriorityQueue<State> queue = new PriorityQueue<State>(1, new StateComparator());
-        queue.add(new State(-1, 0, posx, posy, playerX, playerY+1, null));
+        queue.add(new State(-1, 0, (int)(posx+0.1), (int)(posy+0.1), playerX, playerY+1, null));
         
         while(queue.size() > 0){
         	State nextState = queue.poll();

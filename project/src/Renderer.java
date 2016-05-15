@@ -103,12 +103,12 @@ public class Renderer {
         Graphics2D g = getTransformedGraphics(GRID_MARGIN, S, S);
         g.drawImage(mazeBackground, 0, 0, S, S, null);
         for (Entity ent : grid.getEntities()) {
-            g.drawImage(ent.getSprite().getCurrentImage(), ent.getX() * TX,
-                    ent.getY() * TY, TX, TY, null);
+            g.drawImage(ent.getSprite().getCurrentImage(), (int)(ent.getX() * TX),
+                    (int)(ent.getY() * TY), TX, TY, null);
         }
         PlayerEntity p = grid.getPlayer();
-        g.drawImage(p.getSprite().getCurrentImage(), p.getX() * TX,
-                p.getY() * TY, TX, TY, null);
+        g.drawImage(p.getSprite().getCurrentImage(), (int)(p.getX() * TX),
+                (int)(p.getY() * TY), TX, TY, null);
     }
 
     /**

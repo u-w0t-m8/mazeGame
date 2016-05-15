@@ -11,8 +11,8 @@
 public abstract class Entity {
 
     //need a good scheme for smooth movement eventually
-	protected int posx;
-	protected int posy;
+	protected float posx;
+	protected float posy;
 
 	Sprite mSprite;
 
@@ -31,11 +31,11 @@ public abstract class Entity {
 	    posy = y;
 	}
 	
-	public int getX(){
+	public float getX(){
 		return posx;
 	}
 	
-	public int getY(){
+	public float getY(){
 		return posy;
 	}
 }
