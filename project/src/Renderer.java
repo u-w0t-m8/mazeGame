@@ -53,7 +53,8 @@ public class Renderer {
     private BufferStrategy bufferStrategy = null;
     private Graphics frameGraphics;
 
-    private int resX, resY;
+    private int resX = 800;
+    private int resY = 500;
 
     public Renderer(Canvas c) {
         bufferStrategy = c.getBufferStrategy();
@@ -124,7 +125,40 @@ public class Renderer {
         //sidePanel.drawRect(-300, 0, 300, S);
     }
     
-    public void drawEndState(){
+    /**
+     * Frame of end state
+     */
+    public void drawEndState(EndState End){
+    	final int SX = 1600;
+    	final int SY = 900;
+    	
+    	Graphics2D g = getTransformedGraphics(MENU_MARGIN,SX,SY);
+    	g.setFont(stringFont);
+    	g.setColor(MENU_DEFAULT_FILL);
+    	drawStringCentred(g, "GAME OVER", SX/2, SY/4);
+    	g.drawRect(0, SY*5/8, SX, SY/8);
+    	g.setColor(MENU_DEFAULT_FILL);
+    	g.fillRect(0, SY*5/8, SX, SY/8);
+    	g.setColor(MENU_DEFAULT_CONTENT);
+    	drawStringCentred(g, "Menu",SX/2,SY*11/16);
+    	g.drawRect(0, SY*6/8, SX, SY/8);
+    	g.setColor(MENU_DEFAULT_FILL);
+    	g.fillRect(0, SY*6/8, SX, SY/8);
+    	g.setColor(MENU_DEFAULT_CONTENT);
+    	drawStringCentred(g, "Exit",SX/2,SY*13/16);
+    	if(End.getSelected() == 0){
+            g.setFont(selectedFont);
+            g.setColor(MENU_SELECTED_FILL);
+            g.fillRect(0, SY*5/8, SX, SY/8);
+        	g.setColor(MENU_SELECTED_CONTENT);
+        	drawStringCentred(g, "Menu",SX/2,SY*11/16);
+    	}else{
+            g.setFont(selectedFont);
+            g.setColor(MENU_SELECTED_FILL);
+    	   	g.fillRect(0, SY*6/8, SX, SY/8);
+           	g.setColor(MENU_SELECTED_CONTENT);
+           	drawStringCentred(g, "Exit",SX/2,SY*13/16);
+    	}
     }
 
     /**
@@ -145,7 +179,8 @@ public class Renderer {
         g.setFont(stringFont);
         //drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 
-        String[] strings = new String[] { "EASY", "MEDIUM", "HARD" };
+        String[] difficulty = new String[] { "EASY", "MEDIUM", "HARD" };
+        String[] strings = new String[] { "Play", "Instructions", "Quit" };
 
         // renders the 3 menu buttons in order
         for (int i = 0; i < 3; i++) {

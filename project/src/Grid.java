@@ -25,6 +25,7 @@ public class Grid {
     private PlayerEntity player;
     private int sizex;
     private int sizey;
+    private boolean gameEnd;
     
     private int coinsCollected = 0;
 
@@ -38,6 +39,7 @@ public class Grid {
         entList = new ArrayList<Entity>();
         generate(sizex, sizey);
         player = new PlayerEntity();
+        gameEnd = false;
 
         Random rand = new Random();
 
@@ -71,7 +73,7 @@ public class Grid {
 
 
         // Place coin
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < sizex/3; ++i) {
             entList.add(new Token());
             int x = rand.nextInt(sizex - 1) + 1;
             int y = rand.nextInt(sizey - 1) + 1;
@@ -172,6 +174,8 @@ public class Grid {
                 	entList.remove(e);
                     //System.out.println("Got coin");
                 } else {
+                	gameEnd = true;
+                	//System.exit(1);
                     //System.out.println("Game over");
                 }
                 return true;
@@ -184,14 +188,15 @@ public class Grid {
      * Update the Grid and its entities.
      */
     public void update() {
-
+    	
         checkCollision();
 
         player.update(this);
 
         for (Entity ent : entList) {
-            ent.update(this);
+        	ent.update(this);
         }
+        
     }
 
     public void addEntity(Entity ent) {
@@ -228,6 +233,10 @@ public class Grid {
     
     public int getCoinsCollected(){
     	return this.coinsCollected;
+    }
+    
+    public boolean getGameEnd(){
+    	return gameEnd;
     }
 
     /**
