@@ -39,6 +39,7 @@ public class Engine {
     private JFrame mFrame;
     private Canvas mCanvas;
     // private Input mInput;
+    private int coinCount;
 
     private boolean isRunning = false;
     private GameState state = GameState.MAIN_MENU;
@@ -144,7 +145,7 @@ public class Engine {
                 mRenderer.drawGrid(currentGrid);
                 break;
             case GAME_OVER: 
-            	mRenderer.drawEndState(mEndState, currentGrid);
+            	mRenderer.drawEndState(mEndState, coinCount);
             	break;
             case INSTRUCTION:
             	mRenderer.drawInstructions();
@@ -160,6 +161,7 @@ public class Engine {
     }
 
     void endLevel() {
+    	coinCount = currentGrid.getCoinsCollected();
         currentGrid = null;
         mRenderer.destroyPreRender();
         state = GameState.GAME_OVER;

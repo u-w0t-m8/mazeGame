@@ -146,7 +146,7 @@ public class Renderer {
     /**
      * Frame of end state
      */
-    public void drawEndState(EndState end, Grid currentGrid){
+    public void drawEndState(EndState end, int coinsCollected){
     	final int SX = 1600;
     	final int SY = 900;
     	
@@ -154,7 +154,7 @@ public class Renderer {
     	g.setFont(stringFont);
     	g.setColor(MENU_DEFAULT_FILL);
     	drawStringCentred(g, "GAME OVER", SX/2, SY/4);
-    	drawStringCentred(g, Integer.toString(currentGrid.getCoinsCollected()),SX/2,SY*3/10);
+    	drawStringCentred(g, "Coins Collected: "+Integer.toString(coinsCollected),SX/2,SY*3/10);
     	g.drawRect(0, SY*5/8, SX, SY/8);
     
     	g.drawRect(0, SY*6/8, SX, SY/8);
