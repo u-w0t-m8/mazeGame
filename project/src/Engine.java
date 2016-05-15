@@ -216,6 +216,7 @@ public class Engine {
         public void mouseClicked(MouseEvent event) {
 			int mouseLocationX = event.getX();
 			int mouseLocationY = event.getY();
+			mMenu.getItemAtScreenPosition(mouseLocationX, mouseLocationY);
         }    	
 	};
 	
