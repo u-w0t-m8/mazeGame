@@ -30,6 +30,7 @@ public class Engine {
     private static final int DEFAULT_YRES = 500;
 
     private Menu mMenu;
+    private EndState mEndState;
     private Grid currentGrid = null;
     private Renderer mRenderer;
     private JFrame mFrame;
@@ -42,6 +43,7 @@ public class Engine {
 
     public Engine() {
         mMenu = new Menu();
+        mEndState = new EndState();
         mFrame = new JFrame();
         mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mCanvas = new Canvas();
@@ -93,8 +95,12 @@ public class Engine {
                     }
                 } else {
                     lastTime = time;
-                    update();
-                    render();
+                   //if(currentGrid.getGameEnd()){
+                   //   isRunning = false;
+                   //}
+                    	update();
+                    	render();
+                    //}
                 }
             }
         };
@@ -112,6 +118,9 @@ public class Engine {
         }
         case IN_GAME: {
             currentGrid.update();
+            if(currentGrid.getGameEnd()){
+            	endLevel();
+            }
             break;
         }
         case GAME_OVER: {
@@ -134,6 +143,9 @@ public class Engine {
             case IN_GAME:
                 mRenderer.drawGrid(currentGrid);
                 break;
+            case GAME_OVER: 
+            	mRenderer.drawEndState(mEndState);
+            	break;
             }
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
@@ -148,7 +160,7 @@ public class Engine {
     void endLevel() {
         currentGrid = null;
         mRenderer.destroyPreRender();
-        state = GameState.MAIN_MENU;
+        state = GameState.GAME_OVER;
     }
 
     private KeyAdapter inputListener = new KeyAdapter() {
@@ -187,8 +199,27 @@ public class Engine {
                 }
                 break;
             }
+            case GAME_OVER:{
+            	switch(e.getKeyCode()){
+            	case KeyEvent.VK_UP:
+                    mEndState.up();
+                    break;
+                case KeyEvent.VK_DOWN:
+                    mEndState.down();
+                    break;
+                case KeyEvent.VK_ENTER:
+                	if(mEndState.getSelected() == 0){
+                		state = GameState.MAIN_MENU;
+                	}else{
+                		System.exit(0);
+                	}
+                	break;
+                case KeyEvent.VK_ESCAPE:
+                    System.exit(0);
+                }
+            	}
             }
-        }
+            }
 
         @Override
         public void keyReleased(KeyEvent e) {
