@@ -44,6 +44,18 @@ public class Grid {
         Random rand = new Random();
 
         player.setPos(2, 2);
+        
+     // Place coin
+        for (int i = 0; i < sizex/3; ++i) {
+            entList.add(new Token());
+            int x = rand.nextInt(sizex - 1) + 1;
+            int y = rand.nextInt(sizey - 1) + 1;
+            while (this.getTile(x, y).getIsWall()) {
+                x = rand.nextInt(sizex - 1) + 1;
+                y = rand.nextInt(sizey - 1) + 1;
+            }
+            ((ArrayList<Entity>) entList).get(i).setPos(x, y);
+        }
 
         // Place hunter in random position
         int j = 0;
@@ -60,29 +72,17 @@ public class Grid {
         }
         if(j >= 1){
         	entList.add(new HunterEntity());
-        	((ArrayList<Entity>) entList).get(0).setPos(sizex-3, sizey-3);
+        	((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex-3, sizey-3);
         }
         if(j >= 2){
         	entList.add(new HunterEntity());
-        	((ArrayList<Entity>) entList).get(1).setPos(sizex-3, 2);
+        	((ArrayList<Entity>) entList).get(1+(int)(sizex/3)).setPos(sizex-3, 2);
         }
         if(j >= 3){
         	entList.add(new HunterEntity());
-        	((ArrayList<Entity>) entList).get(2).setPos(2, sizey-3);
+        	((ArrayList<Entity>) entList).get(2+(int)(sizex/3)).setPos(2, sizey-3);
         }
 
-
-        // Place coin
-        for (int i = 0; i < sizex/3; ++i) {
-            entList.add(new Token());
-            int x = rand.nextInt(sizex - 1) + 1;
-            int y = rand.nextInt(sizey - 1) + 1;
-            while (this.getTile(x, y).getIsWall()) {
-                x = rand.nextInt(sizex - 1) + 1;
-                y = rand.nextInt(sizey - 1) + 1;
-            }
-            ((ArrayList<Entity>) entList).get(i + j).setPos(x, y);
-        }
     }
 
     private void openMaze() {
