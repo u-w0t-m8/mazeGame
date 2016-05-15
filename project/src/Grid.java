@@ -70,6 +70,7 @@ public class Grid {
             j = 3;
             break;
         }
+        
         if(j >= 1){
         	entList.add(new HunterEntity());
         	((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex-3, sizey-3);
