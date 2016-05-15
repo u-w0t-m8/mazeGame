@@ -10,4 +10,6 @@ public enum GameState {
 	// LOADING, // may be needed later
 	IN_GAME,
 	// IN_GAME_PAUSED // will definitely be needed later
+	GAME_OVER,
+	
 }
