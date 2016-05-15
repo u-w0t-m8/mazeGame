@@ -40,14 +40,8 @@ public class Grid {
         player = new PlayerEntity();
 
         Random rand = new Random();
-        // Place player in random position
-        int x = rand.nextInt(sizex - 1) + 1;
-        int y = rand.nextInt(sizey - 1) + 1;
-        while (this.getTile(x, y).getIsWall()) {
-            x = rand.nextInt(sizex - 1) + 1;
-            y = rand.nextInt(sizey - 1) + 1;
-        }
-        player.setPos(x, y);
+
+        player.setPos(2, 2);
 
         // Place hunter in random position
         int j = 0;
@@ -62,30 +56,30 @@ public class Grid {
             j = 3;
             break;
         }
-
-        int hunterCount = 0;
-        for (int i = 0; i < j; ++i) {
-            entList.add(new HunterEntity());
-            x = rand.nextInt(sizex - 1) + 1;
-            y = rand.nextInt(sizey - 1) + 1;
-            while (this.getTile(x, y).getIsWall()) {
-                x = rand.nextInt(sizex - 1) + 1;
-                y = rand.nextInt(sizey - 1) + 1;
-            }
-            ((ArrayList<Entity>) entList).get(i).setPos(x, y);
-            hunterCount++;
+        if(j >= 1){
+        	entList.add(new HunterEntity());
+        	((ArrayList<Entity>) entList).get(0).setPos(sizex-3, sizey-3);
         }
+        if(j >= 2){
+        	entList.add(new HunterEntity());
+        	((ArrayList<Entity>) entList).get(1).setPos(sizex-3, 2);
+        }
+        if(j >= 3){
+        	entList.add(new HunterEntity());
+        	((ArrayList<Entity>) entList).get(2).setPos(2, sizey-3);
+        }
+
 
         // Place coin
         for (int i = 0; i < 8; ++i) {
             entList.add(new Token());
-            x = rand.nextInt(sizex - 1) + 1;
-            y = rand.nextInt(sizey - 1) + 1;
+            int x = rand.nextInt(sizex - 1) + 1;
+            int y = rand.nextInt(sizey - 1) + 1;
             while (this.getTile(x, y).getIsWall()) {
                 x = rand.nextInt(sizex - 1) + 1;
                 y = rand.nextInt(sizey - 1) + 1;
             }
-            ((ArrayList<Entity>) entList).get(i + hunterCount).setPos(x, y);
+            ((ArrayList<Entity>) entList).get(i + j).setPos(x, y);
         }
     }
 
