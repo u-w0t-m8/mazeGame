@@ -48,6 +48,7 @@ public class Renderer {
 
     private final Font stringFont = new Font("SansSerif", Font.PLAIN, 36);
     private Font selectedFont = new Font("Helvetica", Font.BOLD, 52);
+    private Font inGameFont = new Font("SansSerif", Font.BOLD, 24);
     private Image mazeBackground;
     private BufferStrategy bufferStrategy = null;
     private Graphics frameGraphics;
@@ -100,15 +101,30 @@ public class Renderer {
         final int S = 1000;
         final int TX = S / grid.getSizeX();
         final int TY = S / grid.getSizeY();
-        Graphics2D g = getTransformedGraphics(GRID_MARGIN, S, S);
+        Graphics2D g = getTransformedGraphics(GRID_MARGIN, S-300, S);
         g.drawImage(mazeBackground, 0, 0, S, S, null);
         for (Entity ent : grid.getEntities()) {
-            g.drawImage(ent.getSprite().getCurrentImage(), ent.getX() * TX,
-                    ent.getY() * TY, TX, TY, null);
+            g.drawImage(ent.getSprite().getCurrentImage(), (int)(ent.getX() * TX),
+                    (int)(ent.getY() * TY), TX, TY, null);
         }
         PlayerEntity p = grid.getPlayer();
-        g.drawImage(p.getSprite().getCurrentImage(), p.getX() * TX,
-                p.getY() * TY, TX, TY, null);
+        g.drawImage(p.getSprite().getCurrentImage(), (int)(p.getX() * TX),
+                (int)(p.getY() * TY), TX, TY, null);
+        g.setColor(MENU_DEFAULT_FILL);
+        g.drawRect(-300, 0, 300, S-10);
+        g.fillRect(-300, 0, 300, S-10);
+        g.setColor(Color.white);
+        g.setFont(inGameFont);
+        drawStringCentred(g,"Player",-150,S/4);
+        g.drawImage(p.getSprite().getCurrentImage(), -182, S*9/32, 64, 64, null);
+        drawStringCentred(g,"Coins Collected",-150,S/2);
+        drawStringCentred(g,Integer.toString(grid.getCoinsCollected()),-150,S*7/12);
+
+        //Graphics2D sidePanel = getTransformedGraphics(GRID_MARGIN,-300,S);
+        //sidePanel.drawRect(-300, 0, 300, S);
+    }
+    
+    public void drawEndState(){
     }
 
     /**

@@ -18,66 +18,56 @@ public abstract class LivingEntity extends Entity {
     // really need to solve smooth movement
     protected float velx;
     protected float vely;
-    public float prevX = 0;
-    public float prevY = 0;
-    
-    private double intermediateX;
-    private double intermediateY;
-    
-    int intermediateCount = 0;
+    int counter = 0;
 
     public abstract void think(Grid grid);
     
     @Override
     public void update(Grid grid) {
     	
-    	think(grid);
-    	
-    	/*
-    	if(intermediateCount == 0){
-    		intermediateX = posx;
-    		intermediateY = posy;
+    	if(counter >0){ //if counting already
+    		if(counter == 25){
+    			velx = 0;
+    			vely = 0;
+    			if(velx != 0){
+    				if((int)(posx+0.1) != (int)posx){
+        				posx = (int) Math.ceil(posx);
+        			}
+        			else {
+        				posx = (int) Math.floor(posx);
+        			}
+    			}
+    			else {
+    				if((int)(posy+0.1) != (int)posy){
+        				posy = (int) Math.ceil(posy);
+        			}
+        			else {
+        				posy = (int) Math.floor(posy);
+        			}
+    			}
+    			
+    			counter = 0;
+    		}
+    		else {
+    			counter++;
+    			posx += velx/25;
+	    		posy += vely/25;
+    		}
     	}
-    	else if(prevX != velx || prevY != vely){
-    		intermediateCount = 75-intermediateCount;
-    		
+    	else { //Else wait
+    		think(grid);
+    		if(velx != 0 || vely != 0){
+    			if(velx != 0 && vely !=0 ){
+    				vely = 0;
+    			}
+    			if(!grid.getTile((int)(posx+velx+0.1), (int)(posy+vely+0.1)).getIsWall()){
+    	    		posx += velx/25;
+    	    		posy += vely/25;
+    	    		counter++;
+    	    	}
+    		}
     	}
-    	else if(intermediateCount == 75){
-    		intermediateCount = 0;
-    		posx += velx;
-    		posy += vely;
-    		System.out.println("Intermediate count is 75");
-    	}
-    	
-    	intermediateCount++;
-    	
-    	intermediateX += velx/75;
-    	intermediateY += vely/75;
-    	*/
-    	
-    	try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	if(!grid.getTile((int)(posx+velx), (int)(posy+vely)).getIsWall()){
-    		posx += velx;
-    		posy += vely;
-    	}
-		
-		velx = 0;
-		vely = 0;
-    	
-    }
-    
-    public double getIntermediateX(){
-    	return intermediateX;
-    }
-    
-    public double getIntermediateY(){
-    	return intermediateY;
+
     }
     
     protected void setVelX(float vx){
