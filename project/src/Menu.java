@@ -1,8 +1,10 @@
- 
+import java.awt.Rectangle;
+
 public class Menu{
 	
 	private int selected;
 	private int difficulty;
+	private Rectangle[] mouseBoxes = new Rectangle[3];
 
 	/**
 	 * Constructor for menu
@@ -11,6 +13,9 @@ public class Menu{
 	public Menu() {	
 		selected = 0;
 		difficulty = 0;
+		for (int i = 0; i < mouseBoxes.length; i++){
+			mouseBoxes[i] = new Rectangle(-1, -1, 0, 0);
+		}
 	}
 	
 	/**
@@ -45,9 +50,18 @@ public class Menu{
 	public void setSelected(int selected) {
 		this.selected = selected;
 	}
+	
+	public void setMouseArea(int index, int x1, int y1, int x2, int y2){
+		mouseBoxes[index].setFrameFromDiagonal(x1, y1, x2, y2);
+	}
 
 	public int getItemAtScreenPosition(int x, int y){
-	    return -1; // TODO
+	    for (int i = 0; i < mouseBoxes.length; i++){
+	    	if (mouseBoxes[i].contains(x, y)){
+	    		return i;
+	    	}
+	    }
+	    return -1;
 	}
 	    
 	public void left() {

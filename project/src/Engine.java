@@ -202,6 +202,7 @@ public class Engine {
                 	mMenu.right();
                 	break;
                 case KeyEvent.VK_ENTER:
+                	// TODO: maybe make this a separate method (see Mouse click)
                 	switch(mMenu.getSelected()){
                 	case(0):
                 		startNewLevel(Difficulty.values()[mMenu.getDifficulty()]);
@@ -269,17 +270,25 @@ public class Engine {
     private MouseAdapter mouseListener = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent event) {
-			int mouseLocationX = event.getX();
-			int mouseLocationY = event.getY();
-			mMenu.getItemAtScreenPosition(mouseLocationX, mouseLocationY);
+        	switch(mMenu.getSelected()){
+        	case(0):
+        		startNewLevel(Difficulty.values()[mMenu.getDifficulty()]);
+        		break;
+        	case(1):
+        		state = GameState.INSTRUCTION;
+        		break;
+        	case(2):
+        		System.exit(0);
+        		break;
+        	}
         }    	
 	};
 	
 	private MouseInputAdapter mouseMotionListener = new MouseInputAdapter(){
 		@Override
         public void mouseMoved(MouseEvent event) {
-			int mouseLocationX = event.getX();
-			int mouseLocationY = event.getY();
+			int index = mMenu.getItemAtScreenPosition(event.getX(), event.getY());
+			mMenu.setSelected(index);
         }   
 	};
 

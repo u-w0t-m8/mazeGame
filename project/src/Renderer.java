@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -26,296 +27,308 @@ import java.awt.image.ImageObserver;
  */
 public class Renderer {
 
-    Image title = ImageCache.getImage("title");
-    // maze render config
-    private static final double GRID_MARGIN = 0.05;
-    // these should be at least as big as the largest expected screen height
-    private static final int GRID_PRERENDER_X = 1000;
-    private static final int GRID_PRERENDER_Y = 1000;
+	Image title = ImageCache.getImage("title");
+	// maze render config
+	private static final double GRID_MARGIN = 0.05;
+	// these should be at least as big as the largest expected screen height
+	private static final int GRID_PRERENDER_X = 1000;
+	private static final int GRID_PRERENDER_Y = 1000;
 
-    // canvas background color
-    private static final Color BG_COLOR = Color.LIGHT_GRAY;
+	// canvas background color
+	private static final Color BG_COLOR = Color.LIGHT_GRAY;
 
-    // menu config
-    private static final double MENU_MARGIN = 0.05;
-    private static final Color MENU_DEFAULT_FILL = new Color(0xA9EBE6);
-    private static final Color MENU_DEFAULT_CONTENT = Color.WHITE;
-    private static final Color MENU_SELECTED_FILL = new Color(0x89C4C0);
-    private static final Color MENU_SELECTED_CONTENT = new Color(0x4B989C);
+	// menu config
+	private static final double MENU_MARGIN = 0.05;
+	private static final Color MENU_DEFAULT_FILL = new Color(0xA9EBE6);
+	private static final Color MENU_DEFAULT_CONTENT = Color.WHITE;
+	private static final Color MENU_SELECTED_FILL = new Color(0x89C4C0);
+	private static final Color MENU_SELECTED_CONTENT = new Color(0x4B989C);
 
-    // whether to wipe the canvas clean on each frame (recommended)
-    private static final boolean CLEAN_FRAME = true;
+	// whether to wipe the canvas clean on each frame (recommended)
+	private static final boolean CLEAN_FRAME = true;
 
-    private final Font stringFont = new Font("SansSerif", Font.PLAIN, 36);
-    private Font selectedFont = new Font("Helvetica", Font.BOLD, 52);
-    private Font inGameFont = new Font("SansSerif", Font.BOLD, 24);
-    private Image mazeBackground;
-    private BufferStrategy bufferStrategy = null;
-    private Graphics frameGraphics;
+	private final Font stringFont = new Font("SansSerif", Font.PLAIN, 36);
+	private Font selectedFont = new Font("Helvetica", Font.BOLD, 52);
+	private Font inGameFont = new Font("SansSerif", Font.BOLD, 24);
+	private Image mazeBackground;
+	private BufferStrategy bufferStrategy = null;
+	private Graphics frameGraphics;
 
-    private int resX = 800;
-    private int resY = 500;
+	private int resX = 800;
+	private int resY = 500;
 
-    public Renderer(Canvas c) {
-        bufferStrategy = c.getBufferStrategy();
-        c.setBackground(BG_COLOR);
-    }
+	public Renderer(Canvas c) {
+		bufferStrategy = c.getBufferStrategy();
+		c.setBackground(BG_COLOR);
+	}
 
-    public void setResolution(int x, int y) {
-        resX = x;
-        resY = y;
-    }
+	public void setResolution(int x, int y) {
+		resX = x;
+		resY = y;
+	}
 
-    /**
-     * Start a new frame for display. After drawing, finishFrame() must be
-     * called to display the completed frame.
-     */
-    public void startFrame() {
-        frameGraphics = bufferStrategy.getDrawGraphics();
-        if (CLEAN_FRAME) {
-            frameGraphics.clearRect(0, 0, resX, resY);
-        }
-        frameGraphics.setColor(Color.BLACK);
-    }
+	/**
+	 * Start a new frame for display. After drawing, finishFrame() must be
+	 * called to display the completed frame.
+	 */
+	public void startFrame() {
+		frameGraphics = bufferStrategy.getDrawGraphics();
+		if (CLEAN_FRAME) {
+			frameGraphics.clearRect(0, 0, resX, resY);
+		}
+		frameGraphics.setColor(Color.BLACK);
+	}
 
-    /**
-     * Tries to display the completed frame and free drawing resources. The draw
-     * buffers used are volatile and can be lost during rendering, destroying
-     * render progress. If this happens, the method returns false and the caller
-     * should restart the render.
-     * 
-     * @return True if the frame render was successful.
-     */
-    public boolean finishFrame() {
-        frameGraphics.dispose();
-        if (bufferStrategy.contentsRestored()) {
-            return false;
-        }
-        bufferStrategy.show();
-        if (bufferStrategy.contentsLost()) {
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * Tries to display the completed frame and free drawing resources. The draw
+	 * buffers used are volatile and can be lost during rendering, destroying
+	 * render progress. If this happens, the method returns false and the caller
+	 * should restart the render.
+	 * 
+	 * @return True if the frame render was successful.
+	 */
+	public boolean finishFrame() {
+		frameGraphics.dispose();
+		if (bufferStrategy.contentsRestored()) {
+			return false;
+		}
+		bufferStrategy.show();
+		if (bufferStrategy.contentsLost()) {
+			return false;
+		}
+		return true;
+	}
 
-    /**
-     * Draws the game map
-     * @param grid
-     */
-    public void drawGrid(Grid grid) {
-        final int S = 1000;
-        final int TX = S / grid.getSizeX();
-        final int TY = S / grid.getSizeY();
-        Graphics2D g = getTransformedGraphics(GRID_MARGIN, S-300, S);
-        g.drawImage(mazeBackground, 0, 0, S, S, null);
-        for (Entity ent : grid.getEntities()) {
-            g.drawImage(ent.getSprite().getCurrentImage(), (int)(ent.getX() * TX),
-                    (int)(ent.getY() * TY), TX, TY, null);
-        }
-        PlayerEntity p = grid.getPlayer();
-        g.drawImage(p.getSprite().getCurrentImage(), (int)(p.getX() * TX),
-                (int)(p.getY() * TY), TX, TY, null);
-        g.setColor(MENU_DEFAULT_FILL);
-        g.drawRect(-300, 0, 300, S-10);
-        g.fillRect(-300, 0, 300, S-10);
-        g.setColor(Color.white);
-        g.setFont(inGameFont);
-        drawStringCentred(g,"Player",-150,S/4);
-        g.drawImage(p.getSprite().getCurrentImage(), -182, S*9/32, 64, 64, null);
-        drawStringCentred(g,"Coins Left",-150,S/2);
-        drawStringCentred(g,Integer.toString(grid.getCoinsLeft()),-150,S*7/12);
+	/**
+	 * Draws the game map
+	 * 
+	 * @param grid
+	 */
+	public void drawGrid(Grid grid) {
+		final int S = 1000;
+		final int TX = S / grid.getSizeX();
+		final int TY = S / grid.getSizeY();
+		Graphics2D g = getTransformedGraphics(GRID_MARGIN, S - 300, S);
+		g.drawImage(mazeBackground, 0, 0, S, S, null);
+		for (Entity ent : grid.getEntities()) {
+			g.drawImage(ent.getSprite().getCurrentImage(), (int) (ent.getX() * TX),
+					(int) (ent.getY() * TY), TX, TY, null);
+		}
+		PlayerEntity p = grid.getPlayer();
+		g.drawImage(p.getSprite().getCurrentImage(), (int) (p.getX() * TX), (int) (p.getY() * TY),
+				TX, TY, null);
+		g.setColor(MENU_DEFAULT_FILL);
+		g.drawRect(-300, 0, 300, S - 10);
+		g.fillRect(-300, 0, 300, S - 10);
+		g.setColor(Color.white);
+		g.setFont(inGameFont);
+		drawStringCentred(g, "Player", -150, S / 4);
+		g.drawImage(p.getSprite().getCurrentImage(), -182, S * 9 / 32, 64, 64, null);
+		drawStringCentred(g, "Coins Left", -150, S / 2);
+		drawStringCentred(g, Integer.toString(grid.getCoinsLeft()), -150, S * 7 / 12);
 
-    }
-    
-    /**
-     * 
-     */
-    public void drawInstructions(){
-    	int SX = 1600;
-    	int SY = 900;
-    	
-    	Graphics2D g = getTransformedGraphics(MENU_MARGIN,SX,SY);
-    	g.setFont(stringFont);
-    	g.setColor(MENU_DEFAULT_FILL);
-    	g.drawRect(0, SY*7/8, SX, SY/8);
-    	g.fillRect(0, SY*7/8, SX, SY/8);
-    	g.setColor(MENU_DEFAULT_CONTENT);
-    	drawStringCentred(g, "< Back",SX/2,SY*15/16);
-    }
-    
-    /**
-     * Frame of end state
-     */
-    public void drawEndState(EndState end, int coinsCollected){
-    	final int SX = 1600;
-    	final int SY = 900;
-    	
-    	Graphics2D g = getTransformedGraphics(MENU_MARGIN,SX,SY);
-    	g.setFont(stringFont);
-    	g.setColor(MENU_DEFAULT_FILL);
-    	drawStringCentred(g, "GAME OVER", SX/2, SY/4);
-    	drawStringCentred(g, "Coins Collected: "+Integer.toString(coinsCollected),SX/2,SY*3/10);
-    	g.drawRect(0, SY*5/8, SX, SY/8);
-    
-    	g.drawRect(0, SY*6/8, SX, SY/8);
-    
-    	if(end.getSelected() == 0){
-            g.setFont(selectedFont);
-            g.setColor(MENU_SELECTED_FILL);
-            g.fillRect(0, SY*5/8, SX, SY/8);
-        	g.setColor(MENU_SELECTED_CONTENT);
-        	drawStringCentred(g, "Menu",SX/2,SY*11/16);
-        	g.setColor(MENU_DEFAULT_FILL);
-        	g.fillRect(0, SY*6/8, SX, SY/8);
-        	g.setColor(MENU_DEFAULT_CONTENT);
-        	drawStringCentred(g, "Exit",SX/2,SY*13/16);
-    	}else{
-            g.setFont(selectedFont);
-    		g.setColor(MENU_DEFAULT_FILL);
-        	g.fillRect(0, SY*5/8, SX, SY/8);
-        	g.setColor(MENU_DEFAULT_CONTENT);
-        	drawStringCentred(g, "Menu",SX/2,SY*11/16);
-            g.setFont(selectedFont);
-            g.setColor(MENU_SELECTED_FILL);
-    	   	g.fillRect(0, SY*6/8, SX, SY/8);
-           	g.setColor(MENU_SELECTED_CONTENT);
-           	drawStringCentred(g, "Exit",SX/2,SY*13/16);
-           	
-    	}
-    }
+	}
 
-    /**
-     * Draw Menu initializes the graphics for the menu interface, using the
-     * method within menu to know which 'difficulty' it is currently on
-     * 
-     * @param m menu
-     */
+	/**
+	 * 
+	 */
+	public void drawInstructions() {
+		int SX = 1600;
+		int SY = 900;
 
-    public void drawMenu(Menu m) {
-        // SX and SY decide the aspect ratio of the menu
-        final int SX = 1600;
-        final int SY = 900;
-        Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
-        g.drawImage(ImageCache.getImage("title"), 0, 0, SX, SY/2, null);
-        g.setColor(MENU_DEFAULT_CONTENT);
-        g.drawRect(0, 0, SX, SY / 2);
-        g.setFont(stringFont);
-        //drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
+		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
+		g.setFont(stringFont);
+		g.setColor(MENU_DEFAULT_FILL);
+		g.drawRect(0, SY * 7 / 8, SX, SY / 8);
+		g.fillRect(0, SY * 7 / 8, SX, SY / 8);
+		g.setColor(MENU_DEFAULT_CONTENT);
+		drawStringCentred(g, "< Back", SX / 2, SY * 15 / 16);
+	}
 
-        String[] strings = new String[] { "PLAY", "INSTRUCTIONS", "QUIT" };
-        String[] difficulty = new String[] { "EASY", "MEDIUM", "HARD" };
-        if( m.getSelected() == 0){
-        	strings[0] = difficulty[m.getDifficulty()];
-        }
-        
-        
-        // renders the 3 menu buttons in order
-        for (int i = 0; i < 3; i++) {
-            // shift each successive button's Y coords downwards
-            final int buttonY = SY * (3 + i) / 6;
-            final int textY = SY * (2 * i + 7) / 12;
-            // decide colors for item
-            Color colFill, colContent;
-            if (i == m.getSelected()) {
-                colFill = MENU_SELECTED_FILL;
-                colContent = MENU_SELECTED_CONTENT;
-                g.setFont(selectedFont);
-            } else {
-                colFill = MENU_DEFAULT_FILL;
-                colContent = MENU_DEFAULT_CONTENT;
-                g.setFont(stringFont);
-            }
-            // fill and draw rectangle then text
-  
-            
-            g.setColor(colFill);
-            g.fillRect(0, buttonY, SX, SY / 6);
-            g.setColor(colContent);
-            g.drawRect(0, buttonY, SX, SY / 6);
-            
-           
-            drawStringCentred(g, strings[i], SX / 2, textY);
+	/**
+	 * Frame of end state
+	 */
+	public void drawEndState(EndState end, int coinsCollected) {
+		final int SX = 1600;
+		final int SY = 900;
 
-        }
-    }
+		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
+		g.setFont(stringFont);
+		g.setColor(MENU_DEFAULT_FILL);
+		drawStringCentred(g, "GAME OVER", SX / 2, SY / 4);
+		drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2,
+				SY * 3 / 10);
+		g.drawRect(0, SY * 5 / 8, SX, SY / 8);
 
-    /**
-     * Centre the objects
-     * @param g
-     * @param s
-     * @param x
-     * @param y
-     */
-    private void drawStringCentred(Graphics g, String s, int x, int y) {
-        Rectangle2D bounds = g.getFontMetrics().getStringBounds(s, g);
-        int dx = (int) bounds.getCenterX();
-        int dy = (int) bounds.getCenterY();
-        g.drawString(s, x - dx, y - dy);
-    }
+		g.drawRect(0, SY * 6 / 8, SX, SY / 8);
 
-    /**
-     * 
-     * @param grid
-     */
-    public void createPreRender(Grid grid) {
-        mazeBackground = new BufferedImage(GRID_PRERENDER_X, GRID_PRERENDER_Y,
-                BufferedImage.TYPE_INT_ARGB);
-        Graphics g = mazeBackground.getGraphics();
-        final int TX = GRID_PRERENDER_X / grid.getSizeX();
-        final int TY = GRID_PRERENDER_Y / grid.getSizeY();
-        for (int y = 0; y < grid.getSizeY(); y++) {
-            for (int x = 0; x < grid.getSizeX(); x++) {
-                Tile tile = grid.getTile(x, y);
-                Image img = tile.getImage();
-                g.drawImage(img, TX * x, TY * y, TX, TY, null);
-            }
-        }
-    }
+		if (end.getSelected() == 0) {
+			g.setFont(selectedFont);
+			g.setColor(MENU_SELECTED_FILL);
+			g.fillRect(0, SY * 5 / 8, SX, SY / 8);
+			g.setColor(MENU_SELECTED_CONTENT);
+			drawStringCentred(g, "Menu", SX / 2, SY * 11 / 16);
+			g.setColor(MENU_DEFAULT_FILL);
+			g.fillRect(0, SY * 6 / 8, SX, SY / 8);
+			g.setColor(MENU_DEFAULT_CONTENT);
+			drawStringCentred(g, "Exit", SX / 2, SY * 13 / 16);
+		} else {
+			g.setFont(selectedFont);
+			g.setColor(MENU_DEFAULT_FILL);
+			g.fillRect(0, SY * 5 / 8, SX, SY / 8);
+			g.setColor(MENU_DEFAULT_CONTENT);
+			drawStringCentred(g, "Menu", SX / 2, SY * 11 / 16);
+			g.setFont(selectedFont);
+			g.setColor(MENU_SELECTED_FILL);
+			g.fillRect(0, SY * 6 / 8, SX, SY / 8);
+			g.setColor(MENU_SELECTED_CONTENT);
+			drawStringCentred(g, "Exit", SX / 2, SY * 13 / 16);
 
-    /**
-     * 
-     */
-    public void destroyPreRender() {
-        mazeBackground = null;
-    }
+		}
+	}
 
-    /**
-     * Provides a resolution-independent graphics object that maps virtual
-     * coordinates to a rectangular area in the centre of the canvas.
-     * <p>
-     * Copies the existing frameGraphics object, and then translates and scales
-     * it so that the coordinates (0..x, 0..y) map to the largest possible
-     * rectangle at the centre of the canvas with aspect ratio x/y, and given
-     * percentage margin from the edge.
-     * 
-     * @param margin the percentage of the space that should be margin
-     * @param x the horizontal size of the virtual coordinate space
-     * @param y the vertical size of the virtual coordinate space
-     * 
-     * @return the transformed copy of frameGraphics
-     */
-    private Graphics2D getTransformedGraphics(double margin, int x, int y) {
-        Graphics2D g2d = (Graphics2D) frameGraphics.create();
-        final double w = resX;
-        final double h = resY;
-        final double rx = x / w;
-        final double ry = y / h;
-        // decide whether to expand to the width or height of the screen
-        if (ry > rx) {
-            // shift right to keep designated rectangle in centre
-            g2d.translate((w - (h * x / y)) / 2, 0);
-            g2d.scale(1 / ry, 1 / ry);
-        } else {
-            // shift down to keep designated rectangle in centre
-            g2d.translate(0, (h - (w * y / x)) / 2);
-            g2d.scale(1 / rx, 1 / rx);
-        }
-        // apply the margin in a similar way if there is one
-        if (margin > 0) {
-            g2d.translate(margin * x, margin * y);
-            g2d.scale(1d - 2 * margin, 1d - 2 * margin);
-        }
-        return g2d;
-    }
+	/**
+	 * Draw Menu initializes the graphics for the menu interface, using the
+	 * method within menu to know which 'difficulty' it is currently on
+	 * 
+	 * @param m
+	 *            menu
+	 */
+
+	public void drawMenu(Menu m) {
+		// SX and SY decide the aspect ratio of the menu
+		final int SX = 1600;
+		final int SY = 900;
+		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
+		g.drawImage(ImageCache.getImage("title"), 0, 0, SX, SY / 2, null);
+		g.setColor(MENU_DEFAULT_CONTENT);
+		g.drawRect(0, 0, SX, SY / 2);
+		g.setFont(stringFont);
+		// drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
+
+		String[] strings = new String[] { "PLAY", "INSTRUCTIONS", "QUIT" };
+		String[] difficulty = new String[] { "EASY", "MEDIUM", "HARD" };
+		if (m.getSelected() == 0) {
+			strings[0] = difficulty[m.getDifficulty()];
+		}
+
+		// renders the 3 menu buttons in order
+		for (int i = 0; i < 3; i++) {
+			// shift each successive button's Y coords downwards
+			final int buttonY = SY * (3 + i) / 6;
+			// decide colors for item
+			Color colFill, colContent;
+			Font textFont;
+			if (i == m.getSelected()) {
+				colFill = MENU_SELECTED_FILL;
+				colContent = MENU_SELECTED_CONTENT;
+				textFont = selectedFont;
+			} else {
+				colFill = MENU_DEFAULT_FILL;
+				colContent = MENU_DEFAULT_CONTENT;
+				textFont = stringFont;
+			}
+
+			drawButton(m, i, g, 0, buttonY, SX, SY / 6, colFill, colContent, strings[i], textFont);
+
+		}
+	}
+
+	private void drawButton(Menu m, int mIndex, Graphics2D g, int x, int y, int w, int h, Color cf,
+			Color cc, String text, Font font) {
+		g.setColor(cf);
+		g.fillRect(x, y, w, h);
+		g.setColor(cc);
+		g.drawRect(x, y, w, h);
+		g.setFont(font);
+		drawStringCentred(g, text, x + (w / 2), y + (h / 2));
+
+		double[] pts = new double[] { x, y, x + w, y + h };
+		g.getTransform().transform(pts, 0, pts, 0, pts.length / 2);
+		m.setMouseArea(mIndex, (int) pts[0], (int) pts[1], (int) pts[2], (int) pts[3]);
+	}
+
+	/**
+	 * Centre the objects
+	 * 
+	 * @param g
+	 * @param s
+	 * @param x
+	 * @param y
+	 */
+	private void drawStringCentred(Graphics g, String s, int x, int y) {
+		Rectangle2D bounds = g.getFontMetrics().getStringBounds(s, g);
+		int dx = (int) bounds.getCenterX();
+		int dy = (int) bounds.getCenterY();
+		g.drawString(s, x - dx, y - dy);
+	}
+
+	/**
+	 * 
+	 * @param grid
+	 */
+	public void createPreRender(Grid grid) {
+		mazeBackground = new BufferedImage(GRID_PRERENDER_X, GRID_PRERENDER_Y,
+				BufferedImage.TYPE_INT_ARGB);
+		Graphics g = mazeBackground.getGraphics();
+		final int TX = GRID_PRERENDER_X / grid.getSizeX();
+		final int TY = GRID_PRERENDER_Y / grid.getSizeY();
+		for (int y = 0; y < grid.getSizeY(); y++) {
+			for (int x = 0; x < grid.getSizeX(); x++) {
+				Tile tile = grid.getTile(x, y);
+				Image img = tile.getImage();
+				g.drawImage(img, TX * x, TY * y, TX, TY, null);
+			}
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void destroyPreRender() {
+		mazeBackground = null;
+	}
+
+	/**
+	 * Provides a resolution-independent graphics object that maps virtual
+	 * coordinates to a rectangular area in the centre of the canvas.
+	 * <p>
+	 * Copies the existing frameGraphics object, and then translates and scales
+	 * it so that the coordinates (0..x, 0..y) map to the largest possible
+	 * rectangle at the centre of the canvas with aspect ratio x/y, and given
+	 * percentage margin from the edge.
+	 * 
+	 * @param margin
+	 *            the percentage of the space that should be margin
+	 * @param x
+	 *            the horizontal size of the virtual coordinate space
+	 * @param y
+	 *            the vertical size of the virtual coordinate space
+	 * 
+	 * @return the transformed copy of frameGraphics
+	 */
+	private Graphics2D getTransformedGraphics(double margin, int x, int y) {
+		Graphics2D g2d = (Graphics2D) frameGraphics.create();
+		final double w = resX;
+		final double h = resY;
+		final double rx = x / w;
+		final double ry = y / h;
+		// decide whether to expand to the width or height of the screen
+		if (ry > rx) {
+			// shift right to keep designated rectangle in centre
+			g2d.translate((w - (h * x / y)) / 2, 0);
+			g2d.scale(1 / ry, 1 / ry);
+		} else {
+			// shift down to keep designated rectangle in centre
+			g2d.translate(0, (h - (w * y / x)) / 2);
+			g2d.scale(1 / rx, 1 / rx);
+		}
+		// apply the margin in a similar way if there is one
+		if (margin > 0) {
+			g2d.translate(margin * x, margin * y);
+			g2d.scale(1d - 2 * margin, 1d - 2 * margin);
+		}
+		return g2d;
+	}
 
 }
