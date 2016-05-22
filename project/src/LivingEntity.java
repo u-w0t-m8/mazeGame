@@ -15,29 +15,30 @@
  */
 public abstract class LivingEntity extends Entity {
 
-    // really need to solve smooth movement
-    protected float velx;
-    protected float vely;
-    private int counter = 0;
+    protected float velx; // velocity of the player in the x direction
+    protected float vely; // velocity of the player in the y direction
+    private int counter = 0; // Used to count the number of intermediate states between discrete positions in the grid
 
     public abstract void think(Grid grid);
     
     @Override
     public void update(Grid grid) {
     	
-    	if(counter >0){ //if counting already
-    		if(counter == 13){
+    	if(counter >0){ // If the entity is already moving
+    		if(counter == 13){ // Check if a full cycle has been made
     			velx = 0;
     			vely = 0;
-    			if(velx != 0){
-    				if((int)(posx+0.1) != (int)posx){
+    			if(velx != 0){ // If the entity is moving along the x axis
+    				//Check if there is a wall in that direction
+    				if((int)(posx+0.1) != (int)posx){ 
         				posx = (int) Math.ceil(posx);
         			}
         			else {
         				posx = (int) Math.floor(posx);
         			}
     			}
-    			else {
+    			else { // If the entity is moving along the y axis
+    				//Check if there is a wall in that direction
     				if((int)(posy+0.1) != (int)posy){
         				posy = (int) Math.ceil(posy);
         			}
@@ -45,45 +46,61 @@ public abstract class LivingEntity extends Entity {
         				posy = (int) Math.floor(posy);
         			}
     			}
-    			
-    			counter = 0;
+    			counter = 0; // Restart counter
     		}
-    		else {
-    			counter++;
+    		else { // Keep moving the entity
+    			counter++; // continue the counter
     			posx += velx/13;
 	    		posy += vely/13;
     		}
     	}
-    	else { //Else wait
+    	else { //Else poll for a new direction
     		think(grid);
     		if(velx != 0 || vely != 0){
     			if(velx != 0 && vely !=0 ){
     				vely = 0;
     			}
+    			// Check if there is a wall in the direction of movement
     			if(!grid.getTile((int)(posx+velx+0.1), (int)(posy+vely+0.1)).getIsWall()){
     	    		posx += velx/13;
     	    		posy += vely/13;
-    	    		counter++;
+    	    		counter++; // Start counter
     	    	}
     		}
     	}
 
     }
     
+    /**
+     * Sets the velocity of player in the x direction
+     * @precondition - vx must be {-1,0,1}
+     * @postcondition - the players velocity will be updated to the given velocity
+     * @param vx - velocity of player in the y direction
+     */
     protected void setVelX(float vx){
-    	//System.out.println("Velocity x:" + vx);
         velx = vx;
     }
     
+    /**
+     * Sets the velocity of player in the y direction
+     * * @precondition - vy must be {-1,0,1}
+     * @postcondition - the players velocity will be updated to the given velocity
+     * @param vy - velocity of player in the y direction
+     */
     protected void setVelY(float vy){
-    	//System.out.println("Velocity y:" + vy);
         vely = vy;
     }
     
+    /**
+     * @return - velocity of the player in the x direction
+     */
     public int getVelx(){
     	return (int)velx;
     }
     
+    /**
+     * @return - velocity of the player in the y direction
+     */
     public int getVely(){
     	return (int)vely;
     }

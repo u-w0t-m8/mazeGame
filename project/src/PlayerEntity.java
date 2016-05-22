@@ -1,4 +1,3 @@
-
 /**
  * Special implementation of LivingEntity whose only thinking is to respond to
  * user input. Also unique in that Grid contains a single instance with a direct
