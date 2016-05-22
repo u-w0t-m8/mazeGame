@@ -4,7 +4,7 @@ public class Menu{
 	
 	private int selected;
 	private int difficulty;
-	private Rectangle[] mouseBoxes = new Rectangle[3];
+	private Rectangle[] mouseBoxes = new Rectangle[5];
 
 	/**
 	 * Constructor for menu
@@ -20,9 +20,9 @@ public class Menu{
 	
 	/**
 	 * Get the value of selected 
-	 * 0 = easy
-	 * 1 = medium
-	 * 2 = hard
+	 * 0 = Start
+	 * 1 = Instructions
+	 * 2 = quit
 	 * @return int
 	 */
 	public int getSelected() {
@@ -61,7 +61,7 @@ public class Menu{
 	    		return i;
 	    	}
 	    }
-	    return -1;
+	    return selected;
 	}
 	    
 	public void left() {
@@ -84,4 +84,5 @@ public class Menu{
 	public int getDifficulty(){
 		return difficulty;
 	}
+	
 }

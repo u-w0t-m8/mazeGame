@@ -40,6 +40,7 @@ public class Engine {
     private Canvas mCanvas;
     // private Input mInput;
     private int coinCount;
+    private int coinsLeft;
 
     private boolean isRunning = false;
     private GameState state = GameState.MAIN_MENU;
@@ -145,7 +146,7 @@ public class Engine {
                 mRenderer.drawGrid(currentGrid);
                 break;
             case GAME_OVER: 
-            	mRenderer.drawEndState(mEndState, coinCount);
+            	mRenderer.drawEndState(mEndState, coinCount,coinsLeft);
             	break;
             case INSTRUCTION:
             	mRenderer.drawInstructions();
@@ -162,6 +163,7 @@ public class Engine {
 
     void endLevel() {
     	coinCount = currentGrid.getCoinsCollected();
+    	coinsLeft = currentGrid.getCoinsLeft();
         currentGrid = null;
         mRenderer.destroyPreRender();
         state = GameState.GAME_OVER;
@@ -183,6 +185,10 @@ public class Engine {
                     break;
                 case KeyEvent.VK_RIGHT:
                     currentGrid.updatePlayerInput(0, 0, 0, 1);
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    state = GameState.MAIN_MENU;
+                    break;
                 }
                 break;
             }
@@ -270,25 +276,84 @@ public class Engine {
     private MouseAdapter mouseListener = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent event) {
-        	switch(mMenu.getSelected()){
-        	case(0):
-        		startNewLevel(Difficulty.values()[mMenu.getDifficulty()]);
-        		break;
-        	case(1):
-        		state = GameState.INSTRUCTION;
-        		break;
-        	case(2):
-        		System.exit(0);
-        		break;
-        	}
+        	
+        	switch(state){
+			case MAIN_MENU:
+				switch(mMenu.getSelected()){
+	        	case(0):
+					int index = mMenu.getItemAtScreenPosition(event.getX(), event.getY());
+	        		switch(index){
+	        			case(0):
+	        				mMenu.left();
+	        				break;
+	        			case(1):
+	        				startNewLevel(Difficulty.values()[mMenu.getDifficulty()]);
+	        				break;
+	        			case(2):
+	        				mMenu.right();
+	        				break;
+	        		}
+	        		break;
+	        	case(1):
+	        		state = GameState.INSTRUCTION;
+	        		break;
+	        	case(2):
+	        		System.exit(0);
+	        		break;
+	        	}
+				break;
+			case GAME_OVER:
+				switch(mEndState.getSelected()){
+				case (0):
+					state = GameState.MAIN_MENU;
+					break;
+				case(1):
+					System.exit(0);
+					break;
+				}
+				break;
+			case INSTRUCTION:
+				state = GameState.MAIN_MENU;
+				break;
+			}
+        	
+        	
         }    	
 	};
 	
 	private MouseInputAdapter mouseMotionListener = new MouseInputAdapter(){
 		@Override
         public void mouseMoved(MouseEvent event) {
-			int index = mMenu.getItemAtScreenPosition(event.getX(), event.getY());
-			mMenu.setSelected(index);
+			switch(state){
+			case MAIN_MENU:
+				int index = mMenu.getItemAtScreenPosition(event.getX(), event.getY());
+				switch(index){
+				case 0:
+					mMenu.setSelected(0);
+					break;
+				case 1:
+					mMenu.setSelected(0);
+					break;
+				case 2:
+					mMenu.setSelected(0);
+					break;
+				case 3:
+					mMenu.setSelected(1);
+					break;
+				case 4:
+					mMenu.setSelected(2);
+					break;
+				}
+				break;
+			case GAME_OVER:
+				int index1 = mEndState.getItemAtScreenPosition(event.getX(), event.getY());
+				mEndState.setSelected(index1);
+				break;
+			case INSTRUCTION:
+				
+				break;
+			}
+			
         }   
 	};
 

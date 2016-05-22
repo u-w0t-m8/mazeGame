@@ -50,6 +50,7 @@ public class Renderer {
 	private final Font stringFont = new Font("SansSerif", Font.PLAIN, 36);
 	private Font selectedFont = new Font("Helvetica", Font.BOLD, 52);
 	private Font inGameFont = new Font("SansSerif", Font.BOLD, 24);
+	private Font gameOverFont = new Font("SansSerif", Font.BOLD, 72);
 	private Image mazeBackground;
 	private BufferStrategy bufferStrategy = null;
 	private Graphics frameGraphics;
@@ -148,20 +149,29 @@ public class Renderer {
 	/**
 	 * Frame of end state
 	 */
-	public void drawEndState(EndState end, int coinsCollected) {
+	public void drawEndState(EndState end, int coinsCollected, int coinsLeft) {
 		final int SX = 1600;
 		final int SY = 900;
 
 		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
-		g.setFont(stringFont);
+		g.setFont(gameOverFont);
 		g.setColor(MENU_DEFAULT_FILL);
-		drawStringCentred(g, "GAME OVER", SX / 2, SY / 4);
-		drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2,
-				SY * 3 / 10);
+		if(coinsLeft == 0){
+			drawStringCentred(g, "CONGRATULATIONS YOU HAVE WON", SX / 2, SY / 4);
+		}else{
+			drawStringCentred(g, "GAME OVER", SX / 2, SY / 4);
+			drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2,
+				SY * 2 / 5);
+		}
 		g.drawRect(0, SY * 5 / 8, SX, SY / 8);
-
+		double[] pts = new double[] { 0, SY * 5 / 8, SX, SY* 6/ 8 };
+		g.getTransform().transform(pts, 0, pts, 0, pts.length / 2);
+		end.setMouseArea(0, (int) pts[0], (int) pts[1], (int) pts[2], (int) pts[3]);
 		g.drawRect(0, SY * 6 / 8, SX, SY / 8);
-
+		pts = new double[] {0, SY * 6 / 8, SX, SY*7/ 8};
+		g.getTransform().transform(pts, 0, pts, 0, pts.length / 2);
+		end.setMouseArea(1, (int) pts[0], (int) pts[1], (int) pts[2], (int) pts[3]);
+		
 		if (end.getSelected() == 0) {
 			g.setFont(selectedFont);
 			g.setColor(MENU_SELECTED_FILL);
@@ -185,6 +195,10 @@ public class Renderer {
 			drawStringCentred(g, "Exit", SX / 2, SY * 13 / 16);
 
 		}
+		
+		for(int i = 0; i < 2;i++){
+			
+		}
 	}
 
 	/**
@@ -207,7 +221,7 @@ public class Renderer {
 		// drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 
 		String[] strings = new String[] { "PLAY", "INSTRUCTIONS", "QUIT" };
-		String[] difficulty = new String[] { "EASY", "MEDIUM", "HARD" };
+		String[] difficulty = new String[] { "PLAY:EASY", "PLAY:MEDIUM", "PLAY:HARD" };
 		if (m.getSelected() == 0) {
 			strings[0] = difficulty[m.getDifficulty()];
 		}
@@ -228,9 +242,13 @@ public class Renderer {
 				colContent = MENU_DEFAULT_CONTENT;
 				textFont = stringFont;
 			}
-
-			drawButton(m, i, g, 0, buttonY, SX, SY / 6, colFill, colContent, strings[i], textFont);
-
+			if(i==0){
+				drawButton(m,0,g,0,buttonY,SX/8,SY/6,Color.RED,Color.DARK_GRAY,"<",textFont);
+				drawButton(m,1,g,SX/8,buttonY,SX*6/8,SY/6,colFill,colContent,strings[i],textFont);
+				drawButton(m,2,g,SX*7/8,buttonY,SX/8,SY/6,Color.RED,Color.DARK_GRAY,">",textFont);
+			}else{
+				drawButton(m, i+2, g, 0, buttonY, SX, SY / 6, colFill, colContent, strings[i], textFont);
+			}
 		}
 	}
 
@@ -241,7 +259,7 @@ public class Renderer {
 		g.setColor(cc);
 		g.drawRect(x, y, w, h);
 		g.setFont(font);
-		drawStringCentred(g, text, x + (w / 2), y + (h / 2));
+		drawStringCentred(g, text, x + (w/2), y + (h / 2));
 
 		double[] pts = new double[] { x, y, x + w, y + h };
 		g.getTransform().transform(pts, 0, pts, 0, pts.length / 2);
