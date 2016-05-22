@@ -37,7 +37,7 @@ public class HunterEntity extends LivingEntity {
     		patt = new PinPattern(grid);
     	}
     	else {
-    		patt = new RandomPattern(grid);
+    		patt = new AmbushPattern(grid);
     	}
     	
         int goalX = patt.getX();

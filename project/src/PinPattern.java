@@ -1,8 +1,12 @@
-
+/**
+ * This pattern returns a position that is five steps head of the direction
+ * the player is heading towards using the current location of the player and the 
+ * velocity vector of the player.
+ */
 public class PinPattern implements Patterns {
 	
-	private int goalX;
-	private int goalY;
+	private int goalX; //x coordinate of the goal of the A* search
+	private int goalY; //y coordinate of the goal of the A* search
 	
 	public PinPattern(Grid grid){
 		for(int i = 0; i < 5; ++i){
@@ -14,12 +18,17 @@ public class PinPattern implements Patterns {
 		}
 	}
 	
-
+	/**
+	 * @return - x coordinate of the goal of the A* search
+	 */
 	@Override
 	public int getX() {
 		return goalX;
 	}
 
+	/**
+	 * @return - y coordinate of the goal of the A* search
+	 */
 	@Override
 	public int getY() {
 		return goalY;

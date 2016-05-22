@@ -1,3 +1,6 @@
+/**
+ * Used to override the functionality of the priority queue in the A* search
+ */
 import java.util.Comparator;
 
 public class StateComparator implements Comparator<State>{
