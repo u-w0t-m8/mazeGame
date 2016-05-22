@@ -6,9 +6,13 @@ public class RandomPattern implements Patterns {
 	private int goalY;
 
 	public RandomPattern(Grid grid){
-		Random rand = new Random();
-		goalX = rand.nextInt(grid.getSizeX() - 1) + 1;
-        goalY = rand.nextInt(grid.getSizeY() - 1) + 1;
+		for(int i = 0; i < 5; ++i){
+			goalX = (int) (grid.getPlayer().getVelx()*5 + grid.getPlayerX()+0.1 - i);
+			goalY = (int) (grid.getPlayer().getVely()*5 + grid.getPlayerY()+0.1 - i);
+			if(goalX < grid.getSizeX()-2 && goalX > 1 && goalY < grid.getSizeY()-2 && goalY > 1){
+				break;
+			}
+		}
 	}
 	
 	@Override

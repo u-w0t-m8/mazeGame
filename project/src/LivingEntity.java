@@ -26,7 +26,7 @@ public abstract class LivingEntity extends Entity {
     public void update(Grid grid) {
     	
     	if(counter >0){ //if counting already
-    		if(counter == 25){
+    		if(counter == 13){
     			velx = 0;
     			vely = 0;
     			if(velx != 0){
@@ -50,8 +50,8 @@ public abstract class LivingEntity extends Entity {
     		}
     		else {
     			counter++;
-    			posx += velx/25;
-	    		posy += vely/25;
+    			posx += velx/13;
+	    		posy += vely/13;
     		}
     	}
     	else { //Else wait
@@ -61,8 +61,8 @@ public abstract class LivingEntity extends Entity {
     				vely = 0;
     			}
     			if(!grid.getTile((int)(posx+velx+0.1), (int)(posy+vely+0.1)).getIsWall()){
-    	    		posx += velx/25;
-    	    		posy += vely/25;
+    	    		posx += velx/13;
+    	    		posy += vely/13;
     	    		counter++;
     	    	}
     		}
