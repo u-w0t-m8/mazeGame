@@ -109,15 +109,19 @@ public class Renderer {
 		final int S = 1000;
 		final int TX = S / grid.getSizeX();
 		final int TY = S / grid.getSizeY();
+		//Offset the grid by -300 to fit i the side panel
 		Graphics2D g = getTransformedGraphics(GRID_MARGIN, S - 300, S);
 		g.drawImage(mazeBackground, 0, 0, S, S, null);
+		//Draws all entitys to the grid
 		for (Entity ent : grid.getEntities()) {
 			g.drawImage(ent.getSprite().getCurrentImage(), (int) (ent.getX() * TX),
 					(int) (ent.getY() * TY), TX, TY, null);
 		}
+		//Gets image of current player
 		PlayerEntity p = grid.getPlayer();
 		g.drawImage(p.getSprite().getCurrentImage(), (int) (p.getX() * TX), (int) (p.getY() * TY),
 				TX, TY, null);
+		//Draws Side panel printing the number of coins left
 		g.setColor(MENU_DEFAULT_FILL);
 		g.drawRect(-300, 0, 300, S - 10);
 		g.fillRect(-300, 0, 300, S - 10);
@@ -131,7 +135,7 @@ public class Renderer {
 	}
 
 	/**
-	 * 
+	 * Draws graphics for instructions
 	 */
 	public void drawInstructions() {
 		int SX = 1600;
@@ -147,7 +151,7 @@ public class Renderer {
 	}
 
 	/**
-	 * Frame of end state
+	 * Frame of end state, either game over or coins collected
 	 */
 	public void drawEndState(EndState end, int coinsCollected, int coinsLeft) {
 		final int SX = 1600;
@@ -156,13 +160,17 @@ public class Renderer {
 		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
 		g.setFont(gameOverFont);
 		g.setColor(MENU_DEFAULT_FILL);
+		//If there are no coins left then the game is won
 		if(coinsLeft == 0){
 			drawStringCentred(g, "CONGRATULATIONS YOU HAVE WON", SX / 2, SY / 4);
 		}else{
+			//Otherwise game over and prints the number of coins collected
 			drawStringCentred(g, "GAME OVER", SX / 2, SY / 4);
 			drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2,
 				SY * 2 / 5);
 		}
+		
+		//Sets up coordinates for menu boxes for endstate class for mouselistener to work
 		g.drawRect(0, SY * 5 / 8, SX, SY / 8);
 		double[] pts = new double[] { 0, SY * 5 / 8, SX, SY* 6/ 8 };
 		g.getTransform().transform(pts, 0, pts, 0, pts.length / 2);
@@ -172,6 +180,7 @@ public class Renderer {
 		g.getTransform().transform(pts, 0, pts, 0, pts.length / 2);
 		end.setMouseArea(1, (int) pts[0], (int) pts[1], (int) pts[2], (int) pts[3]);
 		
+		//Highlights the selected button
 		if (end.getSelected() == 0) {
 			g.setFont(selectedFont);
 			g.setColor(MENU_SELECTED_FILL);
@@ -194,10 +203,6 @@ public class Renderer {
 			g.setColor(MENU_SELECTED_CONTENT);
 			drawStringCentred(g, "Exit", SX / 2, SY * 13 / 16);
 
-		}
-		
-		for(int i = 0; i < 2;i++){
-			
 		}
 	}
 
