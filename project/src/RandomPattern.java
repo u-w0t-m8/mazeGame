@@ -6,12 +6,25 @@ public class RandomPattern implements Patterns {
 	private int goalY;
 
 	public RandomPattern(Grid grid){
-		for(int i = 0; i < 5; ++i){
-			goalX = (int) (grid.getPlayer().getVelx()*5 + grid.getPlayerX()+0.1 - i);
-			goalY = (int) (grid.getPlayer().getVely()*5 + grid.getPlayerY()+0.1 - i);
-			if(goalX < grid.getSizeX()-2 && goalX > 1 && goalY < grid.getSizeY()-2 && goalY > 1){
-				break;
-			}
+		if(grid.getPlayer().getVelx() == 1){
+			goalX = (int) (grid.getSizeX()-3);
+			goalY = (int) (grid.getPlayerY()+0.1);
+		}
+		else if(grid.getPlayer().getVelx() == -1){
+			goalX = 2;
+			goalY = (int) (grid.getPlayerY()+0.1);
+		}
+		else if(grid.getPlayer().getVely() == 1){
+			goalX = (int) (grid.getPlayerX()+0.1);
+			goalY = (int) (grid.getSizeY()-3);
+		}
+		else if(grid.getPlayer().getVely() == -1){
+			goalX = (int) (grid.getPlayerX()+0.1);
+			goalY = 2;
+		}
+		else {
+			goalX = (int) (grid.getPlayerX()+0.1);
+			goalY = (int) (grid.getPlayerY()+0.1);
 		}
 	}
 	
