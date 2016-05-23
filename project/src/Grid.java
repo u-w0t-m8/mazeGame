@@ -32,6 +32,7 @@ public class Grid {
     
     private int coinsLeft;
     private int coinsCollected;
+    private int coinsCollectedTwo;
     
     private boolean[][] visited = new boolean[SIZE][SIZE];
     private int[] x = { 0, 2, 0, -2 };

@@ -26,16 +26,29 @@ public class HunterEntity extends LivingEntity {
     		}
     	}
     	
+    	int diffx = Math.abs((int) (posx - grid.getPlayer().getX()));
+    	int diffy = Math.abs((int) (posx - grid.getPlayer().getY()));
+    	int diffx2 = Math.abs((int) (posx - grid.getPlayer2().getX()));
+    	int diffy2 = Math.abs((int) (posx - grid.getPlayer2().getY()));
+    	PlayerEntity p;
+    	
+    	if(diffx + diffy < diffx2 + diffy2){
+    		p = grid.getPlayer();
+    	}
+    	else {
+    		p = grid.getPlayer2();
+    	}
+    	
     	//Select the strategy pattern corresponding to ID passed in through the constructor 
     	Patterns patt;
     	if(pattern == 0){
-    		patt = new DirectPattern(grid);
+    		patt = new DirectPattern(grid, p);
     	}
     	else if(pattern == 1){
-    		patt = new PinPattern(grid);
+    		patt = new PinPattern(grid, p);
     	}
     	else {
-    		patt = new AmbushPattern(grid);
+    		patt = new AmbushPattern(grid, p);
     	}
     	
     	//Set the goal state of the A* as the coordinates returned by the Strategy Pattern

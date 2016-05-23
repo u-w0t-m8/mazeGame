@@ -7,9 +7,9 @@ public class DirectPattern implements Patterns {
 	private int goalX; //x coordinate of the goal of the A* search
 	private int goalY; //y coordinate of the goal of the A* search
 	
-	public DirectPattern(Grid grid){
-		goalX = (int) (grid.getPlayerX()+0.1);
-		goalY = (int) (grid.getPlayerY()+0.1);
+	public DirectPattern(Grid grid, PlayerEntity player){
+		goalX = (int) (player.getX()+0.1);
+		goalY = (int) (player.getY()+0.1);
 	}
 
 	/**
