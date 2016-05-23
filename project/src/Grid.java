@@ -48,11 +48,12 @@ public class Grid {
         player2 = null;
         if(diff == Difficulty.MULTIPLAYER){
         	player2 = new PlayerEntity();
-            player2.setPos(4, 2);
+            player2.setPos(sizex - 3, 2);
         }
         
         gameEnd = false;
         coinsCollected = 0;
+        coinsCollectedTwo = 0;
         coinsLeft = sizex/3;
         Random rand = new Random();
         
@@ -86,7 +87,12 @@ public class Grid {
     	}
         if(j >= 1){
         	entList.add(new HunterEntity(0));
-        	((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex-3, sizey-3);
+        	if(player2 != null){
+        		((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex/2-1, sizey-3);
+        	}
+        	else {
+        		((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex-3, sizey-3);
+        	}
         }
         if(j >= 2){
         	entList.add(new HunterEntity(1));
@@ -209,26 +215,6 @@ public class Grid {
     	if(coinsLeft == 0){
     		gameEnd = true;
     	}
-    	
-    	/*
-        for (Entity e : entList) {
-            if ((e.getX() <= player.getX() + 0.5 && e.getX() >= player.getX() - 0.5)
-                    && (e.getY() <= player.getY() + 0.5 && e.getY() >= player.getY() - 0.5)) {
-                if (e instanceof Token) {
-                	coinsCollected++;
-                	coinsLeft--;
-                	entList.remove(e);
-                	if(coinsLeft == 0){
-                		gameEnd = true;
-                	}
-                } else {
-                	gameEnd = true;
-                }
-                return true;
-            }
-        }
-        return false;
-        */
     }
 
     /**
