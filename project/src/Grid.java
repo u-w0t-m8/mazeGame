@@ -126,6 +126,7 @@ public class Grid {
                 visited[i][j] = false;
             }
         }
+        
 
         Random rand = new Random();
         Image imgBlank = ImageCache.getImage("tile_blank");
