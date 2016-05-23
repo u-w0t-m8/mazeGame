@@ -217,7 +217,6 @@ public class Engine {
                 case KeyEvent.VK_DOWN:
                     mMenu.down();
                     break;
-
                 case KeyEvent.VK_LEFT:
                 	mMenu.left();
                 	break;
@@ -285,6 +284,7 @@ public class Engine {
                     break;
                 case KeyEvent.VK_RIGHT:
                     currentGrid.updatePlayerInput(0, 0, 0, -1);
+                    break;
                  // FOR PLAYER 2
                 case KeyEvent.VK_W:
                     currentGrid.updatePlayerInputTwo(-1, 0, 0, 0);

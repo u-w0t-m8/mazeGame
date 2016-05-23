@@ -234,7 +234,7 @@ public class Renderer {
 		// drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 
 		String[] strings = new String[] { "PLAY", "INSTRUCTIONS", "QUIT" };
-		String[] difficulty = new String[] { "PLAY:EASY", "PLAY:MEDIUM", "PLAY:HARD" };
+		String[] difficulty = new String[] { "PLAY:EASY", "PLAY:MEDIUM", "PLAY:HARD", "PLAY:MULTIPLAYER" };
 		if (m.getSelected() == 0) {
 			strings[0] = difficulty[m.getDifficulty()];
 		}
