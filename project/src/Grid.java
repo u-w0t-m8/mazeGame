@@ -257,6 +257,7 @@ public class Grid {
     }
     public void updatePlayerInputTwo(int up, int down, int left, int right) {
         //player.updateInputs(up, down, left, right);
+
     }
 
 }
