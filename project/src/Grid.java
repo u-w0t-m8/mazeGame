@@ -44,14 +44,17 @@ public class Grid {
         entList = new ArrayList<Entity>();
         generate(sizex, sizey);
         player = new PlayerEntity();
-        player2 = new PlayerEntity();
+        player.setPos(2, 2);
+        player2 = null;
+        if(diff == Difficulty.MULTIPLAYER){
+        	player2 = new PlayerEntity();
+            player2.setPos(4, 2);
+        }
+        
         gameEnd = false;
         coinsCollected = 0;
         coinsLeft = sizex/3;
         Random rand = new Random();
-
-        player.setPos(2, 2);
-        player2.setPos(4, 2);
         
      // Place coin
         for (int i = 0; i < sizex/3; ++i) {
@@ -77,7 +80,10 @@ public class Grid {
         case HARD:
             j = 3;
             break;
-        }
+    	case MULTIPLAYER:
+    		j = 1;
+    		break;
+    	}
         if(j >= 1){
         	entList.add(new HunterEntity(0));
         	((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex-3, sizey-3);
@@ -126,7 +132,6 @@ public class Grid {
                 visited[i][j] = false;
             }
         }
-        
 
         Random rand = new Random();
         Image imgBlank = ImageCache.getImage("tile_blank");
@@ -172,12 +177,43 @@ public class Grid {
         DFS();
     }
 
-    public boolean checkCollision() {
+    public void checkCollision() {
+    	
+    	for (Entity e : entList) {
+    		if ((e.getX() <= player.getX() + 0.5 && e.getX() >= player.getX() - 0.5)
+                    && (e.getY() <= player.getY() + 0.5 && e.getY() >= player.getY() - 0.5)) {
+    			if (e instanceof Token) {
+    				coinsCollected++;
+    				coinsLeft--;
+    				entList.remove(e);
+    				break;
+    			}
+    			else {
+                	gameEnd = true;
+                }
+    		}
+    			
+    		else if ((e.getX() <= player2.getX() + 0.5 && e.getX() >= player2.getX() - 0.5)
+                    && (e.getY() <= player2.getY() + 0.5 && e.getY() >= player2.getY() - 0.5)) {
+    			if (e instanceof Token) {
+    				coinsCollectedTwo++;
+    				coinsLeft--;
+    				entList.remove(e);
+    				break;
+    			}
+    			else {
+                	gameEnd = true;
+                }
+    		}
+    	}
+    	if(coinsLeft == 0){
+    		gameEnd = true;
+    	}
+    	
+    	/*
         for (Entity e : entList) {
-            if ((e.getX() <= player.getX() + 0.5
-                    && e.getX() >= player.getX() - 0.5)
-                    && (e.getY() <= player.getY() + 0.5
-                            && e.getY() >= player.getY() - 0.5)) {
+            if ((e.getX() <= player.getX() + 0.5 && e.getX() >= player.getX() - 0.5)
+                    && (e.getY() <= player.getY() + 0.5 && e.getY() >= player.getY() - 0.5)) {
                 if (e instanceof Token) {
                 	coinsCollected++;
                 	coinsLeft--;
@@ -192,6 +228,7 @@ public class Grid {
             }
         }
         return false;
+        */
     }
 
     /**
@@ -202,7 +239,9 @@ public class Grid {
         checkCollision();
 
         player.update(this);
-        player2.update(this);
+        if(player2 != null){
+        	player2.update(this);
+        }
 
         for (Entity ent : entList) {
         	ent.update(this);

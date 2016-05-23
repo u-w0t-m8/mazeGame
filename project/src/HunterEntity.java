@@ -25,18 +25,16 @@ public class HunterEntity extends LivingEntity {
     			visited[i][j] = false;
     		}
     	}
-    	
-    	int diffx = Math.abs((int) (posx - grid.getPlayer().getX()));
-    	int diffy = Math.abs((int) (posx - grid.getPlayer().getY()));
-    	int diffx2 = Math.abs((int) (posx - grid.getPlayer2().getX()));
-    	int diffy2 = Math.abs((int) (posx - grid.getPlayer2().getY()));
-    	PlayerEntity p;
-    	
-    	if(diffx + diffy < diffx2 + diffy2){
-    		p = grid.getPlayer();
-    	}
-    	else {
-    		p = grid.getPlayer2();
+    	PlayerEntity p = grid.getPlayer();
+    	if(grid.getPlayer2() != null){
+    		int diffx = Math.abs((int) (posx - grid.getPlayer().getX()));
+        	int diffy = Math.abs((int) (posx - grid.getPlayer().getY()));
+        	int diffx2 = Math.abs((int) (posx - grid.getPlayer2().getX()));
+        	int diffy2 = Math.abs((int) (posx - grid.getPlayer2().getY()));
+        	
+        	if(diffx + diffy > diffx2 + diffy2){
+        		p = grid.getPlayer2();
+        	}
     	}
     	
     	//Select the strategy pattern corresponding to ID passed in through the constructor 
