@@ -255,6 +255,11 @@ public class Grid {
     public void updatePlayerInput(int up, int down, int left, int right) {
         player.updateInputs(up, down, left, right);
     }
+    
+    /**
+     * Updates player entity's keyboard inputs. See PlayerEntity
+     * {@link PlayerEntity#updateInputs(int, int, int, int) method}.
+     */
     public void updatePlayerInputTwo(int up, int down, int left, int right) {
         //player.updateInputs(up, down, left, right);
 

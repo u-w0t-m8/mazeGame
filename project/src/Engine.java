@@ -169,6 +169,10 @@ public class Engine {
         state = GameState.GAME_OVER;
     }
 
+    /**
+     * Listens to key presses made by the user
+     * Depending on the state of the game, it determines the functionality of the keys
+     */
     private KeyAdapter inputListener = new KeyAdapter() {
         public void keyPressed(KeyEvent e) {
             switch (state) {
@@ -281,6 +285,19 @@ public class Engine {
                     break;
                 case KeyEvent.VK_RIGHT:
                     currentGrid.updatePlayerInput(0, 0, 0, -1);
+                 // FOR PLAYER 2
+                case KeyEvent.VK_W:
+                    currentGrid.updatePlayerInputTwo(1, 0, 0, 0);
+                    break;
+                case KeyEvent.VK_S:
+                    currentGrid.updatePlayerInputTwo(0, 1, 0 ,0);
+                    break;
+                case KeyEvent.VK_A:
+                    currentGrid.updatePlayerInputTwo(0, 0, 1, 0);
+                    break;
+                case KeyEvent.VK_D:
+                    currentGrid.updatePlayerInputTwo(0, 0, 0, 1);
+                    break;
                 }
             }
         }
