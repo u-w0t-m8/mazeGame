@@ -117,10 +117,18 @@ public class Renderer {
 			g.drawImage(ent.getSprite().getCurrentImage(), (int) (ent.getX() * TX),
 					(int) (ent.getY() * TY), TX, TY, null);
 		}
-		//Gets image of current player
+		//Gets image of player one
 		PlayerEntity p = grid.getPlayer();
 		g.drawImage(p.getSprite().getCurrentImage(), (int) (p.getX() * TX), (int) (p.getY() * TY),
 				TX, TY, null);
+		
+		//Gets image of player two (if exists)
+		if(grid.getPlayer2() != null){
+			PlayerEntity p2 = grid.getPlayer2();
+			g.drawImage(p2.getSprite().getCurrentImage(), (int) (p2.getX() * TX), (int) (p2.getY() * TY),
+					TX, TY, null);
+		}
+		
 		//Draws Side panel printing the number of coins left
 		g.setColor(MENU_DEFAULT_FILL);
 		g.drawRect(-300, 0, 300, S - 10);

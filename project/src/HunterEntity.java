@@ -1,12 +1,9 @@
 import java.util.PriorityQueue;
 
-/**
- * Placeholder hostile entity. Could probably use a cooler name.
- * 
- */
 public class HunterEntity extends LivingEntity {
 
-	int pattern;
+	private int pattern; // Strategy pattern ID used for this hunter
+	// Used for adding all four adjacent coordinates in A* search
 	private int[] x = {0, 1, 0, -1};
 	private int[] y = {-1, 0, 1, 0};
 	
@@ -29,6 +26,7 @@ public class HunterEntity extends LivingEntity {
     		}
     	}
     	
+    	//Select the strategy pattern corresponding to ID passed in through the constructor 
     	Patterns patt;
     	if(pattern == 0){
     		patt = new DirectPattern(grid);
@@ -40,36 +38,46 @@ public class HunterEntity extends LivingEntity {
     		patt = new AmbushPattern(grid);
     	}
     	
+    	//Set the goal state of the A* as the coordinates returned by the Strategy Pattern
         int goalX = patt.getX();
         int goalY = patt.getY();
         
+        //Initialise priority queue and add initial state
         PriorityQueue<State> queue = new PriorityQueue<State>(1, new StateComparator());
         queue.add(new State(-1, 0, (int)(posx+0.1), (int)(posy+0.1), goalX, goalY+1, null));
+        
         
         while(queue.size() > 0){
         	State nextState = queue.poll();
         	
+        	//If the state has not been visited yet
         	if(!visited[nextState.getY()][nextState.getX()]){
         		visited[nextState.getY()][nextState.getX()] = true;
+        		
         		if(nextState.isGoal()){
-            		
             		if(nextState.getPreviousState() == null){
             			//System.out.println("Already standing on player");
             		}
             		else {
+            			//Find the first move to the player
             			while(nextState.getPreviousState().getPreviousState() != null){
                 			nextState = nextState.getPreviousState();
                 		}
+            			//Get adjacent coordinate
                 		velx = x[nextState.getMove()];
                 		vely = y[nextState.getMove()];
             		}
             		break;
             	}
+        		// Else add all adjacent coordinates to the priority queue
             	else {
             		for(int i = 0; i < 4; ++i){
+            			//Check if the coordinates are not out of bounds, and also is not a wall
             			if(nextState.getX() + x[i] < grid.getSizeX()-1 && nextState.getX() + x[i] > 1 &&
             					nextState.getY() + y[i] < grid.getSizeY()-1 && nextState.getY() + y[i] > 1 &&
-            					!grid.getTile(nextState.getX() + x[i],  nextState.getY() + y[i]).getIsWall()){ // Check if it is not a wall
+            					!grid.getTile(nextState.getX() + x[i],  nextState.getY() + y[i]).getIsWall()){ 
+            				
+            				//Add state
             				queue.add(new State(i, nextState.getDistanceTraveled()+1, 
             						nextState.getX() + x[i], nextState.getY() + y[i], goalX, goalY, nextState));
             				

@@ -25,6 +25,7 @@ public class Grid {
     private Collection<Entity> entList;
     private Tile[][] tileSpace;
     private PlayerEntity player;
+    private PlayerEntity player2;
     private int sizex;
     private int sizey;
     private boolean gameEnd;
@@ -42,12 +43,14 @@ public class Grid {
         entList = new ArrayList<Entity>();
         generate(sizex, sizey);
         player = new PlayerEntity();
+        player2 = new PlayerEntity();
         gameEnd = false;
         coinsCollected = 0;
         coinsLeft = sizex/3;
         Random rand = new Random();
 
         player.setPos(2, 2);
+        player2.setPos(4, 2);
         
      // Place coin
         for (int i = 0; i < sizex/3; ++i) {
@@ -197,6 +200,7 @@ public class Grid {
         checkCollision();
 
         player.update(this);
+        player2.update(this);
 
         for (Entity ent : entList) {
         	ent.update(this);
@@ -226,6 +230,10 @@ public class Grid {
 
     public PlayerEntity getPlayer() {
         return player;
+    }
+    
+    public PlayerEntity getPlayer2() {
+        return player2;
     }
 
     public float getPlayerX() {
@@ -261,7 +269,7 @@ public class Grid {
      * {@link PlayerEntity#updateInputs(int, int, int, int) method}.
      */
     public void updatePlayerInputTwo(int up, int down, int left, int right) {
-        //player.updateInputs(up, down, left, right);
+        player2.updateInputs(up, down, left, right);
 
     }
 
