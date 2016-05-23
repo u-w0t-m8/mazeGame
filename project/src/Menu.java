@@ -76,7 +76,7 @@ public class Menu{
 	public void right() {
 		if(selected == 0){
 				difficulty++;
-				if(difficulty == 3)
+				if(difficulty == 4)
 					difficulty = 0;
 		}
 	} 

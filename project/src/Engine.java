@@ -217,7 +217,6 @@ public class Engine {
                 case KeyEvent.VK_DOWN:
                     mMenu.down();
                     break;
-
                 case KeyEvent.VK_LEFT:
                 	mMenu.left();
                 	break;
@@ -285,18 +284,19 @@ public class Engine {
                     break;
                 case KeyEvent.VK_RIGHT:
                     currentGrid.updatePlayerInput(0, 0, 0, -1);
+                    break;
                  // FOR PLAYER 2
                 case KeyEvent.VK_W:
-                    currentGrid.updatePlayerInputTwo(1, 0, 0, 0);
+                    currentGrid.updatePlayerInputTwo(-1, 0, 0, 0);
                     break;
                 case KeyEvent.VK_S:
-                    currentGrid.updatePlayerInputTwo(0, 1, 0 ,0);
+                    currentGrid.updatePlayerInputTwo(0, -1, 0 ,0);
                     break;
                 case KeyEvent.VK_A:
-                    currentGrid.updatePlayerInputTwo(0, 0, 1, 0);
+                    currentGrid.updatePlayerInputTwo(0, 0, -1, 0);
                     break;
                 case KeyEvent.VK_D:
-                    currentGrid.updatePlayerInputTwo(0, 0, 0, 1);
+                    currentGrid.updatePlayerInputTwo(0, 0, 0, -1);
                     break;
                 }
             }
