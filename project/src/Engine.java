@@ -40,7 +40,10 @@ public class Engine {
     private Canvas mCanvas;
     // private Input mInput;
     private int coinCount;
+    private int coinCount2;
     private int coinsLeft;
+    private int gameEndMode;
+    private boolean isMultiplayer;
 
     private boolean isRunning = false;
     private GameState state = GameState.MAIN_MENU;
@@ -120,7 +123,7 @@ public class Engine {
             break;
         case IN_GAME:
             currentGrid.update();
-            if(currentGrid.getGameEnd()){
+            if(currentGrid.getGameEnd() >=0 ){
             	endLevel();
             }
             break;
@@ -146,7 +149,7 @@ public class Engine {
                 mRenderer.drawGrid(currentGrid);
                 break;
             case GAME_OVER: 
-            	mRenderer.drawEndState(mEndState, coinCount,coinsLeft);
+            	mRenderer.drawEndState(mEndState,isMultiplayer, gameEndMode, coinCount, coinCount2,coinsLeft);
             	break;
             case INSTRUCTION:
             	mRenderer.drawInstructions();
@@ -163,7 +166,16 @@ public class Engine {
 
     void endLevel() {
     	coinCount = currentGrid.getCoinsCollected();
+    	coinCount2 = currentGrid.getCoinsCollectedTwo();
     	coinsLeft = currentGrid.getCoinsLeft();
+    	gameEndMode = currentGrid.getGameEnd();
+    	
+    	if(currentGrid.getIsMulti()){
+    		isMultiplayer = true;
+    	}else{
+    		isMultiplayer = false;
+    	}
+    	
         currentGrid = null;
         mRenderer.destroyPreRender();
         state = GameState.GAME_OVER;

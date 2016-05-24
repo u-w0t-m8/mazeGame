@@ -28,11 +28,11 @@ public class Grid {
     private PlayerEntity player2;
     private int sizex;
     private int sizey;
-    private boolean gameEnd;
     
     private int coinsLeft;
     private int coinsCollected;
     private int coinsCollectedTwo;
+    private int gameEnd;
     
     private boolean[][] visited = new boolean[SIZE][SIZE];
     private int[] x = { 0, 2, 0, -2 };
@@ -51,7 +51,7 @@ public class Grid {
             player2.setPos(sizex - 3, 2);
         }
         
-        gameEnd = false;
+        gameEnd = -1;
         coinsCollected = 0;
         coinsCollectedTwo = 0;
         coinsLeft = sizex/3;
@@ -195,7 +195,7 @@ public class Grid {
     				break;
     			}
     			else {
-                	gameEnd = true;
+                    gameEnd = 1;
                 }
     		}
     			
@@ -208,12 +208,12 @@ public class Grid {
     				break;
     			}
     			else {
-                	gameEnd = true;
+                	gameEnd = 2;
                 }
     		}
     	}
     	if(coinsLeft == 0){
-    		gameEnd = true;
+    		gameEnd = 0;
     	}
     }
 
@@ -280,13 +280,19 @@ public class Grid {
     }
     
     public int getCoinsLeft(){
-    	return coinsLeft;
+    	return this.coinsLeft;
     }
     
-    public boolean getGameEnd(){
-    	return gameEnd;
+    public int getGameEnd(){
+    	return this.gameEnd;
     }
 
+    public boolean getIsMulti(){
+    	if(player2 != null){
+    		return true;
+    	}
+    	return false;
+    }
     /**
      * Updates player entity's keyboard inputs. See PlayerEntity
      * {@link PlayerEntity#updateInputs(int, int, int, int) method}.

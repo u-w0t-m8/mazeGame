@@ -136,11 +136,13 @@ public class Renderer {
 		g.setColor(Color.white);
 		g.setFont(inGameFont);
 		if(grid.getPlayer2() == null){
-			drawStringCentred(g, "Player", -150, S / 4);
+			//If only one player then print image of player and coins left
+			drawStringCentred(g, "Player", -150, S*6 /32);
 			g.drawImage(p.getSprite().getCurrentImage(), -182, S * 7 / 32, 64, 64, null);
 			drawStringCentred(g, "Coins Left", -150, S / 2);
 			drawStringCentred(g, Integer.toString(grid.getCoinsLeft()), -150, S * 7 / 12);
 		}else{
+			//Prints image of both players, their coins collected and total coins left
 			drawStringCentred(g, "Player 1", -150, S / 8);
 			g.drawImage(p.getSprite().getCurrentImage(), -182, S*5/32, 64, 64, null);
 			drawStringCentred(g, "Coins Collected", -150, S* 8/32);
@@ -149,7 +151,7 @@ public class Renderer {
 			g.drawImage(p.getSprite().getCurrentImage(), -182, S * 14/32, 64, 64, null);
 			drawStringCentred(g, "Coins Collected", -150, S* 17/32);
 			drawStringCentred(g, Integer.toString(grid.getCoinsCollectedTwo()), -150, S * 19/ 32);
-			drawStringCentred(g, "Coins Left", -150, S* 21/32);
+			drawStringCentred(g, "Total Coins Left", -150, S* 22/32);
 			drawStringCentred(g, Integer.toString(grid.getCoinsLeft()), -150, S * 23 / 32);
 		}
 	}
@@ -173,7 +175,7 @@ public class Renderer {
 	/**
 	 * Frame of end state, either game over or coins collected
 	 */
-	public void drawEndState(EndState end, int coinsCollected, int coinsLeft) {
+	public void drawEndState(EndState end,boolean multiplayer, int gameEndMode, int coinsCollected,int coinsCollected2, int coinsLeft) {
 		final int SX = 1600;
 		final int SY = 900;
 
@@ -182,12 +184,33 @@ public class Renderer {
 		g.setColor(MENU_DEFAULT_FILL);
 		//If there are no coins left then the game is won
 		if(coinsLeft == 0){
-			drawStringCentred(g, "CONGRATULATIONS YOU HAVE WON", SX / 2, SY / 4);
+			//If player 1 has more coins than player 2 then player 1 has won
+			if(coinsCollected > coinsCollected2){
+				drawStringCentred(g, "CONGRATULATIONS PLAYER 1 HAS WON", SX / 2, SY / 4);
+				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
+			//player 2 wins
+			}else if(coinsCollected < coinsCollected2){
+				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 4);
+				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected2), SX / 2, SY * 2 / 5);
+			}else{
+			//Single player collected all coins
+				drawStringCentred(g, "CONGRATULATIONS YOU HAVE WON", SX / 2, SY / 4);
+			}
 		}else{
 			//Otherwise game over and prints the number of coins collected
-			drawStringCentred(g, "GAME OVER", SX / 2, SY / 4);
-			drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2,
-				SY * 2 / 5);
+			//If is multiplayer and player 1 has more coins collected or player 2 has been killed by AI
+			if(multiplayer == true && (gameEndMode == 2 || coinsCollected > coinsCollected2)){
+				drawStringCentred(g, "CONGRATULATIONS PLAYER 1 HAS WON", SX / 2, SY / 4);
+				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
+			//If is multiplayer and player 2 has more coins collected or player 1 has been killed by AI
+			}else if(multiplayer == true  && (gameEndMode == 1 || coinsCollected < coinsCollected2 )){
+				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 4);
+				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected2), SX / 2, SY * 2 / 5);
+			}else{
+			//Singleplayer loses
+				drawStringCentred(g, "GAME OVER", SX / 2, SY / 4);
+				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
+			}
 		}
 		
 		//Sets up coordinates for menu boxes for endstate class for mouselistener to work
