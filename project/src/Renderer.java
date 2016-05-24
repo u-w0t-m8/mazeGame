@@ -123,8 +123,9 @@ public class Renderer {
 				TX, TY, null);
 		
 		//Gets image of player two (if exists)
+		PlayerEntity p2 = null;
 		if(grid.getPlayer2() != null){
-			PlayerEntity p2 = grid.getPlayer2();
+			p2 = grid.getPlayer2();
 			g.drawImage(p2.getSprite().getCurrentImage(), (int) (p2.getX() * TX), (int) (p2.getY() * TY),
 					TX, TY, null);
 		}
@@ -148,7 +149,7 @@ public class Renderer {
 			drawStringCentred(g, "Coins Collected", -150, S* 8/32);
 			drawStringCentred(g, Integer.toString(grid.getCoinsCollected()), -150, S * 10 / 32);
 			drawStringCentred(g, "Player 2", -150, S*13/32);
-			g.drawImage(p.getSprite().getCurrentImage(), -182, S * 14/32, 64, 64, null);
+			g.drawImage(p2.getSprite().getCurrentImage(), -182, S * 14/32, 64, 64, null);
 			drawStringCentred(g, "Coins Collected", -150, S* 17/32);
 			drawStringCentred(g, Integer.toString(grid.getCoinsCollectedTwo()), -150, S * 19/ 32);
 			drawStringCentred(g, "Total Coins Left", -150, S* 22/32);
