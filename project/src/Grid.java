@@ -43,11 +43,11 @@ public class Grid {
         sizey = SIZE;
         entList = new ArrayList<Entity>();
         generate(sizex, sizey);
-        player = new PlayerEntity();
+        player = new PlayerEntity(1);
         player.setPos(2, 2);
         player2 = null;
         if(diff == Difficulty.MULTIPLAYER){
-        	player2 = new PlayerEntity();
+        	player2 = new PlayerEntity(2);
             player2.setPos(sizex - 3, 2);
         }
         

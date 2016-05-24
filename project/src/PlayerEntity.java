@@ -11,8 +11,14 @@ public class PlayerEntity extends LivingEntity {
     private int keyLeft = 0;
     private int keyRight = 0;
 
-    public PlayerEntity() {
-        setSprite("player1");
+    public PlayerEntity(int num) {
+    	if(num == 1){
+            setSprite("player1");
+
+    	}
+    	else {
+    		setSprite("player2");
+    	}
     }
 
     /**
