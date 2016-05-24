@@ -162,6 +162,7 @@ public class Renderer {
 		int SY = 900;
 
 		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
+		g.drawImage(ImageCache.getImage("instructions"), 0, 0, SX, SY / 2, null);
 		g.setFont(stringFont);
 		g.setColor(MENU_DEFAULT_FILL);
 		g.drawRect(0, SY * 7 / 8, SX, SY / 8);
