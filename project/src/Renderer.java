@@ -135,11 +135,23 @@ public class Renderer {
 		g.fillRect(-300, 0, 300, S - 10);
 		g.setColor(Color.white);
 		g.setFont(inGameFont);
-		drawStringCentred(g, "Player", -150, S / 4);
-		g.drawImage(p.getSprite().getCurrentImage(), -182, S * 9 / 32, 64, 64, null);
-		drawStringCentred(g, "Coins Left", -150, S / 2);
-		drawStringCentred(g, Integer.toString(grid.getCoinsLeft()), -150, S * 7 / 12);
-
+		if(grid.getPlayer2() == null){
+			drawStringCentred(g, "Player", -150, S / 4);
+			g.drawImage(p.getSprite().getCurrentImage(), -182, S * 7 / 32, 64, 64, null);
+			drawStringCentred(g, "Coins Left", -150, S / 2);
+			drawStringCentred(g, Integer.toString(grid.getCoinsLeft()), -150, S * 7 / 12);
+		}else{
+			drawStringCentred(g, "Player 1", -150, S / 8);
+			g.drawImage(p.getSprite().getCurrentImage(), -182, S*5/32, 64, 64, null);
+			drawStringCentred(g, "Coins Collected", -150, S* 8/32);
+			drawStringCentred(g, Integer.toString(grid.getCoinsCollected()), -150, S * 10 / 32);
+			drawStringCentred(g, "Player 2", -150, S*13/32);
+			g.drawImage(p.getSprite().getCurrentImage(), -182, S * 14/32, 64, 64, null);
+			drawStringCentred(g, "Coins Collected", -150, S* 17/32);
+			drawStringCentred(g, Integer.toString(grid.getCoinsCollectedTwo()), -150, S * 19/ 32);
+			drawStringCentred(g, "Coins Left", -150, S* 21/32);
+			drawStringCentred(g, Integer.toString(grid.getCoinsLeft()), -150, S * 23 / 32);
+		}
 	}
 
 	/**

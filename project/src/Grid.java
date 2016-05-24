@@ -199,8 +199,8 @@ public class Grid {
                 }
     		}
     			
-    		else if ((e.getX() <= player2.getX() + 0.5 && e.getX() >= player2.getX() - 0.5)
-                    && (e.getY() <= player2.getY() + 0.5 && e.getY() >= player2.getY() - 0.5)) {
+    		else if (player2 != null && ((e.getX() <= player2.getX() + 0.5 && e.getX() >= player2.getX() - 0.5)
+                    && (e.getY() <= player2.getY() + 0.5 && e.getY() >= player2.getY() - 0.5))) {
     			if (e instanceof Token) {
     				coinsCollectedTwo++;
     				coinsLeft--;
@@ -273,6 +273,10 @@ public class Grid {
     
     public int getCoinsCollected(){
     	return this.coinsCollected;
+    }
+    
+    public int getCoinsCollectedTwo(){
+    	return this.coinsCollectedTwo;
     }
     
     public int getCoinsLeft(){
