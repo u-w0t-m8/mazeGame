@@ -364,5 +364,4 @@ public class Grid {
         player2.updateInputs(up, down, left, right);
 
     }
-
 }
