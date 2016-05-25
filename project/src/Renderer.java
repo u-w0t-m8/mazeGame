@@ -187,12 +187,14 @@ public class Renderer {
 		//If there are no coins left then the game is won
 		if(coinsLeft == 0){
 			//If player 1 has more coins than player 2 then player 1 has won
-			if(coinsCollected > coinsCollected2){
+			if(multiplayer == true && coinsCollected > coinsCollected2){
 				drawStringCentred(g, "CONGRATULATIONS PLAYER 1 HAS WON", SX / 2, SY / 4);
+				g.drawImage(ImageCache.getImage("player1"), (SX/2-32), SY*3/16, 64, 64, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
 			//player 2 wins
-			}else if(coinsCollected < coinsCollected2){
+			}else if(multiplayer == true && coinsCollected < coinsCollected2){
 				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 4);
+				g.drawImage(ImageCache.getImage("player2"), (SX/2-32), SY*3/16, 64, 64, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected2), SX / 2, SY * 2 / 5);
 			}else{
 			//Single player collected all coins
@@ -200,16 +202,18 @@ public class Renderer {
 			}
 		}else{
 			//Otherwise game over and prints the number of coins collected
-			//If is multiplayer and player 1 has more coins collected or player 2 has been killed by AI
-			if(multiplayer == true && (gameEndMode == 2 || coinsCollected > coinsCollected2)){
-				drawStringCentred(g, "CONGRATULATIONS PLAYER 1 HAS WON", SX / 2, SY / 4);
+			//If is multi player and player 1 has more coins collected or player 2 has been killed by AI
+			if(multiplayer == true && gameEndMode == 2){
+				drawStringCentred(g, "CONGRATULATIONS PLAYER 1 HAS WON", SX / 2, SY / 8);
+				g.drawImage(ImageCache.getImage("player1"), (SX/2-32), SY*3/16, 128, 128, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
-			//If is multiplayer and player 2 has more coins collected or player 1 has been killed by AI
-			}else if(multiplayer == true  && (gameEndMode == 1 || coinsCollected < coinsCollected2 )){
+			//If is multi player and player 2 has more coins collected or player 1 has been killed by AI
+			}else if(multiplayer == true  && gameEndMode == 1){
 				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 4);
+				g.drawImage(ImageCache.getImage("player2"), (SX/2-32), SY*3/16, 64, 64, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected2), SX / 2, SY * 2 / 5);
 			}else{
-			//Singleplayer loses
+			//Single player loses
 				drawStringCentred(g, "GAME OVER", SX / 2, SY / 4);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
 			}
@@ -269,9 +273,9 @@ public class Renderer {
 		g.drawRect(0, 0, SX, SY / 2);
 		g.setFont(stringFont);
 		// drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
-
-		String[] strings = new String[] { "PLAY", "INSTRUCTIONS", "QUIT" };
+		
 		String[] difficulty = new String[] { "PLAY:EASY", "PLAY:MEDIUM", "PLAY:HARD", "PLAY:MULTIPLAYER" };
+		String[] strings = new String[] { difficulty[m.getDifficulty()], "INSTRUCTIONS", "QUIT" };
 		if (m.getSelected() == 0) {
 			strings[0] = difficulty[m.getDifficulty()];
 		}
@@ -283,6 +287,7 @@ public class Renderer {
 			// decide colors for item
 			Color colFill, colContent;
 			Font textFont;
+			//If is current selected box then use selected font
 			if (i == m.getSelected()) {
 				colFill = MENU_SELECTED_FILL;
 				colContent = MENU_SELECTED_CONTENT;
@@ -293,9 +298,10 @@ public class Renderer {
 				textFont = stringFont;
 			}
 			if(i==0){
-				drawButton(m,0,g,0,buttonY,SX/8,SY/6,Color.RED,Color.DARK_GRAY,"<",textFont);
+				//drawing 3 buttons for play game left and right
+				drawButton(m,0,g,0,buttonY,SX/8,SY/6,MENU_SELECTED_FILL,Color.DARK_GRAY,"<",textFont);
 				drawButton(m,1,g,SX/8,buttonY,SX*6/8,SY/6,colFill,colContent,strings[i],textFont);
-				drawButton(m,2,g,SX*7/8,buttonY,SX/8,SY/6,Color.RED,Color.DARK_GRAY,">",textFont);
+				drawButton(m,2,g,SX*7/8,buttonY,SX/8,SY/6,MENU_SELECTED_FILL,Color.DARK_GRAY,">",textFont);
 			}else{
 				drawButton(m, i+2, g, 0, buttonY, SX, SY / 6, colFill, colContent, strings[i], textFont);
 			}

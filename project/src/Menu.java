@@ -61,7 +61,7 @@ public class Menu{
 	    		return i;
 	    	}
 	    }
-	    return selected;
+	    return -1;
 	}
 	    
 	public void left() {
