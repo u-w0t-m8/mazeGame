@@ -110,7 +110,6 @@ public class Grid {
         	entList.add(new HunterEntity(2));
         	((ArrayList<Entity>) entList).get(2+(int)(sizex/3)).setPos(2, sizey-3);
         }
-
     }
 
     /**
