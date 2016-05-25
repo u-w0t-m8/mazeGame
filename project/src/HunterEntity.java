@@ -67,7 +67,8 @@ public class HunterEntity extends LivingEntity {
         		
         		if(nextState.isGoal()){
             		if(nextState.getPreviousState() == null){
-            			//System.out.println("Already standing on player");
+            			velx = 0;
+            			vely = -1;
             		}
             		else {
             			//Find the first move to the player

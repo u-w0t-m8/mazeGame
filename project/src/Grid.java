@@ -20,21 +20,22 @@ import java.util.Random;
  */
 public class Grid {
 	
-	private final int SIZE = 31;
+	private final int SIZE = 31; 
 	
-    private Collection<Entity> entList;
-    private Tile[][] tileSpace;
-    private PlayerEntity player;
-    private PlayerEntity player2;
-    private int sizex;
-    private int sizey;
+    private Collection<Entity> entList; // List of entities in the game
+    private Tile[][] tileSpace; // 2D array of tiles forming the grid
+    private PlayerEntity player; // player one object
+    private PlayerEntity player2; // player two object
+    private int sizex; // width of the grid
+    private int sizey; // height of the game
     
-    private int coinsLeft;
-    private int coinsCollected;
-    private int coinsCollectedTwo;
-    private int gameEnd;
+    private int coinsLeft; // coins left in the game
+    private int coinsCollected; // coins collected by player one
+    private int coinsCollectedTwo; // coins collected by player two
+    private int gameEnd; // which player has lost the game
     
-    private boolean[][] visited = new boolean[SIZE][SIZE];
+    private boolean[][] visited = new boolean[SIZE][SIZE]; // visited array used for DFS
+    //Used for adding the four adjacent tiles when performing DFS
     private int[] x = { 0, 2, 0, -2 };
     private int[] y = { -2, 0, 2, 0 };
 
@@ -45,6 +46,8 @@ public class Grid {
         generate(sizex, sizey);
         player = new PlayerEntity(1);
         player2 = null;
+        
+        //Sets the player spawn locations depending on single player and multiplayer 
         if(diff == Difficulty.MULTIPLAYER){
         	player.setPos(sizex - 3, 2);
         	player2 = new PlayerEntity(2);
@@ -60,7 +63,7 @@ public class Grid {
         coinsLeft = sizex/3;
         Random rand = new Random();
         
-     // Place coin
+        // Place appropriate number of coins in the game depending on the size
         for (int i = 0; i < sizex/3; ++i) {
             entList.add(new Token());
             int x = rand.nextInt(sizex - 1) + 1;
@@ -72,7 +75,7 @@ public class Grid {
             ((ArrayList<Entity>) entList).get(i).setPos(x, y);
         }
 
-        // Place hunter in random position
+        // Find out the difficulty and set number of hunters depending on difficulty
         int j = 0;
         switch (diff) {
         case EASY:
@@ -88,6 +91,8 @@ public class Grid {
     		j = 1;
     		break;
     	}
+        
+        // Spawn the number of hunters set above
         if(j >= 1){
         	entList.add(new HunterEntity(0));
         	if(player2 != null){
@@ -108,10 +113,14 @@ public class Grid {
 
     }
 
+    /**
+     * Creates loops in the map, allowing escape routes for the players
+     */
     private void openMaze() {
         Random rand = new Random();
         Image imgBlank = ImageCache.getImage("tile_blank");
         
+        // Open up the outer layer of the grid
         for(int i = 2; i < sizey - 2; ++i){
         	for(int j = 2; j < sizex - 2; j += sizex - 5){
         		tileSpace[j][i] = new Tile(false, imgBlank);
@@ -121,6 +130,8 @@ public class Grid {
         	}
         }
         
+        // Iterates through entire tile space, and randomly opens up walls if and only if
+        // two adjacent sides are walls, and the two other are not walls
         for (int i = 1; i < sizey - 1; ++i) {
             for (int j = 1; j < sizex - 1; ++j) {
                 if (tileSpace[i][j].getIsWall() && 
@@ -135,38 +146,45 @@ public class Grid {
         }
     }
 
+    /**
+     * Performs a depth first search on the grid to create paths
+     */
     private void DFS() {
+    	//Initialise visited 2D array
         for (int i = 0; i < sizex - 2; i++) {
             for (int j = 0; j < sizey - 2; ++j) {
                 visited[i][j] = false;
             }
         }
 
+        //DFS initialisation
         Random rand = new Random();
         Image imgBlank = ImageCache.getImage("tile_blank");
         Queue<Integer> queueCol = new LinkedList<Integer>();
         Queue<Integer> queueRow = new LinkedList<Integer>();
-
         queueCol.add(20);
         queueRow.add(20);
 
+        //While there are still tiles to visit
         while (queueRow.size() > 0) {
             int row = queueRow.poll();
             int col = queueCol.poll();
+            //While all adjacent directions tiles haven't been visited
             while (col > 2 && col < sizex - 3 && row > 2 && row < sizey - 3
-                    && (!visited[row + 2][col] || !visited[row - 2][col]
-                            || !visited[row][col + 2]
-                            || !visited[row][col - 2])) {
+                    && (!visited[row + 2][col] || !visited[row - 2][col] || !visited[row][col + 2] || !visited[row][col - 2])) {
                 queueCol.add(col);
                 queueRow.add(row);
+                
+                //Find the direction that hasn't been visited 
                 int d = rand.nextInt(4);
                 while (visited[row + y[d]][col + x[d]]) {
                     d = rand.nextInt(4);
                 }
+                
+                //Open up one and two walls in the direction and set them as visited
                 visited[row + (y[d]) / 2][col + (x[d]) / 2] = true;
                 visited[row + y[d]][col + x[d]] = true;
-                tileSpace[row + (y[d]) / 2][col + (x[d]) / 2] = new Tile(false,
-                        imgBlank);
+                tileSpace[row + (y[d]) / 2][col + (x[d]) / 2] = new Tile(false, imgBlank);
                 tileSpace[row + y[d]][col + x[d]] = new Tile(false, imgBlank);
                 col += x[d];
                 row += y[d];
@@ -175,6 +193,11 @@ public class Grid {
         openMaze();
     }
 
+    /**
+     * Generates a grid with argument sizes and fills it with walls
+     * @param sx - width of the grid
+     * @param sy - height of the grid
+     */
     private void generate(int sx, int sy) {
         tileSpace = new Tile[sx][sy];
         Image imgWall = ImageCache.getImage("tile_wall");
@@ -186,11 +209,16 @@ public class Grid {
         DFS();
     }
 
+    /**
+     * Checks whether the players have collided with other entities in the game
+     */
     public void checkCollision() {
     	
-    	for (Entity e : entList) {
+    	for (Entity e : entList) { // For all entites in game
+    		//Check if player one has collided with entity
     		if ((e.getX() <= player.getX() + 0.5 && e.getX() >= player.getX() - 0.5)
                     && (e.getY() <= player.getY() + 0.5 && e.getY() >= player.getY() - 0.5)) {
+    			// If player one collided with a coin, remove from entity list and increment player one coin count
     			if (e instanceof Token) {
     				coinsCollected++;
     				coinsLeft--;
@@ -198,23 +226,25 @@ public class Grid {
     				break;
     			}
     			else {
-                    gameEnd = 1;
+                    gameEnd = 1; // set player one as lost
                 }
     		}
-    			
+    		//Check if player one has collided with entity
     		else if (player2 != null && ((e.getX() <= player2.getX() + 0.5 && e.getX() >= player2.getX() - 0.5)
                     && (e.getY() <= player2.getY() + 0.5 && e.getY() >= player2.getY() - 0.5))) {
-    			if (e instanceof Token) {
+    			// If player two collided with a coin, remove from entity list and increment player two coin count
+    			if (e instanceof Token) { 
     				coinsCollectedTwo++;
     				coinsLeft--;
     				entList.remove(e);
     				break;
     			}
     			else {
-                	gameEnd = 2;
+                	gameEnd = 2; // set player two as lost
                 }
     		}
     	}
+    	//If there are no more coins left, end game
     	if(coinsLeft == 0){
     		gameEnd = 0;
     	}
@@ -238,58 +268,81 @@ public class Grid {
         
     }
 
-    public void addEntity(Entity ent) {
-        entList.add(ent);
-    }
-
+    /**
+     * @return - list of entities currently in the game
+     */
     public Collection<Entity> getEntities() {
         return entList;
     }
 
+    /**
+     * @param x - x coordinate of the tile
+     * @param y - y coordinate of the tile
+     * @return - the tile to be return at (x,y)
+     */
     public Tile getTile(int x, int y) {
         return tileSpace[x][y];
     }
 
+    /**
+     * @return - height of the grid
+     */
     public int getSizeX() {
         return sizex;
     }
 
+    /**
+     * @return - width of the grid
+     */
     public int getSizeY() {
         return sizey;
     }
 
+    /**
+     * @return - player one object
+     */
     public PlayerEntity getPlayer() {
         return player;
     }
     
+    /**
+     * @return - player two object
+     */
     public PlayerEntity getPlayer2() {
         return player2;
     }
-
-    public float getPlayerX() {
-        return player.getX();
-    }
-
-    public float getPlayerY() {
-        return player.getY();
-    }
     
+    /**
+     * @return - number of coins player one has collected
+     */
     public int getCoinsCollected(){
     	return this.coinsCollected;
     }
     
+    /**
+     * @return - number of coins player two has collected
+     */
     public int getCoinsCollectedTwo(){
     	return this.coinsCollectedTwo;
     }
     
+    /**
+     * @return - the coins left in the game
+     */
     public int getCoinsLeft(){
     	return this.coinsLeft;
     }
     
+    /**
+     * @return - the player who lost
+     */
     public int getGameEnd(){
     	return this.gameEnd;
     }
 
+    /**
+     * @return - whether the game is multiplayer or not
+     */
     public boolean getIsMulti(){
     	if(player2 != null){
     		return true;
