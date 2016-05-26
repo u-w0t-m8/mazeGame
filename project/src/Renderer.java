@@ -131,7 +131,7 @@ public class Renderer {
 		}
 		
 		//Draws Side panel printing the number of coins left
-		g.setColor(MENU_DEFAULT_FILL);
+		g.setColor(new Color(0xb3c87e));
 		g.drawRect(-300, 0, 300, S - 10);
 		g.fillRect(-300, 0, 300, S - 10);
 		g.setColor(Color.white);
@@ -167,10 +167,10 @@ public class Renderer {
 		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
 		g.drawImage(ImageCache.getImage("instructions"), 0, -100, SX, SY, null);
 		g.setFont(stringFont);
-		g.setColor(MENU_DEFAULT_FILL);
+		g.setColor(MENU_SELECTED_FILL);
 		g.drawRect(0, SY * 7 / 8, SX, SY / 8);
 		g.fillRect(0, SY * 7 / 8, SX, SY / 8);
-		g.setColor(MENU_DEFAULT_CONTENT);
+		g.setColor(MENU_SELECTED_CONTENT);
 		drawStringCentred(g, "< Back", SX / 2, SY * 15 / 16);
 	}
 
@@ -188,13 +188,13 @@ public class Renderer {
 		if(coinsLeft == 0){
 			//If player 1 has more coins than player 2 then player 1 has won
 			if(multiplayer == true && coinsCollected > coinsCollected2){
-				drawStringCentred(g, "CONGRATULATIONS PLAYER 1 HAS WON", SX / 2, SY / 4);
-				g.drawImage(ImageCache.getImage("player1"), (SX/2-32), SY*3/16, 64, 64, null);
+				drawStringCentred(g, "CONGRATULATIONS PLAYER 1 HAS WON", SX / 2, SY / 8);
+				g.drawImage(ImageCache.getImage("player1"), (SX/2-32), SY*3/16, 128, 128, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
 			//player 2 wins
 			}else if(multiplayer == true && coinsCollected < coinsCollected2){
-				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 4);
-				g.drawImage(ImageCache.getImage("player2"), (SX/2-32), SY*3/16, 64, 64, null);
+				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 8);
+				g.drawImage(ImageCache.getImage("player2"), (SX/2-32), SY*3/16, 128, 128, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected2), SX / 2, SY * 2 / 5);
 			}else{
 			//Single player collected all coins
@@ -209,8 +209,8 @@ public class Renderer {
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
 			//If is multi player and player 2 has more coins collected or player 1 has been killed by AI
 			}else if(multiplayer == true  && gameEndMode == 1){
-				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 4);
-				g.drawImage(ImageCache.getImage("player2"), (SX/2-32), SY*3/16, 64, 64, null);
+				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 8);
+				g.drawImage(ImageCache.getImage("player2"), (SX/2-32), SY*3/16, 128, 128, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected2), SX / 2, SY * 2 / 5);
 			}else{
 			//Single player loses
