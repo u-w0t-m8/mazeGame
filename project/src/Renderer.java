@@ -299,9 +299,9 @@ public class Renderer {
 			}
 			if(i==0){
 				//drawing 3 buttons for play game left and right
-				drawButton(m,0,g,0,buttonY,SX/8,SY/6,MENU_SELECTED_FILL,Color.DARK_GRAY,"<",textFont);
+				drawButton(m,0,g,0,buttonY,SX/8,SY/6,colFill,colContent,"<",textFont);
 				drawButton(m,1,g,SX/8,buttonY,SX*6/8,SY/6,colFill,colContent,strings[i],textFont);
-				drawButton(m,2,g,SX*7/8,buttonY,SX/8,SY/6,MENU_SELECTED_FILL,Color.DARK_GRAY,">",textFont);
+				drawButton(m,2,g,SX*7/8,buttonY,SX/8,SY/6,colFill,colContent,">",textFont);
 			}else{
 				drawButton(m, i+2, g, 0, buttonY, SX, SY / 6, colFill, colContent, strings[i], textFont);
 			}
