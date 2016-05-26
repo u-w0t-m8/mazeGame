@@ -29,7 +29,7 @@ public class Renderer {
 
 	Image title = ImageCache.getImage("title");
 	// maze render config
-	private static final double GRID_MARGIN = 0.05;
+	private static final double GRID_MARGIN = 0.025;
 	// these should be at least as big as the largest expected screen height
 	private static final int GRID_PRERENDER_X = 1000;
 	private static final int GRID_PRERENDER_Y = 1000;
@@ -38,8 +38,8 @@ public class Renderer {
 	private static final Color BG_COLOR = Color.LIGHT_GRAY;
 
 	// menu config
-	private static final double MENU_MARGIN = 0.05;
-	private static final Color MENU_DEFAULT_FILL = new Color(0xA9EBE6);
+	private static final double MENU_MARGIN = 0.025;
+	private static final Color MENU_DEFAULT_FILL = new Color(0xBEBEBE);
 	private static final Color MENU_DEFAULT_CONTENT = Color.WHITE;
 	private static final Color MENU_SELECTED_FILL = new Color(0x89C4C0);
 	private static final Color MENU_SELECTED_CONTENT = new Color(0x4B989C);
@@ -189,12 +189,12 @@ public class Renderer {
 			//If player 1 has more coins than player 2 then player 1 has won
 			if(multiplayer == true && coinsCollected > coinsCollected2){
 				drawStringCentred(g, "CONGRATULATIONS PLAYER 1 HAS WON", SX / 2, SY / 8);
-				g.drawImage(ImageCache.getImage("player1"), (SX/2-32), SY*3/16, 128, 128, null);
+				g.drawImage(ImageCache.getImage("wonImage"), (SX/2-32), SY*3/16, 128, 128, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
 			//player 2 wins
 			}else if(multiplayer == true && coinsCollected < coinsCollected2){
 				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 8);
-				g.drawImage(ImageCache.getImage("player2"), (SX/2-32), SY*3/16, 128, 128, null);
+				g.drawImage(ImageCache.getImage("win2"), (SX/2-32), SY*3/16, 128, 128, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected2), SX / 2, SY * 2 / 5);
 			}else{
 			//Single player collected all coins
@@ -205,16 +205,17 @@ public class Renderer {
 			//If is multi player and player 1 has more coins collected or player 2 has been killed by AI
 			if(multiplayer == true && gameEndMode == 2){
 				drawStringCentred(g, "CONGRATULATIONS PLAYER 1 HAS WON", SX / 2, SY / 8);
-				g.drawImage(ImageCache.getImage("player1"), (SX/2-32), SY*3/16, 128, 128, null);
+				g.drawImage(ImageCache.getImage("wonImage"), (SX/2-32), SY*3/16, 128, 128, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
 			//If is multi player and player 2 has more coins collected or player 1 has been killed by AI
 			}else if(multiplayer == true  && gameEndMode == 1){
 				drawStringCentred(g, "CONGRATULATIONS PLAYER 2 HAS WON", SX / 2, SY / 8);
-				g.drawImage(ImageCache.getImage("player2"), (SX/2-32), SY*3/16, 128, 128, null);
+				g.drawImage(ImageCache.getImage("win2"), (SX/2-32), SY*3/16, 128, 128, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected2), SX / 2, SY * 2 / 5);
 			}else{
 			//Single player loses
-				drawStringCentred(g, "GAME OVER", SX / 2, SY / 4);
+				drawStringCentred(g, "GAME OVER", SX / 2, SY / 8);
+				g.drawImage(ImageCache.getImage("youLost"), (SX/2-32), SY*3/16, 128, 128, null);
 				drawStringCentred(g, "Coins Collected: " + Integer.toString(coinsCollected), SX / 2, SY * 2 / 5);
 			}
 		}
