@@ -277,6 +277,10 @@ public class Engine {
             	switch(e.getKeyCode()){
             	case KeyEvent.VK_ENTER:
             		state = GameState.MAIN_MENU;
+            		break;
+            	case KeyEvent.VK_ESCAPE:
+            		state = GameState.MAIN_MENU;
+            		break;
             	}
             }
             }

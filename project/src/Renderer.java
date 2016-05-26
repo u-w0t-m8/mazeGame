@@ -131,6 +131,7 @@ public class Renderer {
 		}
 		
 		//Draws Side panel printing the number of coins left
+		//Change this for side panel color
 		g.setColor(new Color(0xb3c87e));
 		g.drawRect(-300, 0, 300, S - 10);
 		g.fillRect(-300, 0, 300, S - 10);
@@ -301,7 +302,9 @@ public class Renderer {
 			if(i==0){
 				//drawing 3 buttons for play game left and right
 				drawButton(m,0,g,0,buttonY,SX/8,SY/6,colFill,colContent,"<",textFont);
+					
 				drawButton(m,1,g,SX/8,buttonY,SX*6/8,SY/6,colFill,colContent,strings[i],textFont);
+					
 				drawButton(m,2,g,SX*7/8,buttonY,SX/8,SY/6,colFill,colContent,">",textFont);
 			}else{
 				drawButton(m, i+2, g, 0, buttonY, SX, SY / 6, colFill, colContent, strings[i], textFont);
