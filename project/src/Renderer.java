@@ -101,9 +101,9 @@ public class Renderer {
 	}
 
 	/**
-	 * Draws the game map
+	 * Draws the in-game map drawing the grid, entities and side panel
 	 * 
-	 * @param grid
+	 * @param grid - grid class object
 	 */
 	public void drawGrid(Grid grid) {
 		final int S = 1000;
@@ -164,7 +164,7 @@ public class Renderer {
 	public void drawInstructions() {
 		int SX = 1600;
 		int SY = 900;
-
+		
 		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
 		g.drawImage(ImageCache.getImage("instructions"), 0, -100, SX, SY, null);
 		g.setFont(stringFont);
@@ -176,7 +176,17 @@ public class Renderer {
 	}
 
 	/**
-	 * Frame of end state, either game over or coins collected
+	 *Draws the end state, either player has won, player has lost, multiplayer - player 1 has won or player 2 has won.
+	 * Depending on whether all the coins have been collected, in singleplayer the player has won and in multiplayer the player with most coins out of the two win
+	 * Otherwise if the AI has collided with a player, in singleplayer the player loses and in multiplayer the play not killed by the AI wins.
+	 * 
+	 * The first if statement will print out either Game over or Congratulations player has one depending on how the game has ended
+	 * @param End class which controls the buttons
+	 * @param multiplayer lets drawEndState know if game was multiplayer or not
+	 * @param gameEndMode lets drawEndState know who won the multiplayer game
+	 * @param coinsCollected how many coins collected by player1
+	 * @param coinsCollected2 how many coins collected by player2
+	 * @param coinsLeft is how many coins left in the grid
 	 */
 	public void drawEndState(EndState end,boolean multiplayer, int gameEndMode, int coinsCollected,int coinsCollected2, int coinsLeft) {
 		final int SX = 1600;
@@ -233,6 +243,7 @@ public class Renderer {
 		
 		//Highlights the selected button
 		if (end.getSelected() == 0) {
+			//If menu is selected
 			g.setFont(selectedFont);
 			g.setColor(MENU_SELECTED_FILL);
 			g.fillRect(0, SY * 5 / 8, SX, SY / 8);
@@ -243,6 +254,7 @@ public class Renderer {
 			g.setColor(MENU_DEFAULT_CONTENT);
 			drawStringCentred(g, "Exit", SX / 2, SY * 13 / 16);
 		} else {
+			//If exit is selected
 			g.setFont(selectedFont);
 			g.setColor(MENU_DEFAULT_FILL);
 			g.fillRect(0, SY * 5 / 8, SX, SY / 8);
@@ -261,8 +273,7 @@ public class Renderer {
 	 * Draw Menu initializes the graphics for the menu interface, using the
 	 * method within menu to know which 'difficulty' it is currently on
 	 * 
-	 * @param m
-	 *            menu
+	 * @param m menu object
 	 */
 
 	public void drawMenu(Menu m) {
@@ -312,6 +323,20 @@ public class Renderer {
 		}
 	}
 
+	/**Draw button for menu
+	 * 
+	 * @param m - Menu object
+	 * @param mIndex - Index to be added to Rectangle array
+	 * @param g - Graphics object
+	 * @param x - x coordinate 
+	 * @param y - y coordinate
+	 * @param w - width of rectangle
+	 * @param h - height of rectangle
+	 * @param cf - Color of rectangle
+	 * @param cc - color of content
+	 * @param text - string to be drawn center of rectangle
+	 * @param font - font of string to be drawn
+	 */
 	private void drawButton(Menu m, int mIndex, Graphics2D g, int x, int y, int w, int h, Color cf,
 			Color cc, String text, Font font) {
 		g.setColor(cf);

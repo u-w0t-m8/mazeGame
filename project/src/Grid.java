@@ -60,11 +60,11 @@ public class Grid {
         gameEnd = -1;
         coinsCollected = 0;
         coinsCollectedTwo = 0;
-        coinsLeft = sizex/3;
+        coinsLeft = sizex/3+1;
         Random rand = new Random();
         
         // Place appropriate number of coins in the game depending on the size
-        for (int i = 0; i < sizex/3; ++i) {
+        for (int i = 0; i < sizex/3+1; ++i) {
             entList.add(new Token());
             int x = rand.nextInt(sizex - 1) + 1;
             int y = rand.nextInt(sizey - 1) + 1;
@@ -96,19 +96,19 @@ public class Grid {
         if(j >= 1){
         	entList.add(new HunterEntity(0));
         	if(player2 != null){
-        		((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex/2-1, sizey-3);
+        		((ArrayList<Entity>) entList).get(0+(int)(sizex/3)+1).setPos(sizex/2-1, sizey-3);
         	}
         	else {
-        		((ArrayList<Entity>) entList).get(0+(int)(sizex/3)).setPos(sizex-3, sizey-3);
+        		((ArrayList<Entity>) entList).get(0+(int)(sizex/3)+1).setPos(sizex-3, sizey-3);
         	}
         }
         if(j >= 2){
         	entList.add(new HunterEntity(1));
-        	((ArrayList<Entity>) entList).get(1+(int)(sizex/3)).setPos(sizex-3, 2);
+        	((ArrayList<Entity>) entList).get(1+(int)(sizex/3)+1).setPos(sizex-3, 2);
         }
         if(j >= 3){
         	entList.add(new HunterEntity(2));
-        	((ArrayList<Entity>) entList).get(2+(int)(sizex/3)).setPos(2, sizey-3);
+        	((ArrayList<Entity>) entList).get(2+(int)(sizex/3)+1).setPos(2, sizey-3);
         }
     }
 
