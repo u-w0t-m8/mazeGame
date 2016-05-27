@@ -232,7 +232,8 @@ public class Renderer {
 
         Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
         g.setFont(gameOverFont);
-        g.setColor(MENU_DEFAULT_FILL);
+        
+        g.setColor(MENU_SELECTED_CONTENT);
         // If there are no coins left then the game is won
         if (coinsLeft == 0) {
             // If player 1 has more coins than player 2 then player 1 has won
