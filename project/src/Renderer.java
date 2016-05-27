@@ -281,22 +281,16 @@ public class Renderer {
 		final int SX = 1600;
 		final int SY = 900;
 		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
-		g.drawImage(ImageCache.getImage("title"), SX/4, 0, SX/2, SY/2, null);
-		g.setColor(MENU_DEFAULT_CONTENT);
-		g.drawRect(0, 0, SX, SY / 2);
-		g.setFont(stringFont);
-		// drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
-		
-		String[] difficulty = new String[] { "PLAY: EASY", "PLAY: MEDIUM", "PLAY: HARD", "PLAY: MULTIPLAYER" };
-		String[] strings = new String[] { difficulty[m.getDifficulty()], "INSTRUCTIONS", "QUIT" };
-		if (m.getSelected() == 0) {
-			strings[0] = difficulty[m.getDifficulty()];
-		}
+		//Draws Title image 
+		g.drawImage(ImageCache.getImage("title"), SX/4, 0, SX/2, SY/2, null);	
+		//Strings of what is to be printed to main menu
+		String[] difficulty = new String[] { "SINGLE PLAYER:EASY", "SINGLE PLAYER:MEDIUM", "SINGLE PLAYER:HARD"};
+		String[] strings = new String[] { difficulty[m.getDifficulty()], "MULTIPLAYER", "INSTRUCTIONS", "QUIT" };
 
-		// renders the 3 menu buttons in order
-		for (int i = 0; i < 3; i++) {
+		// renders the 4 menu buttons in order
+		for (int i = 0; i < 4; i++) {
 			// shift each successive button's Y coords downwards
-			final int buttonY = SY * (3 + i) / 6;
+			final int buttonY = SY * (4 + i) / 8;
 			// decide colors for item
 			Color colFill, colContent;
 			Font textFont;
@@ -306,19 +300,21 @@ public class Renderer {
 				colContent = MENU_SELECTED_CONTENT;
 				textFont = selectedFont;
 			} else {
+			//Else default font
 				colFill = MENU_DEFAULT_FILL;
 				colContent = MENU_DEFAULT_CONTENT;
 				textFont = stringFont;
 			}
 			if(i==0){
 				//drawing 3 buttons for play game left and right
-				drawButton(m,0,g,0,buttonY,SX/8,SY/6,colFill,colContent,"<",textFont);
+				drawButton(m,0,g,0,buttonY,SX/8,SY/8,colFill,colContent,"<",textFont);
 					
-				drawButton(m,1,g,SX/8,buttonY,SX*6/8,SY/6,colFill,colContent,strings[i],textFont);
+				drawButton(m,1,g,SX/8,buttonY,SX*6/8,SY/8,colFill,colContent,strings[i],textFont);
 					
-				drawButton(m,2,g,SX*7/8,buttonY,SX/8,SY/6,colFill,colContent,">",textFont);
+				drawButton(m,2,g,SX*7/8,buttonY,SX/8,SY/8,colFill,colContent,">",textFont);
 			}else{
-				drawButton(m, i+2, g, 0, buttonY, SX, SY / 6, colFill, colContent, strings[i], textFont);
+				//Drawing the other 3 rows of buttons
+				drawButton(m, i+2, g, 0, buttonY, SX, SY / 8, colFill, colContent, strings[i], textFont);
 			}
 		}
 	}
@@ -352,12 +348,12 @@ public class Renderer {
 	}
 
 	/**
-	 * Centre the objects
+	 * Draw's strings centered in factoring the string length
 	 * 
-	 * @param g
-	 * @param s
-	 * @param x
-	 * @param y
+	 * @param g - graphics object
+	 * @param s - string
+	 * @param x - coordinate x
+	 * @param y - coordinate y
 	 */
 	private void drawStringCentred(Graphics g, String s, int x, int y) {
 		Rectangle2D bounds = g.getFontMetrics().getStringBounds(s, g);
@@ -367,7 +363,7 @@ public class Renderer {
 	}
 
 	/**
-	 * 
+	 * Draws the grid/maze to the frame
 	 * @param grid
 	 */
 	public void createPreRender(Grid grid) {
