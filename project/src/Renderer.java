@@ -39,10 +39,10 @@ public class Renderer {
 
 	// menu config
 	private static final double MENU_MARGIN = 0.025;
-	private static final Color MENU_DEFAULT_FILL = new Color(0xBEBEBE);
+	private static final Color MENU_DEFAULT_FILL = new Color(0xC9C9C9);
 	private static final Color MENU_DEFAULT_CONTENT = Color.WHITE;
-	private static final Color MENU_SELECTED_FILL = new Color(0x89C4C0);
-	private static final Color MENU_SELECTED_CONTENT = new Color(0x4B989C);
+	private static final Color MENU_SELECTED_FILL = new Color(0xB1B1B1);
+	private static final Color MENU_SELECTED_CONTENT = new Color(0x718686);
 
 	// whether to wipe the canvas clean on each frame (recommended)
 	private static final boolean CLEAN_FRAME = true;
@@ -281,14 +281,16 @@ public class Renderer {
 		final int SX = 1600;
 		final int SY = 900;
 		Graphics2D g = getTransformedGraphics(MENU_MARGIN, SX, SY);
-		g.drawImage(ImageCache.getImage("title"), 0, 0, SX, SY / 2, null);
+		g.drawImage(ImageCache.getImage("title"), SX/4, 0, SX/2, SY/2, null);
 		g.setColor(MENU_DEFAULT_CONTENT);
 		g.drawRect(0, 0, SX, SY / 2);
 		g.setFont(stringFont);
 		// drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 		
+
 		String[] difficulty = new String[] { "PLAY:EASY", "PLAY:MEDIUM", "PLAY:HARD"};
 		String[] strings = new String[] { difficulty[m.getDifficulty()], "MULTIPLAYER", "INSTRUCTIONS", "QUIT" };
+
 		if (m.getSelected() == 0) {
 			strings[0] = difficulty[m.getDifficulty()];
 		}
