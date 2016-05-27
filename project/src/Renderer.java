@@ -287,16 +287,16 @@ public class Renderer {
 		g.setFont(stringFont);
 		// drawStringCentred(g, "Maze Game", SX / 2, SY / 4);
 		
-		String[] difficulty = new String[] { "PLAY:EASY", "PLAY:MEDIUM", "PLAY:HARD", "PLAY:MULTIPLAYER" };
-		String[] strings = new String[] { difficulty[m.getDifficulty()], "INSTRUCTIONS", "QUIT" };
+		String[] difficulty = new String[] { "PLAY:EASY", "PLAY:MEDIUM", "PLAY:HARD"};
+		String[] strings = new String[] { difficulty[m.getDifficulty()], "MULTIPLAYER", "INSTRUCTIONS", "QUIT" };
 		if (m.getSelected() == 0) {
 			strings[0] = difficulty[m.getDifficulty()];
 		}
 
 		// renders the 3 menu buttons in order
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			// shift each successive button's Y coords downwards
-			final int buttonY = SY * (3 + i) / 6;
+			final int buttonY = SY * (4 + i) / 8;
 			// decide colors for item
 			Color colFill, colContent;
 			Font textFont;

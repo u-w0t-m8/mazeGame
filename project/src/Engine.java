@@ -242,9 +242,12 @@ public class Engine {
                 		startNewLevel(Difficulty.values()[mMenu.getDifficulty()]);
                 		break;
                 	case(1):
-                		state = GameState.INSTRUCTION;
+                		startNewLevel(Difficulty.MULTIPLAYER);
                 		break;
                 	case(2):
+                		state = GameState.INSTRUCTION;
+                		break;
+                	case(3):
                 		System.exit(0);
                 		break;
                 	}
@@ -341,9 +344,12 @@ public class Engine {
 	        		}
 	        		break;
 	        	case(1):
-	        		state = GameState.INSTRUCTION;
+	        		startNewLevel(Difficulty.MULTIPLAYER);
 	        		break;
 	        	case(2):
+	        		state = GameState.INSTRUCTION;
+	        		break;
+	        	case(3):
 	        		System.exit(0);
 	        		break;
 	        	}
@@ -389,6 +395,8 @@ public class Engine {
 				case 4:
 					mMenu.setSelected(2);
 					break;
+				case 5:
+					mMenu.setSelected(3);
 				}
 				break;
 			case GAME_OVER:
