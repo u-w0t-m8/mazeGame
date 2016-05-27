@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -173,7 +174,7 @@ public class Renderer {
             drawStringCentred(g, Integer.toString(grid.getCoinsLeft()), -150,
                     S * 23 / 32);
         }
-        
+
         // Draw highlight rings for new game
         if (grid.getUpdateCount() < HIGH_DURATION) {
             g.setColor(PLAYER_HIGHLIGHT_COLOR);
@@ -497,6 +498,8 @@ public class Renderer {
             g2d.translate(margin * x, margin * y);
             g2d.scale(1d - 2 * margin, 1d - 2 * margin);
         }
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         return g2d;
     }
 
