@@ -12,13 +12,13 @@ public class PlayerEntity extends LivingEntity {
     private int keyRight = 0;
 
     public PlayerEntity(int num) {
-    	if(num == 1){
+        if(num == 1){
             setSprite("player1");
 
-    	}
-    	else {
-    		setSprite("player2");
-    	}
+        }
+        else {
+            setSprite("player2");
+        }
     }
 
     /**

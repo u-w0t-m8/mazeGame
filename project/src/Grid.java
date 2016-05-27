@@ -2,6 +2,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
@@ -22,12 +23,14 @@ public class Grid {
 	
 	private final int SIZE = 31; 
 	
-    private Collection<Entity> entList; // List of entities in the game
+    private List<Entity> entList; // List of entities in the game
     private Tile[][] tileSpace; // 2D array of tiles forming the grid
     private PlayerEntity player; // player one object
     private PlayerEntity player2; // player two object
     private int sizex; // width of the grid
     private int sizey; // height of the game
+    
+    private int updateCount;
     
     private int coinsLeft; // coins left in the game
     private int coinsCollected; // coins collected by player one
@@ -46,6 +49,8 @@ public class Grid {
         generate(sizex, sizey);
         player = new PlayerEntity(1);
         player2 = null;
+        
+        updateCount = 0;
         
         //Sets the player spawn locations depending on single player and multiplayer 
         if(diff == Difficulty.MULTIPLAYER){
@@ -72,7 +77,7 @@ public class Grid {
                 x = rand.nextInt(sizex - 1) + 1;
                 y = rand.nextInt(sizey - 1) + 1;
             }
-            ((ArrayList<Entity>) entList).get(i).setPos(x, y);
+            entList.get(i).setPos(x, y);
         }
 
         // Find out the difficulty and set number of hunters depending on difficulty
@@ -96,19 +101,19 @@ public class Grid {
         if(j >= 1){
         	entList.add(new HunterEntity(0));
         	if(player2 != null){
-        		((ArrayList<Entity>) entList).get(0+(int)(sizex/3)+1).setPos(sizex/2-1, sizey-3);
+        		entList.get(0+(int)(sizex/3)+1).setPos(sizex/2-1, sizey-3);
         	}
         	else {
-        		((ArrayList<Entity>) entList).get(0+(int)(sizex/3)+1).setPos(sizex-3, sizey-3);
+        		entList.get(0+(int)(sizex/3)+1).setPos(sizex-3, sizey-3);
         	}
         }
         if(j >= 2){
         	entList.add(new HunterEntity(1));
-        	((ArrayList<Entity>) entList).get(1+(int)(sizex/3)+1).setPos(sizex-3, 2);
+        	entList.get(1+(int)(sizex/3)+1).setPos(sizex-3, 2);
         }
         if(j >= 3){
         	entList.add(new HunterEntity(2));
-        	((ArrayList<Entity>) entList).get(2+(int)(sizex/3)+1).setPos(2, sizey-3);
+        	entList.get(2+(int)(sizex/3)+1).setPos(2, sizey-3);
         }
     }
 
@@ -207,6 +212,10 @@ public class Grid {
         }
         DFS();
     }
+    
+    public int getUpdateCount(){
+        return updateCount;
+    }
 
     /**
      * Checks whether the players have collided with other entities in the game
@@ -256,6 +265,8 @@ public class Grid {
     	
         checkCollision();
 
+        updateCount++;
+        
         player.update(this);
         if(player2 != null){
         	player2.update(this);

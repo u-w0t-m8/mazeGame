@@ -17,8 +17,6 @@ import javax.swing.event.MouseInputAdapter;
  * <p>
  * Its other job is to pass user input to the appropriate class (either Grid for
  * player control in-game or Menu for GUI control when not in game or paused).
- * <p>
- * See Input for discussion of how engine-input interface could work.
  * 
  */
 public class Engine {
@@ -47,7 +45,6 @@ public class Engine {
 
     private boolean isRunning = false;
     private GameState state = GameState.MAIN_MENU;
-    
 
     public Engine() {
         mMenu = new Menu();
@@ -70,13 +67,16 @@ public class Engine {
             }
         });
         // STUFF RELATED TO INPUT
-        mCanvas.addKeyListener(inputListener);
+        mCanvas.addKeyListener(keyListener);
         mCanvas.addMouseListener(mouseListener);
         mCanvas.addMouseMotionListener(mouseMotionListener);
         mCanvas.setFocusable(true);
         // c.getFocusListeners();
     }
 
+    /**
+     * Start running the game engine.
+     */
     public void startEngine() {
         // TODO: set windows to visible
         isRunning = true;
@@ -84,29 +84,24 @@ public class Engine {
         mFrame.setVisible(true);
     }
 
+    /**
+     * Simplified sleep loop running update and render at target frame rate.
+     */
     private final Thread LOOPTHREAD = new Thread() {
-        /*
-         * There are lots of viable ways to do a regular timed loop. This one
-         * checks every half-millisecond whether the time since last run
-         * exceeded our target interval.
-         */
-        private long lastTime = System.nanoTime();
-        private final long INTERVAL = (long) (Math.pow(10, 9)
-                / TARGET_FRAME_RATE);
-        private final int SLEEP_NANOS = (int) (Math.pow(10, 6) / 2);
+        // private long lastTime = System.nanoTime();
+        private final long INTERVAL = (long) Math
+                .floor(1000 / TARGET_FRAME_RATE);
 
         public void run() {
             while (isRunning) {
-                long time = System.nanoTime();
-                if (time - lastTime < INTERVAL) {
-                    try {
-                        Thread.sleep(0, SLEEP_NANOS);
-                    } catch (InterruptedException e) {
-                    }
-                } else {
-                    lastTime = time;
-                    	update();
-                    	render();
+                // long time = System.nanoTime();
+                // System.out.println((time-lastTime)/1000000);
+                // lastTime = time;
+                update();
+                render();
+                try {
+                    Thread.sleep(INTERVAL);
+                } catch (InterruptedException e) {
                 }
             }
         };
@@ -123,14 +118,14 @@ public class Engine {
             break;
         case IN_GAME:
             currentGrid.update();
-            if(currentGrid.getGameEnd() >=0 ){
-            	endLevel();
+            if (currentGrid.getGameEnd() >= 0) {
+                endLevel();
             }
             break;
-        case GAME_OVER: 
-        	break;
+        case GAME_OVER:
+            break;
         case INSTRUCTION:
-        	break;
+            break;
         }
     }
 
@@ -148,11 +143,12 @@ public class Engine {
             case IN_GAME:
                 mRenderer.drawGrid(currentGrid);
                 break;
-            case GAME_OVER: 
-            	mRenderer.drawEndState(mEndState,isMultiplayer, gameEndMode, coinCount, coinCount2,coinsLeft);
-            	break;
+            case GAME_OVER:
+                mRenderer.drawEndState(mEndState, isMultiplayer, gameEndMode,
+                        coinCount, coinCount2, coinsLeft);
+                break;
             case INSTRUCTION:
-            	mRenderer.drawInstructions();
+                mRenderer.drawInstructions();
             }
         } while (!mRenderer.finishFrame());
         // if finishFrame() fails the render has to restart
@@ -165,27 +161,27 @@ public class Engine {
     }
 
     void endLevel() {
-    	coinCount = currentGrid.getCoinsCollected();
-    	coinCount2 = currentGrid.getCoinsCollectedTwo();
-    	coinsLeft = currentGrid.getCoinsLeft();
-    	gameEndMode = currentGrid.getGameEnd();
-    	
-    	if(currentGrid.getIsMulti()){
-    		isMultiplayer = true;
-    	}else{
-    		isMultiplayer = false;
-    	}
-    	
+        coinCount = currentGrid.getCoinsCollected();
+        coinCount2 = currentGrid.getCoinsCollectedTwo();
+        coinsLeft = currentGrid.getCoinsLeft();
+        gameEndMode = currentGrid.getGameEnd();
+
+        if (currentGrid.getIsMulti()) {
+            isMultiplayer = true;
+        } else {
+            isMultiplayer = false;
+        }
+
         currentGrid = null;
         mRenderer.destroyPreRender();
         state = GameState.GAME_OVER;
     }
 
     /**
-     * Listens to key presses made by the user
-     * Depending on the state of the game, it determines the functionality of the keys
+     * Listens to key presses made by the user Depending on the state of the
+     * game, it determines the functionality of the keys
      */
-    private KeyAdapter inputListener = new KeyAdapter() {
+    private KeyAdapter keyListener = new KeyAdapter() {
         public void keyPressed(KeyEvent e) {
             switch (state) {
             case IN_GAME: {
@@ -194,7 +190,7 @@ public class Engine {
                     currentGrid.updatePlayerInput(1, 0, 0, 0);
                     break;
                 case KeyEvent.VK_DOWN:
-                    currentGrid.updatePlayerInput(0, 1, 0 ,0);
+                    currentGrid.updatePlayerInput(0, 1, 0, 0);
                     break;
                 case KeyEvent.VK_LEFT:
                     currentGrid.updatePlayerInput(0, 0, 1, 0);
@@ -210,7 +206,7 @@ public class Engine {
                     currentGrid.updatePlayerInputTwo(1, 0, 0, 0);
                     break;
                 case KeyEvent.VK_S:
-                    currentGrid.updatePlayerInputTwo(0, 1, 0 ,0);
+                    currentGrid.updatePlayerInputTwo(0, 1, 0, 0);
                     break;
                 case KeyEvent.VK_A:
                     currentGrid.updatePlayerInputTwo(0, 0, 1, 0);
@@ -230,63 +226,64 @@ public class Engine {
                     mMenu.down();
                     break;
                 case KeyEvent.VK_LEFT:
-                	mMenu.left();
-                	break;
+                    mMenu.left();
+                    break;
                 case KeyEvent.VK_RIGHT:
-                	mMenu.right();
-                	break;
+                    mMenu.right();
+                    break;
                 case KeyEvent.VK_ENTER:
-                	// TODO: maybe make this a separate method (see Mouse click)
-                	switch(mMenu.getSelected()){
-                	case(0):
-                		startNewLevel(Difficulty.values()[mMenu.getDifficulty()]);
-                		break;
-                	case(1):
-                		startNewLevel(Difficulty.MULTIPLAYER);
-                		break;
-                	case(2):
-                		state = GameState.INSTRUCTION;
-                		break;
-                	case(3):
-                		System.exit(0);
-                		break;
-                	}
+                    // TODO: maybe make this a separate method (see Mouse click)
+                    switch (mMenu.getSelected()) {
+                    case (0):
+                        startNewLevel(
+                                Difficulty.values()[mMenu.getDifficulty()]);
+                        break;
+                    case (1):
+                        startNewLevel(Difficulty.MULTIPLAYER);
+                        break;
+                    case (2):
+                        state = GameState.INSTRUCTION;
+                        break;
+                    case (3):
+                        System.exit(0);
+                        break;
+                    }
                     break;
                 case KeyEvent.VK_ESCAPE:
                     System.exit(0);
                 }
                 break;
             }
-            case GAME_OVER:{
-            	switch(e.getKeyCode()){
-            	case KeyEvent.VK_UP:
+            case GAME_OVER: {
+                switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
                     mEndState.up();
                     break;
                 case KeyEvent.VK_DOWN:
                     mEndState.down();
                     break;
                 case KeyEvent.VK_ENTER:
-                	if(mEndState.getSelected() == 0){
-                		state = GameState.MAIN_MENU;
-                	}else{
-                		System.exit(0);
-                	}
-                	break;
+                    if (mEndState.getSelected() == 0) {
+                        state = GameState.MAIN_MENU;
+                    } else {
+                        System.exit(0);
+                    }
+                    break;
                 case KeyEvent.VK_ESCAPE:
                     System.exit(0);
                 }
-            	}
+            }
             case INSTRUCTION:
-            	switch(e.getKeyCode()){
-            	case KeyEvent.VK_ENTER:
-            		state = GameState.MAIN_MENU;
-            		break;
-            	case KeyEvent.VK_ESCAPE:
-            		state = GameState.MAIN_MENU;
-            		break;
-            	}
+                switch (e.getKeyCode()) {
+                case KeyEvent.VK_ENTER:
+                    state = GameState.MAIN_MENU;
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    state = GameState.MAIN_MENU;
+                    break;
+                }
             }
-            }
+        }
 
         @Override
         public void keyReleased(KeyEvent e) {
@@ -304,12 +301,12 @@ public class Engine {
                 case KeyEvent.VK_RIGHT:
                     currentGrid.updatePlayerInput(0, 0, 0, -1);
                     break;
-                 // FOR PLAYER 2
+                // FOR PLAYER 2
                 case KeyEvent.VK_W:
                     currentGrid.updatePlayerInputTwo(-1, 0, 0, 0);
                     break;
                 case KeyEvent.VK_S:
-                    currentGrid.updatePlayerInputTwo(0, -1, 0 ,0);
+                    currentGrid.updatePlayerInputTwo(0, -1, 0, 0);
                     break;
                 case KeyEvent.VK_A:
                     currentGrid.updatePlayerInputTwo(0, 0, -1, 0);
@@ -321,94 +318,104 @@ public class Engine {
             }
         }
     };
-    
+
+    /**
+     * Performs similar function to keyListener but for mouse events.
+     */
     private MouseAdapter mouseListener = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent event) {
-        	
-        	switch(state){
-			case MAIN_MENU:
-				switch(mMenu.getSelected()){
-	        	case(0):
-					int index = mMenu.getItemAtScreenPosition(event.getX(), event.getY());
-	        		switch(index){
-	        			case(0):
-	        				mMenu.left();
-	        				break;
-	        			case(1):
-	        				startNewLevel(Difficulty.values()[mMenu.getDifficulty()]);
-	        				break;
-	        			case(2):
-	        				mMenu.right();
-	        				break;
-	        		}
-	        		break;
-	        	case(1):
-	        		startNewLevel(Difficulty.MULTIPLAYER);
-	        		break;
-	        	case(2):
-	        		state = GameState.INSTRUCTION;
-	        		break;
-	        	case(3):
-	        		System.exit(0);
-	        		break;
-	        	}
-				break;
-			case GAME_OVER:
-				switch(mEndState.getSelected()){
-				case (0):
-					state = GameState.MAIN_MENU;
-					break;
-				case(1):
-					System.exit(0);
-					break;
-				}
-				break;
-			case INSTRUCTION:
-				state = GameState.MAIN_MENU;
-				break;
-			}
-        	
-        	
-        }    	
-	};
-	
-	private MouseInputAdapter mouseMotionListener = new MouseInputAdapter(){
-		@Override
+
+            switch (state) {
+            case MAIN_MENU:
+                switch (mMenu.getSelected()) {
+                case (0):
+                    int index = mMenu.getItemAtScreenPosition(event.getX(),
+                            event.getY());
+                    switch (index) {
+                    case (0):
+                        mMenu.left();
+                        break;
+                    case (1):
+                        startNewLevel(
+                                Difficulty.values()[mMenu.getDifficulty()]);
+                        break;
+                    case (2):
+                        mMenu.right();
+                        break;
+                    }
+                    break;
+                case (1):
+                    startNewLevel(Difficulty.MULTIPLAYER);
+                    break;
+                case (2):
+                    state = GameState.INSTRUCTION;
+                    break;
+                case (3):
+                    System.exit(0);
+                    break;
+                }
+                break;
+            case GAME_OVER:
+                switch (mEndState.getSelected()) {
+                case (0):
+                    state = GameState.MAIN_MENU;
+                    break;
+                case (1):
+                    System.exit(0);
+                    break;
+                }
+                break;
+            case INSTRUCTION:
+                state = GameState.MAIN_MENU;
+                break;
+            default:
+                break;
+            }
+
+        }
+    };
+
+    private MouseInputAdapter mouseMotionListener = new MouseInputAdapter() {
+        @Override
         public void mouseMoved(MouseEvent event) {
-			switch(state){
-			case MAIN_MENU:
-				int index = mMenu.getItemAtScreenPosition(event.getX(), event.getY());
-				switch(index){
-				case 0:
-					mMenu.setSelected(0);
-					break;
-				case 1:
-					mMenu.setSelected(0);
-					break;
-				case 2:
-					mMenu.setSelected(0);
-					break;
-				case 3:
-					mMenu.setSelected(1);
-					break;
-				case 4:
-					mMenu.setSelected(2);
-					break;
-				case 5:
-					mMenu.setSelected(3);
-				}
-				break;
-			case GAME_OVER:
-				int index1 = mEndState.getItemAtScreenPosition(event.getX(), event.getY());
-				mEndState.setSelected(index1);
-				break;
-			case INSTRUCTION:
-				
-				break;
-			}
-			
-        }   
-	};
+            switch (state) {
+            case MAIN_MENU:
+                int index = mMenu.getItemAtScreenPosition(event.getX(),
+                        event.getY());
+                switch (index) {
+                case 0:
+                    mMenu.setSelected(0);
+                    break;
+                case 1:
+                    mMenu.setSelected(0);
+                    break;
+                case 2:
+                    mMenu.setSelected(0);
+                    break;
+                case 3:
+                    mMenu.setSelected(1);
+                    break;
+                case 4:
+                    mMenu.setSelected(2);
+                    break;
+                case 5:
+                    mMenu.setSelected(3);
+                }
+                break;
+            case GAME_OVER:
+                int index1 = mEndState.getItemAtScreenPosition(event.getX(),
+                        event.getY());
+                mEndState.setSelected(index1);
+                break;
+            case INSTRUCTION:
+
+                break;
+            default:
+                break;
+            }
+
+        }
+    };
 
 }
